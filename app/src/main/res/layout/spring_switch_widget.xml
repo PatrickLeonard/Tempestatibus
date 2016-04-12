@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Switch xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:background="#ff2222"
+        android:id="@+id/preferenceSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:clickable="false"
+        android:background="@android:color/transparent"
+        android:thumb="@drawable/spring_thumb"
+        android:track="@drawable/thumb_track">
+</Switch>

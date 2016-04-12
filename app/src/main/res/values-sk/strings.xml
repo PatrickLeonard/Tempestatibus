@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title">Och! Je nám ľúto!</string>
+
+    <string name="error_message">Došlo k chybe. Prosím skúste znova.</string>
+
+    <string name="error_ok_button_text">OK</string>
+
+    <string name="network_unavailable_text">Sieť je nedostupná</string>
+
+    <string name="location_permission_request_rationale">Poloha informácie sú potrebné k načítanie dát o počasí.</string>
+
+    <string name="hourly_all_caps">HODINOVÉ</string>
+
+    <string name="seven_days_all_caps">7 dní</string>
+
+    <string name="rain_slash_snow_all_caps">Dážď / Sneh</string>
+
+    <string name="humidity_all_caps">VLHKOSŤ</string>
+
+    <string name="geolocation_service_not_available">Geolocation služba nie je k dispozícii</string>
+
+    <string name="today_string_day_adapter">dnes</string>
+
+    <string name="app_theme_title">Vyberte aplikáciu tému</string>
+
+    <string name="app_theme_selection">Vyberte app tému</string>
+
+    <string name="units_preference_title">Merné jednotky</string>
+
+    <string name="si_units_preference_summary">jednotky SI</string>
+
+    <string name="us_units_preference_summary">americké jednotky</string>
+
+    <string name="scorching_summer">Spaľujúce Leto</string>
+
+    <string name="wispy_winter">Jemný Winter</string>
+
+    <string name="serene_spring">Serene Spring</string>
+
+    <string name="auspicious_autumn">Sľubný Autumn</string>
+
+    <string name="time_label_format_string">Na %s to bude</string>
+
+    <string name="this_weeks_forecast_string">Budúce Forecast</string>
+
+    <string name="on_switch_text">ON</string>
+
+    <string name="off_switch_text">OFF</string>
+
+    <string name="hourly_extend_preference_summary_off">štandardné Hodinová</string>
+
+    <string name="hourly_extend_preference_summary_on">hodinová Rozšírené</string>
+
+    <string name="refresh_image_description">Tlačidlo refresh trochu počúvať a aktualizovať dáta a displej</string>
+
+    <string name="icon_image_description">Ikona zastupovať počasie, oblačno s dažďom, slnečný, atď.</string>
+
+    <string name="degrees_image_description">Stupne symbol, malý kruh v hornej index</string>
+
+    <string name="NO_Daily_forecast_value">Neexistuje žiadne dáta na zobrazenie</string>
+
+    <string name="daily_icon_content_description">Počasie Ikona na deň</string>
+
+    <string name="temp_background_content_description">Kruhová zázemie pre teplotu</string>
+
+    <string name="hourly_extend_preference_title">Rozšíriť hodinovo?</string>
+
+    <string name="no_geocode_present">No Geocoder prítomný</string>
+
+    <string name="no_location_found_address">Žiadne miesto našiel.</string>
+
+    <string name="daily_forecast_toast_message">Na %1$s vysokým bude %2$s, a to bude %3$s</string>
+
+    <string name="hour_list_toast_message">Na %1$s to bude %2$s a %3$s</string>
+
+    <string name="first_widget_humidity_label">Vlhkosť:</string>
+
+    <string name="first_widget_precipitation_probability_label">Dážď / Sneh:</string>
+
+    <string name="first_widget_nearestStormDistance_label">Storm Dist.</string>
+
+    <string name="first_widget_pressure_label">Tlak:</string>
+
+    <string name="first_widget_dew_point_label">Dew:</string>
+
+    <string name="first_widget_wind_speed_label">Vietor:</string>
+
+    <string name="first_widget_cloud_cover_label">Cloud:</string>
+
+    <string name="first_widget_ozone_label">Ozón:</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">zrážok.:</string>
+
+    <string name="first_widget_visibility_label">viditeľnosť:</string>
+
+    <string name="first_widget_apparentTemperature_label">Vaše Temp:</string>
+
+    <string name="forecast_fetch_error">No počasie našiel.</string>
+
+    <string name="setting_icon_content_description">Malý stroj kolieskom na ikonu Nastavenie</string>
+
+    <string name="visibility_label">VIDITEĽNOSŤ</string>
+
+    <string name="dew_point_label">DEW POINT</string>
+
+    <string name="wind_speed_label">WIND</string>
+
+    <string name="ozone_label">OZONE</string>
+
+    <string name="storm_distance_label">STORM DIST.</string>
+
+    <string name="apparent_temp_label">Zdanlivo TEMP</string>
+
+    <string name="pressure_label">TLAK</string>
+
+    <string name="apparent_max_temp_label">Zdanlivá MAX.</string>
+
+    <string name="apparent_min_temp_label">Zdanlivá MIN.</string>
+
+    <string name="sunset_label">SUNSET</string>
+
+    <string name="sunrise_label">SUNRISE</string>
+
+    <string name="cloud_cover_label">Oblačnosť</string>
+
+    <string name="high_temp_time_label">TIME HIGH TEMP</string>
+
+    <string name="low_temp_time_label">LOW TEMP TIME</string>
+
+    <string name="moon_phase_label">MOON PHASE</string>
+
+    <string name="configure_widget_layout">Konfigurácia Widget</string>
+
+    <string name="match_app_theme_hint">Prispôsobte widgetu tému s apps</string>
+
+    <string name="transparent_background_text">Priehľadné pozadie</string>
+
+    <string name="text_color_label">Farba Textu</string>
+
+    <string name="white_label">Biela</string>
+
+    <string name="black_label">čerň</string>
+
+    <string name="proceed_button_label">pokračovať</string>
+
+    <string name="black_text_hint">App Widget bude mať čierny text.</string>
+
+    <string name="white_text_hint">App Widget bude mať biely text.</string>
+
+    <string name="transparent_background_hint">Layout app widgetu s priehľadným pozadím</string>
+
+    <string name="match_app_theme_text">Match App Theme</string>
+</resources>

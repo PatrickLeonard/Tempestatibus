@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="error_title">哎呀！ 抱歉!</string>
+
+    <string name="error_message">有一个错误。 请再试一次。</string>
+
+    <string name="error_ok_button_text">好</string>
+
+    <string name="network_unavailable_text">网络不可用</string>
+
+    <string name="location_permission_request_rationale">位置信息是需要以检索天气数据。</string>
+
+    <string name="hourly_all_caps">HOURLY</string>
+
+    <string name="seven_days_all_caps">7天</string>
+
+    <string name="rain_slash_snow_all_caps">雨/雪</string>
+
+    <string name="humidity_all_caps">湿度</string>
+
+    <string name="geolocation_service_not_available">不提供地理定位服务</string>
+
+    <string name="today_string_day_adapter">今天</string>
+
+    <string name="app_theme_title">选择一个应用程序主题</string>
+
+    <string name="app_theme_selection">选择应用程序，主题</string>
+
+    <string name="units_preference_title">计量单位</string>
+
+    <string name="si_units_preference_summary">SI单位</string>
+
+    <string name="us_units_preference_summary">美国单位</string>
+
+    <string name="scorching_summer">炎炎夏季</string>
+
+    <string name="wispy_winter">束状冬季</string>
+
+    <string name="serene_spring">宁静的春天</string>
+
+    <string name="auspicious_autumn">吉祥秋</string>
+
+    <string name="time_label_format_string">在%s的这将是</string>
+
+    <string name="this_weeks_forecast_string">后市预测</string>
+
+    <string name="on_switch_text">上</string>
+
+    <string name="off_switch_text">关闭</string>
+
+    <string name="hourly_extend_preference_summary_off">标准小时</string>
+
+    <string name="hourly_extend_preference_summary_on">每小时扩展</string>
+
+    <string name="refresh_image_description">一个小刷新按钮听取并刷新数据和显示</string>
+
+    <string name="icon_image_description">图标来表示，天气，多云有雨，阳光明媚，等</string>
+
+    <string name="degrees_image_description">度符号，一个小圈标</string>
+
+    <string name="NO_Daily_forecast_value">没有数据显示</string>
+
+    <string name="daily_icon_content_description">天气图标的一天</string>
+
+    <string name="temp_background_content_description">圆形的背景的温度</string>
+
+    <string name="hourly_extend_preference_title">扩展每小时预测？</string>
+
+    <string name="no_geocode_present">无地理编码本</string>
+
+    <string name="no_location_found_address">找不到位置。</string>
+
+    <string name="daily_forecast_toast_message">在％1$s高必％2$s，这将是％3$s的</string>
+
+    <string name="hour_list_toast_message">在％1$s的将是％2$s和％3$s</string>
+
+    <string name="first_widget_humidity_label">湿度：</string>
+
+    <string name="first_widget_precipitation_probability_label">雨/雪：</string>
+
+    <string name="first_widget_nearestStormDistance_label">风暴DIST。</string>
+
+    <string name="first_widget_pressure_label">压力：</string>
+
+    <string name="first_widget_dew_point_label">露：</string>
+
+    <string name="first_widget_wind_speed_label">风：</string>
+
+    <string name="first_widget_cloud_cover_label">云：</string>
+
+    <string name="first_widget_ozone_label">臭氧：</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">雨：</string>
+
+    <string name="first_widget_visibility_label">能见度：</string>
+
+    <string name="first_widget_apparentTemperature_label">感觉温度：</string>
+
+    <string name="forecast_fetch_error">没有预测发现。</string>
+
+    <string name="setting_icon_content_description">一个小机器齿轮的设置图标</string>
+
+    <string name="visibility_label">能见度</string>
+
+    <string name="dew_point_label">露点</string>
+
+    <string name="wind_speed_label">风</string>
+
+    <string name="ozone_label">臭氧</string>
+
+    <string name="storm_distance_label">暴风影音DIST。</string>
+
+    <string name="apparent_temp_label">表观TEMP</string>
+
+    <string name="pressure_label">压力</string>
+
+    <string name="apparent_max_temp_label">表观MAX。</string>
+
+    <string name="apparent_min_temp_label">表观最小。</string>
+
+    <string name="sunset_label">日落</string>
+
+    <string name="sunrise_label">日出</string>
+
+    <string name="cloud_cover_label">云量</string>
+
+    <string name="high_temp_time_label">高温时间</string>
+
+    <string name="low_temp_time_label">LOW TEMP TIME</string>
+
+    <string name="moon_phase_label">月相</string>
+
+    <string name="configure_widget_layout">配置窗口小部件</string>
+
+    <string name="match_app_theme_hint">匹配部件主题的应用程序</string>
+
+    <string name="transparent_background_text">透明背景</string>
+
+    <string name="text_color_label">文字颜色</string>
+
+    <string name="white_label">白色</string>
+
+    <string name="black_label">黑色</string>
+
+    <string name="proceed_button_label">继续</string>
+
+    <string name="black_text_hint">应用程序的部件将具有黑色文本。</string>
+
+    <string name="white_text_hint">应用程序的部件将具有白色文本。</string>
+
+    <string name="transparent_background_hint">布局应用程序窗口小部件透明背景</string>
+
+    <string name="match_app_theme_text">匹配应用主题</string>
+</resources>

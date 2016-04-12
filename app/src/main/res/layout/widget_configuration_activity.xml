@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="4dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:text="@string/configure_widget_layout"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/configure_title"/>
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/match_app_theme_text"
+        android:id="@+id/matchAppThemeButton"
+        android:hint="@string/match_app_theme_hint"
+        android:textSize="24sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_below="@+id/configure_title"/>
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transparent_background_text"
+        android:id="@+id/clearAppThemeButton"
+        android:hint="@string/transparent_background_hint"
+        android:textSize="24sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_below="@id/matchAppThemeButton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:text="@string/text_color_label"
+        android:layout_marginTop="10dp"
+        android:id="@+id/text_color_title"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/clearAppThemeButton"/>
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/white_label"
+        android:id="@+id/whiteTextButton"
+        android:hint="@string/white_text_hint"
+        android:textSize="24sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_below="@id/text_color_title"/>
+
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/black_label"
+        android:id="@+id/blackTextButton"
+        android:hint="@string/black_text_hint"
+        android:textSize="24sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_below="@id/whiteTextButton"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/proceedButton"
+        android:text="@string/proceed_button_label"
+        android:background="@color/button_background_color"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginEnd="50dp"/>
+
+</RelativeLayout>

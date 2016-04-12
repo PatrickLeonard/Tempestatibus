@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.codeoregonapp.patrickleonard.tempestatibus"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:name=".TempestatibusApplication">
+        <meta-data android:name="api-key"
+                   tools:replace="android:value"
+                   android:value="@string/api_key_string"/>
+        <service
+            android:name=".widget.WidgetForecastUpdateService"
+            android:exported="false"/>
+        <service
+            android:name=".widget.DailyGridViewRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service
+            android:name=".forecastRetrievalUtility.ForecastRetrievalService"
+            android:exported="false"/>
+        <service
+            android:name=".forecastRetrievalUtility.locationUtils.LocationFetchService"
+            android:exported="false"/>
+        <service
+            android:name=".forecastRetrievalUtility.googleAPIUtils.GoogleAPIConnectionService"
+            android:exported="false"/>
+        <service
+            android:name=".forecastRetrievalUtility.addressUtils.AddressFetchIntentService"
+            android:exported="false"/>
+        <service
+            android:name=".forecastRetrievalUtility.forecastUtils.ForecastFetchIntentService"
+            android:exported="false"/>
+        <service
+            android:name=".forecastRetrievalUtility.forecastUtils.JSONExtractionIntentService"
+            android:exported="false"/>
+        <service
+            android:name=".forecastRetrievalUtility.addressFromNameUtils.SearchedAddressFetchIntentService"
+            android:exported="false"/>
+        <service
+            android:name=".forecastRetrievalUtility.SearchedLocationForecastRetrievalService"
+            android:exported="false"/>
+        <receiver
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/widget_2x1_label"
+            android:name=".widget.TempestatibusSmallWidgetProvider" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/tempestatibus_2x1_widget_info"/>
+        </receiver>
+        <receiver
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/widget_3x2_label"
+            android:name=".widget.TempestatibusMediumWidgetProvider" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/tempestatibus_3x2_widget_info"/>
+        </receiver>
+        <receiver
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/widget_4x3_label"
+            android:name=".widget.TempestatibusLargeWidgetProvider" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/tempestatibus_4x3_widget_info"/>
+        </receiver>
+        <activity android:name=".widget.TempestatibusWidgetConfigure"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- ATTENTION: This intent was auto-generated. Follow instructions at
+              https://g.co/AppIndexing/AndroidStudio to publish your Android app deep links. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="github.com" />
+                <data android:pathPrefix="/PatrickLeonard/CodeOregonApp" />
+                <data android:scheme="http" />
+                <data android:scheme="https"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.SearchedLocationActivity"
+            android:label="@string/title_activity_searched_location"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeoregonapp.patrickleonard.tempestatibus.ui.SearchForLocationActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.SearchForLocationActivity"
+            android:label="@string/title_activity_search_for_location"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.DailyForecastActivity"
+            android:label="@string/title_activity_daily_forecast"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.HourlyForecastActivity"
+            android:label="@string/title_activity_hourly_forecast"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity"/>
+        </activity>
+        <activity android:name=".ui.SettingsActivity"
+                  android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity"/>
+        </activity>
+    </application>
+
+</manifest>

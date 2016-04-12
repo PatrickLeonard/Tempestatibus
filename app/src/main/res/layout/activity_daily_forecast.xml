@@ -1,0 +1,731 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ui.MainActivity"
+                android:padding="10dp"
+                android:id="@+id/main_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="4">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.1">
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/empty_two_digit_number"
+                    android:id="@+id/locationLabel"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/sub_text_color"
+                    android:textSize="14sp"/>
+
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/this_weeks_forecast_string"
+                    android:id="@+id/seven_day_forecast_header"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:textSize="30sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/seven_day_forecast_header"
+                    android:id="@+id/timeLabel"
+                    android:textSize="16sp"
+                    android:text="@string/empty_two_digit_number"/>
+
+            </RelativeLayout>
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:id="@+id/dailyTemperatureLayout">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/maxTemperatureLayout">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/empty_two_digit_number"
+                        android:id="@+id/maxTemperatureLabel"
+                        android:background="@android:color/transparent"
+                        android:layout_centerInParent="true"
+                        android:textSize="60sp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/maxTemperatureDegreeImageView"
+                        android:src="@drawable/winter_degree_large"
+                        android:layout_toRightOf="@+id/maxTemperatureLabel"
+                        android:layout_toEndOf="@+id/maxTemperatureLabel"
+                        android:background="@android:color/transparent"
+                        android:paddingTop="4dp"
+                        android:contentDescription="@string/degrees_image_description"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/maxTemperatureLayout"
+                    android:id="@+id/slashLayout"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textSize="60sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/slashLayout"
+                    android:id="@+id/minTemperatureLayout">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/empty_two_digit_number"
+                        android:id="@+id/minTemperatureLabel"
+                        android:background="@android:color/transparent"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/sub_text_color"
+                        android:textSize="60sp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/minTemperatureDegreeImageView"
+                        android:src="@drawable/winter_degree_large"
+                        android:layout_toRightOf="@+id/minTemperatureLabel"
+                        android:layout_toEndOf="@+id/minTemperatureLabel"
+                        android:background="@android:color/transparent"
+                        android:paddingTop="4dp"
+                        android:contentDescription="@string/degrees_image_description"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/minTemperatureLayout"
+                    android:layout_toEndOf="@id/minTemperatureLayout"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginStart="6dp"
+                    android:paddingTop="6dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/empty_two_digit_number"
+                        android:id="@+id/temperatureValueUnits"
+                        android:background="@android:color/transparent"
+                        android:textSize="50sp"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/iconImageView"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/icon_image_description"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_two_digit_number"
+                android:id="@+id/summaryValue"
+                android:layout_toRightOf="@id/iconImageView"
+                android:layout_toEndOf="@id/iconImageView"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:textSize="18sp"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".63">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/humidity_all_caps"
+                            android:textSize="12sp"
+                            android:id="@+id/humidityLabel"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/humidityValue"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@id/humidityLabel"
+                            android:background="@android:color/transparent"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rain_slash_snow_all_caps"
+                            android:textSize="12sp"
+                            android:id="@+id/precipLabel"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/precipValue"
+                            android:background="@android:color/transparent"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@id/precipLabel"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/wind_speed_label"
+                            android:textSize="12sp"
+                            android:id="@+id/windLabel"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/windValue"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@id/windLabel"
+                            android:background="@android:color/transparent"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/visibility_label"
+                            android:textSize="12sp"
+                            android:id="@+id/visibilityLabel"
+                            android:textColor="@color/sub_text_color"
+                            android:background="@android:color/transparent"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/visibilityValue"
+                            android:background="@android:color/transparent"
+                            android:layout_below="@id/visibilityLabel"
+                            android:layout_centerHorizontal="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dew_point_label"
+                            android:textSize="12sp"
+                            android:id="@+id/dewLabel"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"/>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dewLabel"
+                            android:layout_centerHorizontal="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_two_digit_number"
+                                android:id="@+id/dewValue"
+                                android:background="@android:color/transparent"/>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/dewValueSmallDegree"
+                                android:layout_toRightOf="@id/dewValue"
+                                android:layout_toEndOf="@id/dewValueSmallDegree"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_two_digit_number"
+                                android:id="@+id/dewValueUnits"
+                                android:layout_toRightOf="@id/dewValueSmallDegree"
+                                android:layout_toEndOf="@id/dewValueSmallDegree"
+                                android:background="@android:color/transparent"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_alignBaseline="@id/dewValue"/>
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ozone_label"
+                            android:textSize="12sp"
+                            android:id="@+id/ozoneLabel"
+                            android:textColor="@color/sub_text_color"
+                            android:background="@android:color/transparent"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/ozoneValue"
+                            android:background="@android:color/transparent"
+                            android:layout_below="@id/ozoneLabel"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apparent_max_temp_label"
+                            android:textSize="12sp"
+                            android:id="@+id/maxApparentTemperatureLabel"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"/>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/maxApparentTemperatureLabel"
+                            android:layout_centerHorizontal="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_two_digit_number"
+                                android:id="@+id/maxApparentTemperatureValue"/>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/maxApparentTemperatureValueSmallDegree"
+                                android:layout_toRightOf="@id/maxApparentTemperatureValue"
+                                android:layout_toEndOf="@id/maxApparentTemperatureValue"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_two_digit_number"
+                                android:id="@+id/maxApparentTemperatureValueUnits"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_alignBaseline="@id/maxApparentTemperatureValue"
+                                android:layout_toRightOf="@id/maxApparentTemperatureValueSmallDegree"
+                                android:layout_toEndOf="@id/maxApparentTemperatureValueSmallDegree"
+                                android:background="@android:color/transparent"/>
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apparent_min_temp_label"
+                            android:textSize="12sp"
+                            android:id="@+id/minApparentTemperatureLabel"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"/>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/minApparentTemperatureLabel"
+                            android:layout_centerHorizontal="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_two_digit_number"
+                                android:id="@+id/minApparentTemperatureValue"/>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/minApparentTemperatureValueSmallDegree"
+                                android:layout_toRightOf="@id/minApparentTemperatureValue"
+                                android:layout_toEndOf="@id/minApparentTemperatureValue"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/empty_two_digit_number"
+                                android:id="@+id/minApparentTemperatureValueUnits"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_alignBaseline="@id/minApparentTemperatureValue"
+                                android:layout_toRightOf="@id/minApparentTemperatureValueSmallDegree"
+                                android:layout_toEndOf="@id/minApparentTemperatureValueSmallDegree"
+                                android:background="@android:color/transparent"/>
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pressure_label"
+                            android:textSize="12sp"
+                            android:id="@+id/pressureLabel"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/pressureValue"
+                            android:background="@android:color/transparent"
+                            android:layout_below="@id/pressureLabel"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sunset_label"
+                            android:textSize="12sp"
+                            android:id="@+id/sunsetLabel"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/sub_text_color"
+                            android:background="@android:color/transparent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/sunsetValue"
+                            android:layout_below="@id/sunsetLabel"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sunrise_label"
+                            android:textSize="12sp"
+                            android:id="@+id/sunriseLabel"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/sunriseValue"
+                            android:layout_below="@id/sunriseLabel"
+                            android:layout_centerHorizontal="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cloud_cover_label"
+                            android:textSize="12sp"
+                            android:id="@+id/cloudLabel"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/cloudValue"
+                            android:background="@android:color/transparent"
+                            android:layout_below="@id/cloudLabel"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/high_temp_time_label"
+                            android:id="@+id/maxTimeLabel"
+                            android:textSize="12sp"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/sub_text_color"
+                            android:background="@android:color/transparent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/maxTimeValue"
+                            android:layout_below="@id/maxTimeLabel"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/low_temp_time_label"
+                            android:id="@+id/minTimeLabel"
+                            android:textSize="12sp"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/sub_text_color"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/minTimeValue"
+                            android:layout_below="@id/minTimeLabel"
+                            android:layout_centerHorizontal="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/moon_phase_label"
+                            android:textSize="12sp"
+                            android:id="@+id/moonLabel"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/sub_text_color"
+                            android:background="@android:color/transparent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/empty_two_digit_number"
+                            android:id="@+id/moonValue"
+                            android:textSize="12sp"
+                            android:layout_below="@id/moonLabel"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by_forecast"
+        android:id="@+id/poweredByForecast"
+        android:textSize="10sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/sub_text_color"/>
+</RelativeLayout>
+
+

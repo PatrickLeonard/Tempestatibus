@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title">Ωχ! Συγνώμη!</string>
+
+    <string name="error_message">Υπήρξε ένα σφάλμα. Παρακαλώ προσπάθησε ξανά.</string>
+
+    <string name="error_ok_button_text">Εντάξει</string>
+
+    <string name="network_unavailable_text">Δίκτυο δεν είναι διαθέσιμο</string>
+
+    <string name="location_permission_request_rationale">Οι πληροφορίες θέσης είναι απαραίτητη για την ανάκτηση δεδομένων καιρού.</string>
+
+    <string name="hourly_all_caps">ΩΡΙΑΊΟΣ</string>
+
+    <string name="seven_days_all_caps">7 ΗΜΕΡΕΣ</string>
+
+    <string name="rain_slash_snow_all_caps">Βροχή / Χιονόπτωση</string>
+
+    <string name="humidity_all_caps">ΥΓΡΑΣΙΑ</string>
+
+    <string name="geolocation_service_not_available">Υπηρεσία geolocation δεν είναι διαθέσιμη</string>
+
+    <string name="today_string_day_adapter">Σήμερα</string>
+
+    <string name="app_theme_title">Επιλέξτε ένα θέμα App</string>
+
+    <string name="app_theme_selection">Επιλέξτε το θέμα app</string>
+
+    <string name="units_preference_title">Μονάδες Μέτρησης</string>
+
+    <string name="si_units_preference_summary">μονάδες SI</string>
+
+    <string name="us_units_preference_summary">μονάδες των ΗΠΑ</string>
+
+    <string name="scorching_summer">καύσωνας του καλοκαιριού</string>
+
+    <string name="wispy_winter">ψιλές Χειμώνας</string>
+
+    <string name="serene_spring">Serene άνοιξη</string>
+
+    <string name="auspicious_autumn">ευοίωνο Φθινόπωρο</string>
+
+    <string name="time_label_format_string">%s θα είναι</string>
+
+    <string name="this_weeks_forecast_string">μέλλον Πρόγνωση</string>
+
+    <string name="on_switch_text">ΕΠΊ</string>
+
+    <string name="off_switch_text">ΜΑΚΡΙΆ ΑΠΌ</string>
+
+    <string name="hourly_extend_preference_summary_off">πρότυπο Ωριαία</string>
+
+    <string name="hourly_extend_preference_summary_on">ωριαία Επέκταση</string>
+
+    <string name="refresh_image_description">Ένα μικρό κουμπί ανανέωσης για να ακούσετε και να ανανεώσετε τα δεδομένα και την οθόνη</string>
+
+    <string name="icon_image_description">Εικονίδιο για να αντιπροσωπεύουν τον καιρό, Συννεφιά με βροχή, ηλιόλουστη, κ.λπ.</string>
+
+    <string name="degrees_image_description">Μοίρες Σύμβολο, ένα μικρό κύκλο στη θέση του εκθέτη</string>
+
+    <string name="NO_Daily_forecast_value">Δεν υπάρχουν στοιχεία προς εμφάνιση</string>
+
+    <string name="daily_icon_content_description">Καιρός Icon για την ημέρα</string>
+
+    <string name="temp_background_content_description">Εγκύκλιος υπόβαθρο για τη θερμοκρασία</string>
+
+    <string name="hourly_extend_preference_title">Επεκτείνετε ωριαία πρόβλεψη;</string>
+
+    <string name="no_geocode_present">Όχι παρούσα Geocoder</string>
+
+    <string name="no_location_found_address">Δεν βρέθηκε τοποθεσία.</string>
+
+    <string name="daily_forecast_toast_message">Από %1$s ο υψηλός θα είναι %2$s και θα είναι %3$s</string>
+
+    <string name="hour_list_toast_message">%1$s θα είναι %2$s και %3$s</string>
+
+    <string name="first_widget_humidity_label">υγρασία:</string>
+
+    <string name="first_widget_precipitation_probability_label">Βροχή / Χιόνι:</string>
+
+    <string name="first_widget_nearestStormDistance_label">Θύελλα Απόστ.</string>
+
+    <string name="first_widget_pressure_label">Πίεση:</string>
+
+    <string name="first_widget_dew_point_label">Δροσιά:</string>
+
+    <string name="first_widget_wind_speed_label">Άνεμος:</string>
+
+    <string name="first_widget_cloud_cover_label">Σύννεφο:</string>
+
+    <string name="first_widget_ozone_label">Όζο:</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">αλλαγής .:</string>
+
+    <string name="first_widget_visibility_label">Ορατότητα:</string>
+
+    <string name="first_widget_apparentTemperature_label">Νιώστε Θερμοκρασία:</string>
+
+    <string name="forecast_fetch_error">Δεν βρέθηκαν πρόβλεψη.</string>
+
+    <string name="setting_icon_content_description">Ένα μικρό οδοντωτό μηχάνημα για τις ρυθμίσεις του εικονιδίου</string>
+
+    <string name="visibility_label">ΟΡΑΤΌΤΗΤΑ</string>
+
+    <string name="dew_point_label">Σημείο Δρόσου</string>
+
+    <string name="wind_speed_label">ΆΝΕΜΟΣ</string>
+
+    <string name="ozone_label">ΌΖΟ</string>
+
+    <string name="storm_distance_label">STORM DIST.</string>
+
+    <string name="apparent_temp_label">προκύπτει TEMP</string>
+
+    <string name="pressure_label">ΠΊΕΣΗ</string>
+
+    <string name="apparent_max_temp_label">Προκύπτει MAX.</string>
+
+    <string name="apparent_min_temp_label">Προκύπτει MIN.</string>
+
+    <string name="sunset_label">ΗΛΙΟΒΑΣΊΛΕΜΑ</string>
+
+    <string name="sunrise_label">ΑΝΑΤΟΛΉ ΗΛΊΟΥ</string>
+
+    <string name="cloud_cover_label">ΝΕΦΟΚΆΛΥΨΗ</string>
+
+    <string name="high_temp_time_label">Υψηλής θερμοκρασίας TIME</string>
+
+    <string name="low_temp_time_label">Χαμηλής θερμοκρασίας ΧΡΟΝΟΣ</string>
+
+    <string name="moon_phase_label">Φάση Σελήνης</string>
+
+    <string name="configure_widget_layout">Διαμόρφωση Widget</string>
+
+    <string name="match_app_theme_hint">Ταιριάζει με το θέμα widget με τις εφαρμογές</string>
+
+    <string name="transparent_background_text">διαφανές φόντο</string>
+
+    <string name="text_color_label">Χρώμα κειμένου</string>
+
+    <string name="white_label">άσπρο</string>
+
+    <string name="black_label">Μαύρος</string>
+
+    <string name="proceed_button_label">Προχωρώ</string>
+
+    <string name="black_text_hint">Widget app θα έχουν μαύρο κείμενο.</string>
+
+    <string name="white_text_hint">Widget app θα έχουν λευκό κείμενο.</string>
+
+    <string name="transparent_background_hint">Διάταξη widget app με διαφανές φόντο</string>
+
+    <string name="match_app_theme_text">Αγώνας App Θέμα</string>
+</resources>

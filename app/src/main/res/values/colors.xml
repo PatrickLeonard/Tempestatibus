@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sub_text_color">#80ffffff</color>
+    <color name="thumb_disabled_color">#50ffffff</color>
+    <color name="button_background_color">#70ffffff</color>
+    <color name="spring_text_color">#ffffff00</color>
+    <color name="autumn_text_color">#ffff9900</color>
+    <color name="winter_text_color">#ff6b78b4</color>
+    <color name="summer_text_color">#ffffffff</color>
+    <color name="winter_bg_gradient_start">#33bfdf</color>
+    <color name="winter_bg_gradient_end">#33dfff</color>
+    <color name="summer_bg_gradient_start">#883832</color>
+    <color name="summer_bg_gradient_end">#cc3832</color>
+    <color name="spring_bg_gradient_start">#335533</color>
+    <color name="spring_bg_gradient_end">#337733</color>
+    <color name="autumn_bg_gradient_start">#4e342e</color>
+    <color name="autumn_bg_gradient_end">#660000</color>
+    <color name="winter_bg_widget_gradient_start">#33bfdf</color>
+    <color name="winter_bg_widget_gradient_end">#33dfff</color>
+    <color name="summer_bg_widget_gradient_start">#883832</color>
+    <color name="summer_bg_widget_gradient_end">#cc3832</color>
+    <color name="spring_bg_widget_gradient_start">#335533</color>
+    <color name="spring_bg_widget_gradient_end">#337733</color>
+    <color name="autumn_bg_widget_gradient_start">#4e342e</color>
+    <color name="autumn_bg_widget_gradient_end">#660000</color>
+</resources>

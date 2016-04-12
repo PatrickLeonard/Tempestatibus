@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" >
+        <shape android:shape="oval">
+            <solid android:color="@color/spring_text_color" />
+            <size android:width="@dimen/switch_dimension" android:height="@dimen/switch_dimension" />
+        </shape>
+    </item>
+    <item android:state_pressed="true" >
+        <shape android:shape="oval">
+            <solid android:color="@color/spring_text_color" />
+            <size android:width="@dimen/switch_dimension" android:height="@dimen/switch_dimension" />
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape android:shape="oval">
+            <solid android:color="@color/thumb_disabled_color" />
+            <size android:width="@dimen/switch_dimension" android:height="@dimen/switch_dimension" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/thumb_disabled_color" />
+            <size android:width="@dimen/switch_dimension" android:height="@dimen/switch_dimension" />
+        </shape>
+    </item>
+</selector>

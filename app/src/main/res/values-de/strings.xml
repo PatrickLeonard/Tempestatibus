@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title">Hoppla! Es tut uns leid!</string>
+
+    <string name="error_message">Es gab einen Fehler. Bitte versuche es erneut.</string>
+
+    <string name="error_ok_button_text">OK</string>
+
+    <string name="network_unavailable_text">Netzwerk nicht verfügbar</string>
+
+    <string name="location_permission_request_rationale">Standort-Informationen ist erforderlich, um Wetterdaten abrufen.</string>
+
+    <string name="hourly_all_caps">STÜNDLICH</string>
+
+    <string name="seven_days_all_caps">7 TAGE</string>
+
+    <string name="rain_slash_snow_all_caps">REGENSCHNEE</string>
+
+    <string name="humidity_all_caps">LUFTFEUCHTIGKEIT</string>
+
+    <string name="geolocation_service_not_available">Geolocation-Dienst nicht verfügbar</string>
+
+    <string name="today_string_day_adapter">Heute</string>
+
+    <string name="app_theme_title">Wählen Sie eine App Theme</string>
+
+    <string name="app_theme_selection">Wählen Sie das Thema App</string>
+
+    <string name="units_preference_title">Maßeinheiten</string>
+
+    <string name="si_units_preference_summary">SI-Einheiten</string>
+
+    <string name="us_units_preference_summary">US-Einheiten</string>
+
+    <string name="scorching_summer">Sengenden Sommer</string>
+
+    <string name="wispy_winter">Wispy Winter</string>
+
+    <string name="serene_spring">Serene Frühling</string>
+
+    <string name="auspicious_autumn">Auspicious Herbst</string>
+
+    <string name="time_label_format_string">Bei %s wird es sein</string>
+
+    <string name="this_weeks_forecast_string">Zukunftsvorhersage</string>
+
+    <string name="on_switch_text">AM</string>
+
+    <string name="off_switch_text">AUS</string>
+
+    <string name="hourly_extend_preference_summary_off">Standard Stündlich</string>
+
+    <string name="hourly_extend_preference_summary_on">stündliche Erweiterte</string>
+
+    <string name="refresh_image_description">Eine kleine Schaltfläche Aktualisieren, um zu hören und zu aktualisieren die Daten und Display</string>
+
+    <string name="icon_image_description">Icon, um das Wetter, bewölkt mit regen, sonnig, usw. darstellen</string>
+
+    <string name="degrees_image_description">Grad Symbol, einen kleinen Kreis hochgestellt</string>
+
+    <string name="NO_Daily_forecast_value">Es liegen keine Daten zum Anzeigen</string>
+
+    <string name="daily_icon_content_description">Wetter Icon für den Tag</string>
+
+    <string name="temp_background_content_description">Kreishintergrund für die Temperatur</string>
+
+    <string name="hourly_extend_preference_title">Verlängern stündliche Vorhersage?</string>
+
+    <string name="no_geocode_present">Kein Geocoder vorhanden</string>
+
+    <string name="no_location_found_address">Kein Standort gefunden.</string>
+
+    <string name="daily_forecast_toast_message">Auf %1$s der Hoch wird %2$s sein und es wird %3$s</string>
+
+    <string name="hour_list_toast_message">Bei %1$s wird es %2$s und %3$s</string>
+
+    <string name="first_widget_humidity_label">Luftfeuchtigkeit:</string>
+
+    <string name="first_widget_precipitation_probability_label">Regenschnee:</string>
+
+    <string name="first_widget_nearestStormDistance_label">Sturm Dist.</string>
+
+    <string name="first_widget_pressure_label">Druck:</string>
+
+    <string name="first_widget_dew_point_label">Tau:</string>
+
+    <string name="first_widget_wind_speed_label">Wind:</string>
+
+    <string name="first_widget_cloud_cover_label">Wolke:</string>
+
+    <string name="first_widget_ozone_label">Ozon:</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">Niederschl .:</string>
+
+    <string name="first_widget_visibility_label">Sichtweite:</string>
+
+    <string name="first_widget_apparentTemperature_label">Fühlen Sie Temp:</string>
+
+    <string name="forecast_fetch_error">Keine Prognose gefunden.</string>
+
+    <string name="setting_icon_content_description">Eine kleine Maschine für die Zahnrad Einstellungen icon</string>
+
+    <string name="visibility_label">SICHTWEITE</string>
+
+    <string name="dew_point_label">TAUPUNKT</string>
+
+    <string name="wind_speed_label">WIND</string>
+
+    <string name="ozone_label">OZON</string>
+
+    <string name="storm_distance_label">STORM DIST.</string>
+
+    <string name="apparent_temp_label">APPARENT TEMP</string>
+
+    <string name="pressure_label">DRUCK</string>
+
+    <string name="apparent_max_temp_label">APPARENT MAX.</string>
+
+    <string name="apparent_min_temp_label">APPARENT MIN.</string>
+
+    <string name="sunset_label">SONNENUNTERGANG</string>
+
+    <string name="sunrise_label">SONNENAUFGANG</string>
+
+    <string name="cloud_cover_label">WOLKENDECKE</string>
+
+    <string name="high_temp_time_label">HIGH TEMP TIME</string>
+
+    <string name="low_temp_time_label">LOW TEMP TIME</string>
+
+    <string name="moon_phase_label">MONDPHASE</string>
+
+    <string name="configure_widget_layout">konfigurieren Widget</string>
+
+    <string name="match_app_theme_hint">Passen Sie die Widget-Thema mit den Apps</string>
+
+    <string name="transparent_background_text">Transparenter Hintergrund</string>
+
+    <string name="text_color_label">Textfarbe</string>
+
+    <string name="white_label">Weiß</string>
+
+    <string name="black_label">Schwarz</string>
+
+    <string name="proceed_button_label">vorgehen</string>
+
+    <string name="black_text_hint">App-Widget wird schwarzer Text zu haben.</string>
+
+    <string name="white_text_hint">App-Widget wird weißer Text haben.</string>
+
+    <string name="transparent_background_hint">Layout-app-Widget mit transparentem Hintergrund</string>
+
+    <string name="match_app_theme_text">Spiel App Theme</string>
+</resources>

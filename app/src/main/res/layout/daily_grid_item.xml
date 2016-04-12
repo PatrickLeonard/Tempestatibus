@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              tools:background="@drawable/bg_gradient_summer"
+              android:orientation="vertical"
+              android:layout_width="44dp"
+              android:layout_height="160dp"
+              android:id="@+id/grid_item_layout"
+              android:padding="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/dayAbbreviationLabel"
+                android:textSize="12sp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/empty_two_digit_number"
+                android:gravity="center"/>
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dailyGridIconImageView"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/icon_image_description"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".80"
+            android:gravity="center">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:id="@+id/dailyGridMaxTempLinearLayout"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dailyGridMaxTemperatureLabel"
+                    android:textSize="12sp"
+                    android:text="@string/empty_two_digit_number"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dailyGridMMaxTempSmallDegreeImageView"
+                    android:contentDescription="@string/degrees_image_description"
+                    android:src="@drawable/summer_degree_small"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dailyGridMaxTempLinearLayout"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dailyGridMinTemperatureLabel"
+                    android:textColor="@color/sub_text_color"
+                    android:textSize="12sp"
+                    android:text="@string/empty_two_digit_number"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dailyGridMMinTempSmallDegreeImageView"
+                    android:contentDescription="@string/degrees_image_description"
+                    android:src="@drawable/summer_degree_small"
+                    android:background="@android:color/transparent"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateRelativeLayout"
+        android:background="@android:color/transparent"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_two_digit_number"
+            android:id="@+id/dateLabel"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:id="@+id/hourlyRelativeLayout"
+        android:background="@android:color/transparent"
+        android:layout_below="@id/dateRelativeLayout"
+        >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timeLabel"
+                android:text="@string/empty_two_digit_number"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hourlyIconImageView"
+                android:background="@android:color/transparent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/timeLabel"
+                android:layout_toEndOf="@id/timeLabel"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/icon_image_description"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/summaryLabel"
+                android:text="@string/empty_two_digit_number"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/hourlyIconImageView"
+                android:layout_toEndOf="@id/hourlyIconImageView"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hourlyTempUnits"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="12sp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/smallDegreeImageView"
+            android:contentDescription="@string/degrees_image_description"
+            android:layout_toLeftOf="@id/hourlyTempUnits"
+            android:layout_toStartOf="@id/hourlyTempUnits"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:background="@android:color/transparent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hourlyTemperatureLabel"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/smallDegreeImageView"
+            android:layout_toStartOf="@id/smallDegreeImageView"
+            android:text="@string/empty_two_digit_number"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

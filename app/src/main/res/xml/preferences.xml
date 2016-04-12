@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="@string/theme_preference_key"
+        android:title="@string/theme"
+        android:summary="@string/app_theme_title"
+        android:dialogTitle="@string/app_theme_selection"
+        android:entries="@array/appThemeEntries"
+        android:entryValues="@array/appThemeValueEntries"
+        android:defaultValue="@string/summer_value">
+    </ListPreference>
+
+    <com.codeoregonapp.patrickleonard.tempestatibus.ui.CustomSwitchPreference
+       android:key="@string/units_preference_key"
+       android:title="@string/units_preference_title"
+       android:textOn="@string/si_units_preference"
+       android:summaryOn="@string/si_units_preference_summary"
+       android:textOff="@string/us_units_preference"
+       android:summaryOff="@string/us_units_preference_summary">
+    </com.codeoregonapp.patrickleonard.tempestatibus.ui.CustomSwitchPreference>
+
+    <com.codeoregonapp.patrickleonard.tempestatibus.ui.CustomSwitchPreference
+        android:key="@string/hourly_extend_preference_key"
+        android:title="@string/hourly_extend_preference_title"
+        android:textOn="@string/on_switch_text"
+        android:summaryOn="@string/hourly_extend_preference_summary_on"
+        android:textOff="@string/off_switch_text"
+        android:summaryOff="@string/hourly_extend_preference_summary_off"
+        android:defaultValue="false">
+    </com.codeoregonapp.patrickleonard.tempestatibus.ui.CustomSwitchPreference>
+
+</PreferenceScreen>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title">Oeps! Sorry!</string>
+
+    <string name="error_message">Er is een fout opgetreden. Probeer opnieuw.</string>
+
+    <string name="error_ok_button_text">OK</string>
+
+    <string name="network_unavailable_text">Netwerk niet beschikbaar</string>
+
+    <string name="location_permission_request_rationale">Locatie-informatie is nodig om weer op te halen.</string>
+
+    <string name="hourly_all_caps">HOURLY</string>
+
+    <string name="seven_days_all_caps">7 DAGEN</string>
+
+    <string name="rain_slash_snow_all_caps">REGEN SNEEUW</string>
+
+    <string name="humidity_all_caps">VOCHTIGHEID</string>
+
+    <string name="geolocation_service_not_available">Geolocatie dienst niet beschikbaar</string>
+
+    <string name="today_string_day_adapter">Vandaag</string>
+
+    <string name="app_theme_title">Kies een App Theme</string>
+
+    <string name="app_theme_selection">Selecteer de app thema</string>
+
+    <string name="units_preference_title">Maateenheden</string>
+
+    <string name="si_units_preference_summary">SI-eenheden</string>
+
+    <string name="us_units_preference_summary">Amerikaanse eenheden</string>
+
+    <string name="scorching_summer">Verzengende Zomer</string>
+
+    <string name="wispy_winter">Piekerig Winter</string>
+
+    <string name="serene_spring">Serene Spring</string>
+
+    <string name="auspicious_autumn">Gunstige Herfst</string>
+
+    <string name="time_label_format_string">Op %s zal het</string>
+
+    <string name="this_weeks_forecast_string">Future Forecast</string>
+
+    <string name="on_switch_text">OP</string>
+
+    <string name="off_switch_text">OFF</string>
+
+    <string name="hourly_extend_preference_summary_off">Standard per uur</string>
+
+    <string name="hourly_extend_preference_summary_on">Per uur Extended</string>
+
+    <string name="refresh_image_description">Een beetje refresh knop om te luisteren en de gegevens en de weergave vernieuwen</string>
+
+    <string name="icon_image_description">Icoon om het weer, bewolkt met regen, zonnig, etc. vertegenwoordigen</string>
+
+    <string name="degrees_image_description">Graden Symbool, een kleine cirkel in superscript</string>
+
+    <string name="NO_Daily_forecast_value">Er zijn geen gegevens om te tonen</string>
+
+    <string name="daily_icon_content_description">Weer pictogram voor de dag</string>
+
+    <string name="temp_background_content_description">Cirkelvormige achtergrond voor de temperatuur</string>
+
+    <string name="hourly_extend_preference_title">Verleng per uur?</string>
+
+    <string name="no_geocode_present">Geen Geocoder aanwezig</string>
+
+    <string name="no_location_found_address">Geen locatie gevonden.</string>
+
+    <string name="daily_forecast_toast_message">Op %1$s zal hoog zijn %2$s en het zal %3$s</string>
+
+    <string name="hour_list_toast_message">Op %1$s het zal zijn %2$s en %3$s</string>
+
+    <string name="first_widget_humidity_label">Vochtigheid:</string>
+
+    <string name="first_widget_precipitation_probability_label">Regen sneeuw:</string>
+
+    <string name="first_widget_nearestStormDistance_label">Storm Dist.</string>
+
+    <string name="first_widget_pressure_label">Druk:</string>
+
+    <string name="first_widget_dew_point_label">Dauw:</string>
+
+    <string name="first_widget_wind_speed_label">Wind:</string>
+
+    <string name="first_widget_cloud_cover_label">Wolk:</string>
+
+    <string name="first_widget_ozone_label">Ozon:</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">neerslag .:</string>
+
+    <string name="first_widget_visibility_label">Zichtbaarheid:</string>
+
+    <string name="first_widget_apparentTemperature_label">Voel Temp:</string>
+
+    <string name="forecast_fetch_error">Geen prognose gevonden.</string>
+
+    <string name="setting_icon_content_description">Een kleine machine radertje voor pictogram instellingen</string>
+
+    <string name="visibility_label">ZICHTBAARHEID</string>
+
+    <string name="dew_point_label">DAUWPUNT</string>
+
+    <string name="wind_speed_label">WIND</string>
+
+    <string name="ozone_label">OZON</string>
+
+    <string name="storm_distance_label">STORM DIST.</string>
+
+    <string name="apparent_temp_label">Temp</string>
+
+    <string name="pressure_label">DRUK</string>
+
+    <string name="apparent_max_temp_label">BLIJKT MAX.</string>
+
+    <string name="apparent_min_temp_label">BLIJKT MIN.</string>
+
+    <string name="sunset_label">ZONSONDERGANG</string>
+
+    <string name="sunrise_label">ZONSOPGANG</string>
+
+    <string name="cloud_cover_label">BEWOLKING</string>
+
+    <string name="high_temp_time_label">HIGH TEMP TIJD</string>
+
+    <string name="low_temp_time_label">LAGE TEMP TIJD</string>
+
+    <string name="moon_phase_label">MAANFASE</string>
+
+    <string name="configure_widget_layout">configure Widget</string>
+
+    <string name="match_app_theme_hint">Overeenkomen met de widget thema met de apps</string>
+
+    <string name="transparent_background_text">transparante achtergrond</string>
+
+    <string name="text_color_label">tekst Kleur</string>
+
+    <string name="white_label">Wit</string>
+
+    <string name="black_label">Zwart</string>
+
+    <string name="proceed_button_label">voortgaan</string>
+
+    <string name="black_text_hint">App widget zwarte tekst hebben.</string>
+
+    <string name="white_text_hint">App widget zal witte tekst te hebben.</string>
+
+    <string name="transparent_background_hint">Layout app widget met transparante achtergrond</string>
+
+    <string name="match_app_theme_text">Match App Theme</string>
+</resources>

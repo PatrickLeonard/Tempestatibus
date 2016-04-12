@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:minHeight="40dp"
+                    android:minWidth="110dp"
+                    android:minResizeHeight="40dp"
+                    android:minResizeWidth="110dp"
+                    android:previewImage="@layout/summer_2x1_widget_layout"
+                    android:initialLayout="@layout/summer_2x1_widget_layout"
+                    android:initialKeyguardLayout="@layout/summer_2x1_widget_layout"
+                    android:configure="com.codeoregonapp.patrickleonard.tempestatibus.widget.TempestatibusWidgetConfigure"
+                    android:resizeMode="horizontal|vertical"
+                    android:widgetCategory="keyguard|home_screen"
+                    android:updatePeriodMillis="3600000" >
+</appwidget-provider>

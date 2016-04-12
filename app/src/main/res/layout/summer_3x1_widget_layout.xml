@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:clickable="true"
+             android:padding="2dp"
+             android:layout_margin="10dp"
+             android:background="@drawable/bg_widget_gradient_summer">
+
+
+    <LinearLayout
+        android:id="@+id/first_widget_outer_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iconImageView"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/icon_image_description"
+                />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_two_digit_number"
+                android:textColor="@color/summer_text_color"
+                android:id="@+id/firstWidgetTemperatureValue"
+                android:textSize="24sp"
+                android:layout_marginRight="3dp"
+                android:layout_marginEnd="3dp"
+                android:background="@android:color/transparent"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/summer_degree_small"
+                android:id="@+id/firstWidgetTemperatureDegreeSymbol"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/degrees_image_description"
+                android:layout_marginTop="1dp"
+                android:layout_toRightOf="@id/firstWidgetTemperatureValue"
+                android:layout_toEndOf="@id/firstWidgetTemperatureValue"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/us_units_fahrenheit"
+                android:id="@+id/firstWidgetTemperatureUnits"
+                android:textSize="20sp"
+                android:textColor="@color/summer_text_color"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@id/firstWidgetTemperatureDegreeSymbol"
+                android:layout_toEndOf="@id/firstWidgetTemperatureDegreeSymbol"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/empty_two_digit_number"
+                android:id="@+id/firstWidgetSummaryValue"
+                android:background="@android:color/transparent"
+                android:textSize="12sp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:textColor="@color/summer_text_color"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

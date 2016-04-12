@@ -1,0 +1,9 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">32dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="switch_dimension">25dp</dimen>
+    <dimen name="daily_grid_item_padding">4dp</dimen>
+    <dimen name="first_widget_layout_data_table_bottom_margin">2dp</dimen>
+</resources>

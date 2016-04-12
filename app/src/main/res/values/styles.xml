@@ -1,0 +1,210 @@
+<resources>
+
+    <style name="SUMMER" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_gradient_summer</item>
+        <item name="android:textViewStyle">@style/SUMMER.TEXTVIEW_STYLE</item>
+        <item name="android:buttonStyle">@style/SUMMER.BUTTON_STYLE</item>
+        <item name="android:listViewStyle">@style/SUMMER.LIST_VIEW_STYLE</item>
+        <item name="android:alertDialogTheme">@style/SUMMER.DIALOG_THEME</item>
+        <item name="android:progressBarStyle">@style/SUMMER.INDETERMINATE_PROGRESS_STYLE</item>
+        <item name="android:radioButtonStyle">@style/SUMMER.RADIO_BUTTON_STYLE</item>
+        <item name="android:editTextStyle">@style/SUMMER.EDIT_TEXT_STYLE</item>
+    </style>
+
+    <style name="SUMMER.EDIT_TEXT_STYLE" parent="SUMMER">
+        <item name="android:textColor">@color/summer_text_color</item>
+    </style>
+
+    <style name="SUMMER.RADIO_BUTTON_STYLE" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/summer_text_color</item>
+    </style>
+
+    <style name="SUMMER.INDETERMINATE_PROGRESS_STYLE" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/indeterminate_progress_summer</item>
+    </style>
+
+    <style name="SUMMER.ACTION_BAR_STYLE">
+        <item name="android:background">@drawable/bg_gradient_summer</item>
+    </style>
+
+    <style name="SUMMER.DIALOG_THEME" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_gradient_summer</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorAlertDialogListItem">@android:color/white</item>
+        <item name="android:buttonBarButtonStyle">@style/SUMMER.CANCEL_BUTTON_STYLE</item>
+        <item name="android:textAppearanceButton">@style/SUMMER.ALERT_DIALOG_BUTTON_TEXT_APPEARANCE</item>
+    </style>
+
+    <style name="SUMMER.ALERT_DIALOG_BUTTON_TEXT_APPEARANCE">
+        <item name="android:textColor">@color/summer_text_color</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SUMMER.CANCEL_BUTTON_STYLE">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="SUMMER.LIST_VIEW_STYLE" parent="android:Widget.DeviceDefault.ListView">
+        <item name="android:background">@drawable/bg_gradient_summer</item>
+    </style>
+
+    <style name="SUMMER.TEXTVIEW_STYLE" parent="SUMMER">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="SUMMER.BUTTON_STYLE" parent="android:Widget.DeviceDefault.Button">
+        <item name="android:background">@color/button_background_color</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AUTUMN" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_gradient_autumn</item>
+        <item name="android:textViewStyle">@style/AUTUMN.TEXTVIEW_STYLE</item>
+        <item name="android:buttonStyle">@style/AUTUMN.BUTTON_STYLE</item>
+        <item name="android:listViewStyle">@style/AUTUMN.LIST_VIEW_STYLE</item>
+        <item name="android:alertDialogTheme">@style/AUTUMN.DIALOG_THEME</item>
+        <item name="android:progressBarStyle">@style/AUTUMN.INDETERMINATE_PROGRESS_STYLE</item>
+        <item name="android:radioButtonStyle">@style/AUTUMN.RADIO_BUTTON_STYLE</item>
+        <item name="android:editTextStyle">@style/AUTUMN.EDIT_TEXT_STYLE</item>
+    </style>
+    
+    <style name="AUTUMN.EDIT_TEXT_STYLE" parent="AUTUMN">
+        <item name="android:textColor">@color/autumn_text_color</item>
+    </style>
+    
+    <style name="AUTUMN.RADIO_BUTTON_STYLE" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/autumn_text_color</item>
+    </style>
+
+    <style name="AUTUMN.INDETERMINATE_PROGRESS_STYLE" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/indeterminate_progress_autumn</item>
+    </style>
+
+    <style name="AUTUMN.DIALOG_THEME" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_gradient_autumn</item>
+        <item name="android:textColor">@color/autumn_text_color</item>
+        <item name="android:textColorAlertDialogListItem">@color/autumn_text_color</item>
+        <item name="android:buttonBarButtonStyle">@style/AUTUMN.CANCEL_BUTTON_STYLE</item>
+    </style>
+
+    <style name="AUTUMN.CANCEL_BUTTON_STYLE">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/autumn_text_color</item>
+    </style>
+
+    <style name="AUTUMN.LIST_VIEW_STYLE" parent="android:Widget.DeviceDefault.ListView">
+        <item name="android:background">@drawable/bg_gradient_autumn</item>
+    </style>
+
+    <style name="AUTUMN.TEXTVIEW_STYLE" parent="AUTUMN">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/autumn_text_color</item>
+    </style>
+
+    <style name="AUTUMN.BUTTON_STYLE" parent="android:Widget.DeviceDefault.Button">
+        <item name="android:background">@color/button_background_color</item>
+        <item name="android:textColor">@color/autumn_text_color</item>
+    </style>
+
+    <style name="SPRING" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_gradient_spring</item>
+        <item name="android:textViewStyle">@style/SPRING.TEXTVIEW_STYLE</item>
+        <item name="android:buttonStyle">@style/SPRING.BUTTON_STYLE</item>
+        <item name="android:listViewStyle">@style/SPRING.LIST_VIEW_STYLE</item>
+        <item name="android:alertDialogTheme">@style/SPRING.DIALOG_THEME</item>
+        <item name="android:progressBarStyle">@style/SPRING.INDETERMINATE_PROGRESS_STYLE</item>
+        <item name="android:radioButtonStyle">@style/SPRING.RADIO_BUTTON_STYLE</item>
+        <item name="android:editTextStyle">@style/SPRING.EDIT_TEXT_STYLE</item>
+    </style>
+
+    <style name="SPRING.EDIT_TEXT_STYLE" parent="SPRING">
+        <item name="android:textColor">@color/spring_text_color</item>
+    </style>
+
+    <style name="SPRING.RADIO_BUTTON_STYLE" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/spring_text_color</item>
+    </style>
+
+    <style name="SPRING.INDETERMINATE_PROGRESS_STYLE" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/indeterminate_progress_spring</item>
+    </style>
+
+    <style name="SPRING.DIALOG_THEME" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_gradient_spring</item>
+        <item name="android:textColor">@color/spring_text_color</item>
+        <item name="android:textColorAlertDialogListItem">@color/spring_text_color</item>
+        <item name="android:buttonBarButtonStyle">@style/SPRING.CANCEL_BUTTON_STYLE</item>
+    </style>
+
+    <style name="SPRING.CANCEL_BUTTON_STYLE">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/spring_text_color</item>
+    </style>
+
+    <style name="SPRING.LIST_VIEW_STYLE" parent="android:Widget.DeviceDefault.ListView">
+        <item name="android:background">@drawable/bg_gradient_spring</item>
+    </style>
+
+    <style name="SPRING.TEXTVIEW_STYLE" parent="SPRING">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/spring_text_color</item>
+    </style>
+
+    <style name="SPRING.BUTTON_STYLE" parent="android:Widget.DeviceDefault.Button">
+        <item name="android:background">@color/button_background_color</item>
+        <item name="android:textColor">@color/spring_text_color</item>
+    </style>
+
+    <style name="WINTER" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_gradient_winter</item>
+        <item name="android:textViewStyle">@style/WINTER.TEXTVIEW_STYLE</item>
+        <item name="android:buttonStyle">@style/WINTER.BUTTON_STYLE</item>
+        <item name="android:listViewStyle">@style/WINTER.LIST_VIEW_STYLE</item>
+        <item name="android:alertDialogTheme">@style/WINTER.DIALOG_THEME</item>
+        <item name="android:progressBarStyle">@style/WINTER.INDETERMINATE_PROGRESS_STYLE</item>
+        <item name="android:radioButtonStyle">@style/WINTER.RADIO_BUTTON_STYLE</item>
+        <item name="android:editTextStyle">@style/WINTER.EDIT_TEXT_STYLE</item>
+    </style>
+
+    <style name="WINTER.EDIT_TEXT_STYLE" parent="WINTER">
+        <item name="android:textColor">@color/winter_text_color</item>
+    </style>
+
+    <style name="WINTER.RADIO_BUTTON_STYLE" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/winter_text_color</item>
+    </style>
+
+    <style name="WINTER.INDETERMINATE_PROGRESS_STYLE" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/indeterminate_progress_winter</item>
+    </style>
+
+    <style name="WINTER.DIALOG_THEME" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_gradient_winter</item>
+        <item name="android:textColor">@color/winter_text_color</item>
+        <item name="android:textColorSecondary">@color/winter_text_color</item>
+        <item name="android:textColorAlertDialogListItem">@color/winter_text_color</item>
+        <item name="android:buttonBarButtonStyle">@style/WINTER.CANCEL_BUTTON_STYLE</item>
+    </style>
+
+    <style name="WINTER.CANCEL_BUTTON_STYLE">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/winter_text_color</item>
+    </style>
+
+    <style name="WINTER.LIST_VIEW_STYLE" parent="android:Widget.DeviceDefault.ListView">
+        <item name="android:background">@drawable/bg_gradient_winter</item>
+    </style>
+
+    <style name="WINTER.TEXTVIEW_STYLE" parent="WINTER">
+        <item name="android:textColor">@color/winter_text_color</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="WINTER.BUTTON_STYLE" parent="android:Widget.DeviceDefault.Button">
+        <item name="android:textColor">@color/winter_text_color</item>
+        <item name="android:background">@color/button_background_color</item>
+    </style>
+
+</resources>

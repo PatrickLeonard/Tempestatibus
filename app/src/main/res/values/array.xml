@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="appThemeEntries">
+        <item>@string/scorching_summer</item>
+        <item>@string/wispy_winter</item>
+        <item>@string/serene_spring</item>
+        <item>@string/auspicious_autumn</item>
+    </string-array>
+    <string-array name="appThemeValueEntries">
+        <item>@string/summer_value</item>
+        <item>@string/winter_value</item>
+        <item>@string/spring_value</item>
+        <item>@string/autumn_value</item>
+    </string-array>
+</resources>

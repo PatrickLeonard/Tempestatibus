@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title">Oops! Üzgünüm!</string>
+
+    <string name="error_message">Bir hata vardı. Lütfen tekrar deneyin.</string>
+
+    <string name="error_ok_button_text">tamam</string>
+
+    <string name="network_unavailable_text">Ağ kullanılamıyor</string>
+
+    <string name="location_permission_request_rationale">Konum bilgisi hava veri almak için gereklidir.</string>
+
+    <string name="hourly_all_caps">SAATLİK</string>
+
+    <string name="seven_days_all_caps">7 GÜN</string>
+
+    <string name="rain_slash_snow_all_caps">YAĞMUR / KAR</string>
+
+    <string name="humidity_all_caps">NEM</string>
+
+    <string name="geolocation_service_not_available">Mevcut değil Coğrafi Konum hizmeti</string>
+
+    <string name="today_string_day_adapter">Bugün</string>
+
+    <string name="app_theme_title">Bir Uygulama Tema Seç</string>
+
+    <string name="app_theme_selection">App temasını seçin</string>
+
+    <string name="units_preference_title">Ölçü birimleri</string>
+
+    <string name="si_units_preference_summary">SI birimleri</string>
+
+    <string name="us_units_preference_summary">ABD birimleri</string>
+
+    <string name="scorching_summer">Scorching Yaz</string>
+
+    <string name="wispy_winter">incecik Kış</string>
+
+    <string name="serene_spring">Serene Bahar</string>
+
+    <string name="auspicious_autumn">Hayriye Sonbahar</string>
+
+    <string name="time_label_format_string">%s azından olacak</string>
+
+    <string name="this_weeks_forecast_string">Gelecek Tahmini</string>
+
+    <string name="on_switch_text">ON</string>
+
+    <string name="off_switch_text">KAPALI</string>
+
+    <string name="hourly_extend_preference_summary_off">Saatlik standart</string>
+
+    <string name="hourly_extend_preference_summary_on">Saatlik Genişletilmiş</string>
+
+    <string name="refresh_image_description">Biraz yenile düğmesi dinlemek ve veri ve ekran yenilemek için</string>
+
+    <string name="icon_image_description">Simge yağmur, güneşli, vb bulutlu hava, temsil etmek</string>
+
+    <string name="degrees_image_description">Sembol, üst simge küçük bir daire Degrees</string>
+
+    <string name="NO_Daily_forecast_value">Gösterilecek veri yok</string>
+
+    <string name="daily_icon_content_description">Gün için Hava Durumu Simgesi</string>
+
+    <string name="temp_background_content_description">Sıcaklık Dairesel arka plan</string>
+
+    <string name="hourly_extend_preference_title">Saatlik tahmini uzatın?</string>
+
+    <string name="no_geocode_present">Hayır Geocoder mevcut</string>
+
+    <string name="no_location_found_address">Hiçbir yere bulunamadı.</string>
+
+    <string name="daily_forecast_toast_message">%1$s %2$s %3$s yüksek olacak ve o olacak</string>
+
+    <string name="hour_list_toast_message">%1$s azından %2$s ve %3$s olacak</string>
+
+    <string name="first_widget_humidity_label">Nem:</string>
+
+    <string name="first_widget_precipitation_probability_label">Yağmur / Kar:</string>
+
+    <string name="first_widget_nearestStormDistance_label">Fırtına Dist.</string>
+
+    <string name="first_widget_pressure_label">Baskı:</string>
+
+    <string name="first_widget_dew_point_label">Dew:</string>
+
+    <string name="first_widget_wind_speed_label">Rüzgar:</string>
+
+    <string name="first_widget_cloud_cover_label">Bulut:</string>
+
+    <string name="first_widget_ozone_label">Ozon:</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">Yağış .:</string>
+
+    <string name="first_widget_visibility_label">Görünürlük:</string>
+
+    <string name="first_widget_apparentTemperature_label">Temp hissedin:</string>
+
+    <string name="forecast_fetch_error">Hiçbir beklentisi bulundu.</string>
+
+    <string name="setting_icon_content_description">Ayarlar simgesine için küçük bir makine dişli</string>
+
+    <string name="visibility_label">GÖRÜŞ</string>
+
+    <string name="dew_point_label">erime noktası</string>
+
+    <string name="wind_speed_label">RÜZGAR</string>
+
+    <string name="ozone_label">OZON</string>
+
+    <string name="storm_distance_label">FIRTINA DIST.</string>
+
+    <string name="apparent_temp_label">GÖRÜNEN TEMP</string>
+
+    <string name="pressure_label">BASKI</string>
+
+    <string name="apparent_max_temp_label">GÖRÜNEN MAX.</string>
+
+    <string name="apparent_min_temp_label">GÖRÜNEN MİN.</string>
+
+    <string name="sunset_label">SUNSET</string>
+
+    <string name="sunrise_label">GÜNEŞ</string>
+
+    <string name="cloud_cover_label">BULUT ÖRTÜSÜ</string>
+
+    <string name="high_temp_time_label">YÜKSEK SICAKLIK ZAMAN</string>
+
+    <string name="low_temp_time_label">DÜŞÜK SICAKLIK ZAMAN</string>
+
+    <string name="moon_phase_label">AY EVRELERİ</string>
+
+    <string name="configure_widget_layout">Yapılandırma Widget</string>
+
+    <string name="match_app_theme_hint">Uygulamalar ile Widget tema maç</string>
+
+    <string name="transparent_background_text">şeffaf Arkaplan</string>
+
+    <string name="text_color_label">Metin Rengi</string>
+
+    <string name="white_label">Beyaz</string>
+
+    <string name="black_label">Siyah</string>
+
+    <string name="proceed_button_label">Devam</string>
+
+    <string name="black_text_hint">App Widget siyah metin olacaktır.</string>
+
+    <string name="white_text_hint">App Widget beyaz metin olacaktır.</string>
+
+    <string name="transparent_background_hint">Şeffaf arka plan ile Düzen uygulama widget</string>
+
+    <string name="match_app_theme_text">Maç App Tema</string>
+</resources>

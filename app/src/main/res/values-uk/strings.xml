@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title">Нам Вибачте!</string>
+
+    <string name="error_message">Там була помилка. Будь ласка спробуйте ще раз.</string>
+
+    <string name="error_ok_button_text">добре</string>
+
+    <string name="network_unavailable_text">Мережа недоступна</string>
+
+    <string name="location_permission_request_rationale">Місцезнаходження необхідний для отримання даних про погоду.</string>
+
+    <string name="hourly_all_caps">Погодинний</string>
+
+    <string name="seven_days_all_caps">7 ДНІВ</string>
+
+    <string name="rain_slash_snow_all_caps">Дощ / сніг</string>
+
+    <string name="humidity_all_caps">ВЛАЖНОСТЬ</string>
+
+    <string name="geolocation_service_not_available">Географічне положення доступний не</string>
+
+    <string name="today_string_day_adapter">сьогодні</string>
+
+    <string name="app_theme_title">Виберіть тему App</string>
+
+    <string name="app_theme_selection">Виберіть програму тему</string>
+
+    <string name="units_preference_title">Одиниці виміру</string>
+
+    <string name="si_units_preference_summary">СІ</string>
+
+    <string name="us_units_preference_summary">одиниці США</string>
+
+    <string name="scorching_summer">пекуче літо</string>
+
+    <string name="wispy_winter">тонкими Зима</string>
+
+    <string name="serene_spring">Серена Весна</string>
+
+    <string name="auspicious_autumn">сприятливий Осінь</string>
+
+    <string name="time_label_format_string">У %s буде</string>
+
+    <string name="this_weeks_forecast_string">майбутнє Прогноз</string>
+
+    <string name="on_switch_text">Про</string>
+
+    <string name="off_switch_text">ВИКЛ</string>
+
+    <string name="hourly_extend_preference_summary_off">Стандартний Погодинний</string>
+
+    <string name="hourly_extend_preference_summary_on">Погодинний Extended</string>
+
+    <string name="refresh_image_description">Кнопка трохи оновлення, щоб прослухати і оновити дані і дисплей</string>
+
+    <string name="icon_image_description">Іконка представляти погода, хмарно з дощем, сонячний, і т.д.</string>
+
+    <string name="degrees_image_description">Градуси Символ, невелике коло у верхньому індексі</string>
+
+    <string name="NO_Daily_forecast_value">Там немає даних для відображення</string>
+
+    <string name="daily_icon_content_description">Погода Іконка протягом дня</string>
+
+    <string name="temp_background_content_description">Циркуляр фон для температури</string>
+
+    <string name="hourly_extend_preference_title">Продовжити погодинний прогноз?</string>
+
+    <string name="no_geocode_present">Немає даний геокодер</string>
+
+    <string name="no_location_found_address">Місце розташування не знайдено.</string>
+
+    <string name="daily_forecast_toast_message">На %1$s висока буде %2$s і він буде з %3$s</string>
+
+    <string name="hour_list_toast_message">У %1$s буде %2$s і %3$s</string>
+
+    <string name="first_widget_humidity_label">Вологість:</string>
+
+    <string name="first_widget_precipitation_probability_label">Дощ / Сніг:</string>
+
+    <string name="first_widget_nearestStormDistance_label">Шторм р-н.</string>
+
+    <string name="first_widget_pressure_label">тиск:</string>
+
+    <string name="first_widget_dew_point_label">роси:</string>
+
+    <string name="first_widget_wind_speed_label">вітер:</string>
+
+    <string name="first_widget_cloud_cover_label">Облік:</string>
+
+    <string name="first_widget_ozone_label">озон:</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">опадів.:</string>
+
+    <string name="first_widget_visibility_label">видимість:</string>
+
+    <string name="first_widget_apparentTemperature_label">Відчуйте Temp:</string>
+
+    <string name="forecast_fetch_error">Немає прогноз не знайдено.</string>
+
+    <string name="setting_icon_content_description">Невеликий машина гвинтиком для іконки налаштувань</string>
+
+    <string name="visibility_label">ПРОЗОРІСТЬ</string>
+
+    <string name="dew_point_label">ТОЧКА РОСИ</string>
+
+    <string name="wind_speed_label">ВІТЕР</string>
+
+    <string name="ozone_label">ОЗОН</string>
+
+    <string name="storm_distance_label">ШТОРМ-н.</string>
+
+    <string name="apparent_temp_label">ПОВНА ТЕМП</string>
+
+    <string name="pressure_label">ТИСК</string>
+
+    <string name="apparent_max_temp_label">ПОВНА MAX.</string>
+
+    <string name="apparent_min_temp_label">ПОВНА МІН.</string>
+
+    <string name="sunset_label">ЗАХІД СОНЦЯ</string>
+
+    <string name="sunrise_label">ВОСХОД</string>
+
+    <string name="cloud_cover_label">Хмарний покрив</string>
+
+    <string name="high_temp_time_label">ВИСОКА ТЕМП ЧАС</string>
+
+    <string name="low_temp_time_label">НИЗЬКИЙ ТЕМП ЧАС</string>
+
+    <string name="moon_phase_label">фази Місяця</string>
+
+    <string name="configure_widget_layout">налаштувати віджет</string>
+
+    <string name="match_app_theme_hint">Підходимо тему віджет з додатками</string>
+
+    <string name="transparent_background_text">прозорий фон</string>
+
+    <string name="text_color_label">колір тексту</string>
+
+    <string name="white_label">білий</string>
+
+    <string name="black_label">чорний</string>
+
+    <string name="proceed_button_label">продовжити</string>
+
+    <string name="black_text_hint">App віджет буде мати чорний текст.</string>
+
+    <string name="white_text_hint">App віджет буде мати білий текст.</string>
+
+    <string name="transparent_background_hint">Макет додаток віджет з прозорим фоном</string>
+
+    <string name="match_app_theme_text">Матч App Тема</string>
+</resources>

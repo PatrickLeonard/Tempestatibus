@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_title">Ups! Žao mi je!</string>
+
+    <string name="error_message">Došlo je do greške. Molimo pokušajte ponovo.</string>
+
+    <string name="error_ok_button_text">Uredu</string>
+
+    <string name="network_unavailable_text">Mreža je nedostupna</string>
+
+    <string name="location_permission_request_rationale">Lokacija informacije je potrebno da biste preuzeli podatke o vremenu.</string>
+
+    <string name="hourly_all_caps">SATIMA</string>
+
+    <string name="seven_days_all_caps">7 DANA</string>
+
+    <string name="rain_slash_snow_all_caps">Kiša / Snijeg</string>
+
+    <string name="humidity_all_caps">VLAŽNOST</string>
+
+    <string name="geolocation_service_not_available">Geolokacija usluga nije dostupna</string>
+
+    <string name="today_string_day_adapter">Danas</string>
+
+    <string name="app_theme_title">Odaberite aplikaciju Theme</string>
+
+    <string name="app_theme_selection">Odaberite aplikaciju temu</string>
+
+    <string name="units_preference_title">Jedinice mjere</string>
+
+    <string name="si_units_preference_summary">SI jedinice</string>
+
+    <string name="us_units_preference_summary">US jedinice</string>
+
+    <string name="scorching_summer">Divan Summer</string>
+
+    <string name="wispy_winter">Prozirnim Winter</string>
+
+    <string name="serene_spring">Serene Spring</string>
+
+    <string name="auspicious_autumn">Povoljan Jesen</string>
+
+    <string name="time_label_format_string">Na %s to će biti</string>
+
+    <string name="this_weeks_forecast_string">Future Prognoza</string>
+
+    <string name="on_switch_text">ON</string>
+
+    <string name="off_switch_text">OFF</string>
+
+    <string name="hourly_extend_preference_summary_off">Standard Po Satu</string>
+
+    <string name="hourly_extend_preference_summary_on">Proširena Satima</string>
+
+    <string name="refresh_image_description">Malo dugme refresh da slušati i osvježiti podataka i prikaz</string>
+
+    <string name="icon_image_description">Ikona za zastupanje vremena, oblačno vrijeme sa kišom, sunčan, itd</string>
+
+    <string name="degrees_image_description">Simbol stepeni, mali krug u eksponent</string>
+
+    <string name="NO_Daily_forecast_value">Nema podataka za prikaz</string>
+
+    <string name="daily_icon_content_description">Vrijeme Ikona za dan</string>
+
+    <string name="temp_background_content_description">Kružni pozadine za temperaturu</string>
+
+    <string name="hourly_extend_preference_title">Proširiti po satu?</string>
+
+    <string name="no_geocode_present">No geokoder prisutan</string>
+
+    <string name="no_location_found_address">Nema lokacija pronađen.</string>
+
+    <string name="daily_forecast_toast_message">%1$s visokih će biti %2$s i to će biti %3$s</string>
+
+    <string name="hour_list_toast_message">Na %1$s će biti %2$s %3$s</string>
+
+    <string name="first_widget_precipitation_probability_label">Kiša / Snijeg:</string>
+
+    <string name="first_widget_nearestStormDistance_label">Storm Dist.</string>
+
+    <string name="first_widget_pressure_label">pritisak:</string>
+
+    <string name="first_widget_dew_point_label">Dew:</string>
+
+    <string name="first_widget_wind_speed_label">Vjetar:</string>
+
+    <string name="first_widget_cloud_cover_label">Cloud:</string>
+
+    <string name="first_widget_ozone_label">Ozone:</string>
+
+    <string name="first_widget_precipitation_intensity_string_label">oborina .:</string>
+
+    <string name="first_widget_visibility_label">Vidljivost:</string>
+
+    <string name="first_widget_apparentTemperature_label">Feel Temp:</string>
+
+    <string name="forecast_fetch_error">Nema prognoza pronađen.</string>
+
+    <string name="setting_icon_content_description">Mali stroj zupčanika za postavke ikona</string>
+
+    <string name="visibility_label">VIDLJIVOST</string>
+
+    <string name="dew_point_label">Točke Rosišta</string>
+
+    <string name="wind_speed_label">WIND</string>
+
+    <string name="ozone_label">OZON</string>
+
+    <string name="storm_distance_label">STORM DIST.</string>
+
+    <string name="apparent_temp_label">Očevidna temp</string>
+
+    <string name="pressure_label">PRITISAK</string>
+
+    <string name="apparent_max_temp_label">IGLEDNE MAX.</string>
+
+    <string name="apparent_min_temp_label">IGLEDNE MIN.</string>
+
+    <string name="sunset_label">SUNSET</string>
+
+    <string name="sunrise_label">SUNRISE</string>
+
+    <string name="cloud_cover_label">CLOUD COVER</string>
+
+    <string name="high_temp_time_label">Visoke Temp Time</string>
+
+    <string name="low_temp_time_label">Niskoj Temp Time</string>
+
+    <string name="moon_phase_label">Moon Phase</string>
+
+    <string name="configure_widget_layout">Konfiguracija Widget</string>
+
+    <string name="match_app_theme_hint">Uskladite widget temu s aplikacijama</string>
+
+    <string name="transparent_background_text">transparentnom pozadinom</string>
+
+    <string name="text_color_label">Boja teksta</string>
+
+    <string name="white_label">White</string>
+
+    <string name="black_label">Black</string>
+
+    <string name="proceed_button_label">Postupiti</string>
+
+    <string name="black_text_hint">App widget će imati crni tekst.</string>
+
+    <string name="white_text_hint">App widget će imati bijele tekst.</string>
+
+    <string name="transparent_background_hint">Izgled aplikaciju widget s transparentnom pozadinom</string>
+
+    <string name="first_widget_humidity_label">Vlaga:</string>
+
+    <string name="match_app_theme_text">Match App Tema</string>
+</resources>
