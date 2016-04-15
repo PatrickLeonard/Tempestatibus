@@ -22,6 +22,7 @@ public class LocationSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCATIONS_LATITUDE = "LATITUDE";
     public static final String COLUMN_LOCATIONS_LONGITUDE = "LONGITUDE";
 
+    public static final int DEFAULT_LAST_KNOWN_ID = -1;
     public static final String DEFAULT_LAST_KNOWN_ADDRESS = "Portland, OR";
     public static final String DEFAULT_LAST_KNOWN_NAME = "LAST_KNOWN";
     public static final Double DEFAULT_LAST_KNOWN_LATITUDE = 45.5231;
@@ -30,19 +31,21 @@ public class LocationSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_LOCATIONS__TABLE =
             "CREATE TABLE " + LOCATIONS_TABLE + " (" +
-                    BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    BaseColumns._ID + " INTEGER PRIMARY KEY," +
                     COLUMN_LOCATIONS_ADDRESS + " TEXT, " +
                     COLUMN_LOCATIONS_NAME + " TEXT, " +
                     COLUMN_LOCATIONS_LATITUDE + " REAL, " +
                     COLUMN_LOCATIONS_LONGITUDE + " REAL );";
 
-    private static final String INSERT_LAST_KNOWN__TABLE =
-            "INSERT INTO " + LOCATIONS_TABLE + " (" +
+    private static final String INSERT_LAST_KNOWN =
+            "INSERT OR REPLACE INTO " + LOCATIONS_TABLE + " (" +
+                    BaseColumns._ID + "," +
                     COLUMN_LOCATIONS_ADDRESS + "," +
                     COLUMN_LOCATIONS_NAME + "," +
                     COLUMN_LOCATIONS_LATITUDE + "," +
                     COLUMN_LOCATIONS_LONGITUDE + ") " +
-            "VALUES ('" + DEFAULT_LAST_KNOWN_ADDRESS + "','" +
+            "VALUES (" + DEFAULT_LAST_KNOWN_ID + ",'" +
+                    DEFAULT_LAST_KNOWN_ADDRESS + "','" +
                     DEFAULT_LAST_KNOWN_NAME + "'," +
                     DEFAULT_LAST_KNOWN_LATITUDE + "," +
                     DEFAULT_LAST_KNOWN_LONGITUDE + ");";
@@ -54,11 +57,13 @@ public class LocationSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_LOCATIONS__TABLE);
-        db.execSQL(INSERT_LAST_KNOWN__TABLE);
+        db.execSQL(INSERT_LAST_KNOWN);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if(oldVersion < 2)  {
+                db.execSQL(INSERT_LAST_KNOWN);
+            }
     }
 }

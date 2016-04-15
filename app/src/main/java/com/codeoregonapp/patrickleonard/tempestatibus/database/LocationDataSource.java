@@ -89,7 +89,7 @@ public class LocationDataSource {
                         LocationSQLiteHelper.COLUMN_LOCATIONS_ADDRESS,
                         LocationSQLiteHelper.COLUMN_LOCATIONS_LATITUDE,
                         LocationSQLiteHelper.COLUMN_LOCATIONS_LONGITUDE},
-                null,  //Selection
+                BaseColumns._ID + " <> " + LocationSQLiteHelper.DEFAULT_LAST_KNOWN_ID,  //Selection
                 null,  //Selection args
                 null,  //Group By
                 null,  //Having
