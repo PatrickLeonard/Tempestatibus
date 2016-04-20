@@ -17,13 +17,15 @@ public class LocationSQLiteHelper extends SQLiteOpenHelper {
 
     //Meme table code
     public static final String LOCATIONS_TABLE = "LOCATIONS";
-    public static final String COLUMN_LOCATIONS_ADDRESS = "ADDRESS";
+    public static final String COLUMN_LOCATIONS_STANDARD_ADDRESS = "STANDARD_ADDRESS";
+    public static final String COLUMN_LOCATIONS_SHORTENED_ADDRESS = "SHORTENED_ADDRESS";
     public static final String COLUMN_LOCATIONS_NAME = "NAME";
     public static final String COLUMN_LOCATIONS_LATITUDE = "LATITUDE";
     public static final String COLUMN_LOCATIONS_LONGITUDE = "LONGITUDE";
 
     public static final int DEFAULT_LAST_KNOWN_ID = -1;
-    public static final String DEFAULT_LAST_KNOWN_ADDRESS = "Portland, OR";
+    public static final String DEFAULT_LAST_KNOWN_STANDARD_ADDRESS = "Portland, OR";
+    public static final String DEFAULT_LAST_KNOWN_SHORTENED_ADDRESS = "Portland, OR";
     public static final String DEFAULT_LAST_KNOWN_NAME = "LAST_KNOWN";
     public static final Double DEFAULT_LAST_KNOWN_LATITUDE = 45.5231;
     public static final Double DEFAULT_LAST_KNOWN_LONGITUDE = -122.6765;
@@ -32,7 +34,8 @@ public class LocationSQLiteHelper extends SQLiteOpenHelper {
     private static final String CREATE_LOCATIONS__TABLE =
             "CREATE TABLE " + LOCATIONS_TABLE + " (" +
                     BaseColumns._ID + " INTEGER PRIMARY KEY," +
-                    COLUMN_LOCATIONS_ADDRESS + " TEXT, " +
+                    COLUMN_LOCATIONS_STANDARD_ADDRESS + " TEXT, " +
+                    COLUMN_LOCATIONS_SHORTENED_ADDRESS + " TEXT, " +
                     COLUMN_LOCATIONS_NAME + " TEXT, " +
                     COLUMN_LOCATIONS_LATITUDE + " REAL, " +
                     COLUMN_LOCATIONS_LONGITUDE + " REAL );";
@@ -40,12 +43,14 @@ public class LocationSQLiteHelper extends SQLiteOpenHelper {
     private static final String INSERT_LAST_KNOWN =
             "INSERT OR REPLACE INTO " + LOCATIONS_TABLE + " (" +
                     BaseColumns._ID + "," +
-                    COLUMN_LOCATIONS_ADDRESS + "," +
+                    COLUMN_LOCATIONS_STANDARD_ADDRESS + ", " +
+                    COLUMN_LOCATIONS_SHORTENED_ADDRESS + ", " +
                     COLUMN_LOCATIONS_NAME + "," +
                     COLUMN_LOCATIONS_LATITUDE + "," +
                     COLUMN_LOCATIONS_LONGITUDE + ") " +
             "VALUES (" + DEFAULT_LAST_KNOWN_ID + ",'" +
-                    DEFAULT_LAST_KNOWN_ADDRESS + "','" +
+                    DEFAULT_LAST_KNOWN_STANDARD_ADDRESS + "','" +
+                    DEFAULT_LAST_KNOWN_SHORTENED_ADDRESS + "','" +
                     DEFAULT_LAST_KNOWN_NAME + "'," +
                     DEFAULT_LAST_KNOWN_LATITUDE + "," +
                     DEFAULT_LAST_KNOWN_LONGITUDE + ");";

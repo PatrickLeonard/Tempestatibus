@@ -10,6 +10,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Class to handle CRUD operations on the database
@@ -32,12 +33,13 @@ public class LocationDataSource {
         db.close();
     }
 
-    public void create(Location location, String name, String address) {
+    public void create(Location location, String name, String standardAddress,String shortenedAddress) {
         SQLiteDatabase db = open();
         db.beginTransaction();
         ContentValues locationValues = new ContentValues();
         locationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_NAME, name);
-        locationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_ADDRESS, address);
+        locationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_STANDARD_ADDRESS, standardAddress);
+        locationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_SHORTENED_ADDRESS, shortenedAddress);
         locationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_LATITUDE, location.getLatitude());
         locationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_LONGITUDE, location.getLongitude());
         db.insert(LocationSQLiteHelper.LOCATIONS_TABLE, null, locationValues);
@@ -68,7 +70,7 @@ public class LocationDataSource {
         updateLocationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_NAME, name);
         db.update(LocationSQLiteHelper.LOCATIONS_TABLE,
                 updateLocationValues,
-                String.format("%s=%d", BaseColumns._ID, id)
+                String.format(Locale.getDefault(),"%s=%d", BaseColumns._ID, id)
                 , null);
         db.setTransactionSuccessful();
         db.endTransaction();
@@ -81,15 +83,21 @@ public class LocationDataSource {
     }
 
     //This needs to have the model class created and used. It also should implement Parcelable
+    public ArrayList<SavedLocationModel> readLastKnown() {
+        return readLastKnownLocation();
+    }
+
+    //This needs to have the model class created and used. It also should implement Parcelable
     private ArrayList<SavedLocationModel> readLocations() {
         SQLiteDatabase db = open();
         Cursor cursor = db.query(LocationSQLiteHelper.LOCATIONS_TABLE,
                 new String[]{LocationSQLiteHelper.COLUMN_LOCATIONS_NAME,
                         BaseColumns._ID,
-                        LocationSQLiteHelper.COLUMN_LOCATIONS_ADDRESS,
+                        LocationSQLiteHelper.COLUMN_LOCATIONS_STANDARD_ADDRESS,
+                        LocationSQLiteHelper.COLUMN_LOCATIONS_SHORTENED_ADDRESS,
                         LocationSQLiteHelper.COLUMN_LOCATIONS_LATITUDE,
                         LocationSQLiteHelper.COLUMN_LOCATIONS_LONGITUDE},
-                BaseColumns._ID + " <> " + LocationSQLiteHelper.DEFAULT_LAST_KNOWN_ID,  //Selection
+                String.format(Locale.getDefault(),"%s <> %d",BaseColumns._ID,LocationSQLiteHelper.DEFAULT_LAST_KNOWN_ID),  //Selection
                 null,  //Selection args
                 null,  //Group By
                 null,  //Having
@@ -99,23 +107,85 @@ public class LocationDataSource {
         Location location;
         int id;
         String name;
-        String address;
+        String standardAddress;
+        String shortenedAddress;
         ArrayList<SavedLocationModel> savedLocationModels = new ArrayList<>();
         if(cursor.moveToFirst()) {
             do{
                 id = getIntFromColumnName(cursor,BaseColumns._ID);
                 name = getStringFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_NAME);
-                address = getStringFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_ADDRESS);
+                standardAddress = getStringFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_STANDARD_ADDRESS);
+                shortenedAddress = getStringFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_SHORTENED_ADDRESS);
                 location = new Location(LocationManager.PASSIVE_PROVIDER);
                 location.setLatitude(getRealFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_LATITUDE));
                 location.setLongitude(getRealFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_LONGITUDE));
-                Log.v(LocationDataSource.TAG, "Reading: id: " + id + " name: " + name + " address: " + address);
-                savedLocationModels.add(new SavedLocationModel(location,id,name,address));
+                Log.v(LocationDataSource.TAG, "Reading: id: " + id + " name: " + name + " standard address: " + standardAddress + " shortened address: " + shortenedAddress);
+                savedLocationModels.add(new SavedLocationModel(location,id,name,standardAddress,shortenedAddress));
             }while(cursor.moveToNext());
         }
         cursor.close();
         close(db);
         return savedLocationModels;
+    }
+
+    //This needs to have the model class created and used. It also should implement Parcelable
+    private ArrayList<SavedLocationModel> readLastKnownLocation() {
+        SQLiteDatabase db = open();
+        Cursor cursor = db.query(LocationSQLiteHelper.LOCATIONS_TABLE,
+                new String[]{LocationSQLiteHelper.COLUMN_LOCATIONS_NAME,
+                        BaseColumns._ID,
+                        LocationSQLiteHelper.COLUMN_LOCATIONS_STANDARD_ADDRESS,
+                        LocationSQLiteHelper.COLUMN_LOCATIONS_SHORTENED_ADDRESS,
+                        LocationSQLiteHelper.COLUMN_LOCATIONS_LATITUDE,
+                        LocationSQLiteHelper.COLUMN_LOCATIONS_LONGITUDE},
+                String.format(Locale.getDefault(),"%s = %d",BaseColumns._ID,LocationSQLiteHelper.DEFAULT_LAST_KNOWN_ID),  //Selection
+                null,  //Selection args
+                null,  //Group By
+                null,  //Having
+                BaseColumns._ID + " ASC",  //Order
+                null); //Limit
+
+        Location lastKnown;
+        int id;
+        String name;
+        String standardAddress;
+        String shortenedAddress;
+        ArrayList<SavedLocationModel> savedLastKnown = new ArrayList<>();
+        if(cursor.moveToFirst()) {
+            do{
+                id = getIntFromColumnName(cursor,BaseColumns._ID);
+                name = getStringFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_NAME);
+                standardAddress = getStringFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_STANDARD_ADDRESS);
+                shortenedAddress = getStringFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_SHORTENED_ADDRESS);
+                lastKnown = new Location(LocationManager.PASSIVE_PROVIDER);
+                lastKnown.setLatitude(getRealFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_LATITUDE));
+                lastKnown.setLongitude(getRealFromColumnName(cursor, LocationSQLiteHelper.COLUMN_LOCATIONS_LONGITUDE));
+                Log.v(LocationDataSource.TAG, "Reading: id: " + id + " name: " + name + " standard address: " + standardAddress + " shortened address: " + shortenedAddress);
+                savedLastKnown.add(new SavedLocationModel(lastKnown,id,name,standardAddress,shortenedAddress));
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        close(db);
+        return savedLastKnown;
+    }
+
+    public void updateLastKnown(String standardAddress,String shortenedAddress, double latitude, double longitude) {
+        SQLiteDatabase db = open();
+        db.beginTransaction();
+
+        ContentValues updateLocationValues = new ContentValues();
+
+        updateLocationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_STANDARD_ADDRESS, standardAddress);
+        updateLocationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_SHORTENED_ADDRESS, shortenedAddress);
+        updateLocationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_LATITUDE, latitude);
+        updateLocationValues.put(LocationSQLiteHelper.COLUMN_LOCATIONS_LONGITUDE, longitude);
+        db.update(LocationSQLiteHelper.LOCATIONS_TABLE,
+                updateLocationValues,
+                String.format(Locale.getDefault(),"%s=%d", BaseColumns._ID, LocationSQLiteHelper.DEFAULT_LAST_KNOWN_ID)
+                , null);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        close(db);
     }
 
     private int getIntFromColumnName(Cursor cursor, String columnName) {

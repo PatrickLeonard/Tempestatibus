@@ -39,14 +39,16 @@ import butterknife.ButterKnife;
 public class SearchForLocationActivity extends AppCompatActivity {
     public static final String TAG = SearchForLocationActivity.class.getSimpleName();
     public static final String CURRENT_LOCATION_EXTRA = "CURRENT_LOCATION";
-    public static final String CURRENT_ADDRESS_EXTRA = "CURRENT_ADDRESS";
+    public static final String CURRENT_STANDARD_ADDRESS_EXTRA = "CURRENT_STANDARD_ADDRESS";
+    public static final String CURRENT_SHORTENED_ADDRESS_EXTRA = "CURRENT_SHORTENED_ADDRESS";
     private LocationDataSource mLocationDataSource;
     private ArrayList<Address> mAddresses;
     private ArrayList<String> mDisplayStrings;
     private ArrayList<SavedLocationModel> mSavedLocationModels;
     private UnfilteredArrayAdapter mUnfilteredArrayAdapter;
     private Location mCurrentLocation;
-    private String mCurrentAddress;
+    private String mCurrentStandardAddress;
+    private String mCurrentShortenedAddress;
     private String mUserSavedName;
 
     public LocationDataSource getLocationDataSource() {
@@ -113,14 +115,22 @@ public class SearchForLocationActivity extends AppCompatActivity {
         mCurrentLocation = currentLocation;
     }
 
-    public String getCurrentAddress() {
-        return mCurrentAddress;
+    public String getCurrentStandardAddress() {
+        return mCurrentStandardAddress;
     }
 
-    public void setCurrentAddress(String currentAddress) {
-        mCurrentAddress = currentAddress;
+    public void setCurrentStandardAddress(String currentStandardAddress) {
+        mCurrentStandardAddress = currentStandardAddress;
     }
 
+    public String getCurrentShortenedAddress() {
+        return mCurrentShortenedAddress;
+    }
+
+    public void setCurrentShortenedAddress(String currentShortenedAddress) {
+        mCurrentShortenedAddress = currentShortenedAddress;
+    }
+    
     @Bind(R.id.autoCompleteTextView)
     AutoCompleteTextView mAutoCompleteTextView;
     @Bind(android.R.id.list)
@@ -141,12 +151,14 @@ public class SearchForLocationActivity extends AppCompatActivity {
     private void setCurrentData() {
         Intent intent = getIntent();
         setCurrentLocation((Location) intent.getParcelableExtra(SearchForLocationActivity.CURRENT_LOCATION_EXTRA));
-        setCurrentAddress(intent.getStringExtra(SearchForLocationActivity.CURRENT_ADDRESS_EXTRA));
+        setCurrentStandardAddress(intent.getStringExtra(SearchForLocationActivity.CURRENT_STANDARD_ADDRESS_EXTRA));
+        setCurrentShortenedAddress(intent.getStringExtra(SearchForLocationActivity.CURRENT_SHORTENED_ADDRESS_EXTRA));
     }
 
     private void configureSavedLocationsListView() {
         setLocationDataSource(new LocationDataSource(this));
         setSavedLocationModels(getLocationDataSource().read());
+        getLocationDataSource().readLastKnown();
         getListView().setAdapter(new LocationAdapter(this, getSavedLocationModels()));
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -264,7 +276,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
 
     private void configureAutoCompleteTextView() {
         setDisplayStrings(new ArrayList<String>());
-        getDisplayStrings().add(getCurrentAddress());
+        getDisplayStrings().add(getCurrentStandardAddress());
         setUnfilteredArrayAdapter(new UnfilteredArrayAdapter
                 (this, TempestatibusApplicationSettings.getAddressSearchItemLayoutId(), getDisplayStrings()));
         getAutoCompleteTextView().setThreshold(1);
@@ -298,9 +310,11 @@ public class SearchForLocationActivity extends AppCompatActivity {
 
     private void startSearchedLocationActivity(SavedLocationModel savedLocationModel) {
         Intent intent = new Intent(SearchForLocationActivity.this,SearchedLocationActivity.class);
-        intent.putExtra(SearchedLocationActivity.SEARCHED_ADDRESS_EXTRA, savedLocationModel.getAddress());
+        intent.putExtra(SearchedLocationActivity.SEARCHED_STANDARD_ADDRESS_EXTRA, savedLocationModel.getStandardAddress());
+        intent.putExtra(SearchedLocationActivity.SEARCHED_SHORTENED_ADDRESS_EXTRA, savedLocationModel.getShortenedAddress());
         intent.putExtra(SearchedLocationActivity.SEARCHED_LOCATION_EXTRA, savedLocationModel.getLocation());
-        intent.putExtra(SearchedLocationActivity.CURRENT_ADDRESS_EXTRA, getCurrentAddress());
+        intent.putExtra(SearchedLocationActivity.CURRENT_STANDARD_ADDRESS_EXTRA, getCurrentStandardAddress());
+        intent.putExtra(SearchedLocationActivity.CURRENT_SHORTENED_ADDRESS_EXTRA, getCurrentShortenedAddress());
         intent.putExtra(SearchedLocationActivity.CURRENT_LOCATION_EXTRA, getCurrentLocation());
         startActivity(intent);
         finish();
@@ -315,10 +329,13 @@ public class SearchForLocationActivity extends AppCompatActivity {
         startService(intent);
     }
 
-    public void addResultsToAdapter() {
-        String displayLine;
+    public void clearDisplayStringsAndAdapter() {
         getDisplayStrings().clear();
         getUnfilteredArrayAdapter().clear();
+    }
+
+    public void addResultsToAdapter() {
+        String displayLine;
         ArrayList<Address> addresses = getAddresses();
         if(addresses != null) {
             for (Address address : getAddresses()) {
@@ -330,16 +347,19 @@ public class SearchForLocationActivity extends AppCompatActivity {
                 getDisplayStrings().add(displayLine);
             }
         }
-        getDisplayStrings().add(getCurrentAddress());
+    }
+
+    public void addCurrentAndNotify() {
+        getDisplayStrings().add(getCurrentStandardAddress());
         getUnfilteredArrayAdapter().addAll(getDisplayStrings());
         getUnfilteredArrayAdapter().notifyDataSetChanged();
     }
 
 
     private SavedLocationModel createSavedLocationModelFromSearchedLocation(int itemPosition) {
-        String address = getDisplayStrings().get(itemPosition);
+        String displayString = getDisplayStrings().get(itemPosition);
         Location location = new Location(LocationManager.PASSIVE_PROVIDER);
-        if(address.equals(getCurrentAddress())) {
+        if(displayString.equals(getCurrentStandardAddress())) {
             location.setLatitude(getCurrentLocation().getLatitude());
             location.setLongitude(getCurrentLocation().getLongitude());
         }
@@ -347,9 +367,26 @@ public class SearchForLocationActivity extends AppCompatActivity {
             location.setLatitude(getAddresses().get(itemPosition).getLatitude());
             location.setLongitude(getAddresses().get(itemPosition).getLongitude());
         }
-        return new SavedLocationModel(location,-1,null,address);
+        return new SavedLocationModel(location,-2,null,displayString,displayString);
     }
 
+    private String createStandardAddressString(Address address) {
+        String standardAddress = "";
+        for (int i=0;i<=address.getMaxAddressLineIndex();++i) {
+            standardAddress += address.getAddressLine(i);
+            standardAddress += " ";
+        }
+        return standardAddress;
+    }
+
+    private String createShortenedAddressString(Address address) {
+        String shortenedAddress = "";
+        for (int j=1;j<=address.getMaxAddressLineIndex();++j) {
+            shortenedAddress += address.getAddressLine(j);
+            shortenedAddress += " ";
+        }
+        return shortenedAddress;
+    }
     //Keep up with theme changes on resume
     @Override
     protected void onResume() {

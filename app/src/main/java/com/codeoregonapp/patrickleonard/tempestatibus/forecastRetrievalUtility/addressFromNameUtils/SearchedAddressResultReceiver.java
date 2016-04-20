@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 
+import com.codeoregonapp.patrickleonard.tempestatibus.R;
+import com.codeoregonapp.patrickleonard.tempestatibus.ui.AlertDialogFragment;
+import com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity;
 import com.codeoregonapp.patrickleonard.tempestatibus.ui.SearchForLocationActivity;
 
 import java.util.ArrayList;
@@ -31,8 +34,23 @@ public class SearchedAddressResultReceiver extends ResultReceiver {
     @Override
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         mResultCode = resultCode;
-        mSearchedAddresses = resultData.getParcelableArrayList(SearchedAddressFetchConstants.RESULT_DATA_KEY);
-        mSearchForLocationActivity.setAddresses((ArrayList<Address>) mSearchedAddresses);
-        mSearchForLocationActivity.addResultsToAdapter();
+        mSearchForLocationActivity.clearDisplayStringsAndAdapter();
+        switch (mResultCode) {
+            case SearchedAddressFetchConstants.SUCCESS_RESULT: {
+                mSearchedAddresses = resultData.getParcelableArrayList(SearchedAddressFetchConstants.RESULT_DATA_KEY);
+                mSearchForLocationActivity.setAddresses((ArrayList<Address>) mSearchedAddresses);
+                mSearchForLocationActivity.addResultsToAdapter();
+                break;
+            }
+            case SearchedAddressFetchConstants.NOT_PRESENT: {
+                AlertDialogFragment dialog = new AlertDialogFragment();
+                dialog.show(mSearchForLocationActivity.getFragmentManager(), mSearchForLocationActivity.getString(R.string.error_dialog));
+                break;
+            }
+            default: {
+                //do nothing
+            }
+        }
+        mSearchForLocationActivity.addCurrentAndNotify();
     }
 }

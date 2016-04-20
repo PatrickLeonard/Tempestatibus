@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 
+import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalService;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalServiceConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Forecast;
 
@@ -35,10 +36,14 @@ public class ForecastRetrievalServiceMainActivityResultReceiver extends ResultRe
             //get the data from the successful retrieval of the Forecast data
             mResultCode = resultCode;
             Forecast forecast = resultData.getParcelable(ForecastRetrievalServiceConstants.RESULT_DATA_KEY);
-            String address = resultData.getString(ForecastRetrievalServiceConstants.STANDARD_ADDRESS_DATA_KEY);
+            String standardAddress = resultData.getString(ForecastRetrievalServiceConstants.STANDARD_ADDRESS_DATA_KEY);
+            String shortenedAddress = resultData.getString(ForecastRetrievalServiceConstants.SHORTENED_ADDRESS_DATA_KEY);
+            String locationType = resultData.getString(ForecastRetrievalServiceConstants.LOCATION_TYPE_DATA_KEY);
             //Set the data in the Main Activity and update the UI Views
             mMainActivity.setForecast(forecast);
-            mMainActivity.setAddress(address);
+            mMainActivity.setStandardAddress(standardAddress);
+            mMainActivity.setShortenedAddress(shortenedAddress);
+            mMainActivity.setLocationType(locationType);
             Log.v(ForecastRetrievalServiceMainActivityResultReceiver.TAG,"Calling updateCurrentDisplay from: " + Thread.currentThread().getName());
             mMainActivity.updateCurrentDisplay(mMainActivity.getForecast());
         }

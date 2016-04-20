@@ -43,7 +43,7 @@ public class SearchedAddressFetchIntentService extends IntentService {
         String errorMessage = "";
         mReceiver = intent.getParcelableExtra(SearchedAddressFetchConstants.RECEIVER);
         Location currentLocation = intent.getParcelableExtra(SearchedAddressFetchConstants.CURRENT_LOCATION_DATA);
-        double range = 10.00;
+        double range = 20.00;
         String enteredText = intent.getStringExtra(SearchedAddressFetchConstants.ENTERED_TEXT_KEY);
         List<Address> addresses = null;
         if(Geocoder.isPresent()) {

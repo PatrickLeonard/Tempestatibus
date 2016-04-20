@@ -48,14 +48,18 @@ public class SearchedLocationActivity extends AppCompatActivity {
     public static final String DAILY_FORECAST_PARCEL = "DAILY FORECAST"; //Daily Forecast data
     public static final String HOURLY_FORECAST_PARCEL = "HOURLY FORECAST"; //Hourly Forecast data
     public static final String SEARCHED_LOCATION_EXTRA = "SEARCHED_LOCATION"; //Searched Location Data
-    public static final String SEARCHED_ADDRESS_EXTRA = "SEARCHED_ADDRESS"; //Searched Address Data
+    public static final String SEARCHED_STANDARD_ADDRESS_EXTRA = "SEARCHED_STANDARD_ADDRESS"; //Searched Address Data
+    public static final String SEARCHED_SHORTENED_ADDRESS_EXTRA = "SEARCHED_SHORTENED_ADDRESS"; //Searched Address Data
     public static final String CURRENT_LOCATION_EXTRA = "CURRENT_LOCATION"; //Current Location Data
-    public static final String CURRENT_ADDRESS_EXTRA = "CURRENT_ADDRESS"; //Current Address Data
+    public static final String CURRENT_STANDARD_ADDRESS_EXTRA = "CURRENT_STANDARD_ADDRESS"; //Current Address Data
+    public static final String CURRENT_SHORTENED_ADDRESS_EXTRA = "CURRENT_SHORTENED_ADDRESS"; //Current Address Data
     public static final String ADDRESS_EXTRA = "ADDRESS"; //Address Data sent to DailyForecastActivity
-    private String mAddress;
+    private String mSearchedStandardAddress;
+    private String mSearchedShortenedAddress;
     private Location mSearchedLocation;
     private Location mCurrentLocation;
-    private String mCurrentAddress;
+    private String mCurrentStandardAddress;
+    private String mCurrentShortenedAddress;
     private Forecast mForecast;
     private TempestatibusApplicationSettings mTempestatibusApplicationSettings;
     private LocationDataSource mLocationDataSource;
@@ -67,14 +71,22 @@ public class SearchedLocationActivity extends AppCompatActivity {
         mForecast = forecast;
     }
 
-    public String getAddress() {
-        return mAddress;
+    public String getSearchedStandardAddress() {
+        return mSearchedStandardAddress;
     }
 
-    public void setAddress(String address) {
-        mAddress = address;
+    public void setSearchedStandardAddress(String searchedStandardAddress) {
+        mSearchedStandardAddress = searchedStandardAddress;
+    }
+    
+    public String getSearchedShortenedAddress() {
+        return mSearchedShortenedAddress;
     }
 
+    public void setSearchedShortenedAddress(String searchedShortenedAddress) {
+        mSearchedShortenedAddress = searchedShortenedAddress;
+    }
+    
     public Location getSearchedLocation() {
         return mSearchedLocation;
     }
@@ -99,14 +111,22 @@ public class SearchedLocationActivity extends AppCompatActivity {
         mCurrentLocation = currentLocation;
     }
 
-    public String getCurrentAddress() {
-        return mCurrentAddress;
+    public String getCurrentStandardAddress() {
+        return mCurrentStandardAddress;
     }
 
-    public void setCurrentAddress(String currentAddress) {
-        mCurrentAddress = currentAddress;
+    public void setCurrentStandardAddress(String currentStandardAddress) {
+        mCurrentStandardAddress = currentStandardAddress;
     }
 
+    public String getCurrentShortenedAddress() {
+        return mCurrentShortenedAddress;
+    }
+
+    public void setCurrentShortenedAddress(String currentShortenedAddress) {
+        mCurrentShortenedAddress = currentShortenedAddress;
+    }
+    
     public TempestatibusApplicationSettings getTempestatibusApplicationSettings() {
         if(mTempestatibusApplicationSettings == null) {
             mTempestatibusApplicationSettings = new TempestatibusApplicationSettings();
@@ -190,10 +210,12 @@ public class SearchedLocationActivity extends AppCompatActivity {
         applyCurrentTheme();
         //Get the Location and Address Data
         setSearchedLocation((Location) getIntent().getParcelableExtra(SearchedLocationActivity.SEARCHED_LOCATION_EXTRA));
-        setAddress(getIntent().getStringExtra(SearchedLocationActivity.SEARCHED_ADDRESS_EXTRA));
+        setSearchedStandardAddress(getIntent().getStringExtra(SearchedLocationActivity.SEARCHED_STANDARD_ADDRESS_EXTRA));
+        setSearchedShortenedAddress(getIntent().getStringExtra(SearchedLocationActivity.SEARCHED_SHORTENED_ADDRESS_EXTRA));
         //Get the Current Location and Address data
         setCurrentLocation((Location) getIntent().getParcelableExtra(SearchedLocationActivity.CURRENT_LOCATION_EXTRA));
-        setCurrentAddress(getIntent().getStringExtra(SearchedLocationActivity.CURRENT_ADDRESS_EXTRA));
+        setCurrentStandardAddress(getIntent().getStringExtra(SearchedLocationActivity.CURRENT_STANDARD_ADDRESS_EXTRA));
+        setCurrentShortenedAddress(getIntent().getStringExtra(SearchedLocationActivity.CURRENT_SHORTENED_ADDRESS_EXTRA));
         //Set the onClick listener for the data refresh button
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +248,8 @@ public class SearchedLocationActivity extends AppCompatActivity {
                     location.setLatitude(getCurrentLocation().getLatitude());
                     location.setLongitude(getCurrentLocation().getLongitude());
                     Intent intent = new Intent(SearchedLocationActivity.this, SearchForLocationActivity.class);
-                    intent.putExtra(SearchForLocationActivity.CURRENT_ADDRESS_EXTRA, getCurrentAddress());
+                    intent.putExtra(SearchForLocationActivity.CURRENT_STANDARD_ADDRESS_EXTRA, getCurrentStandardAddress());
+                    intent.putExtra(SearchForLocationActivity.CURRENT_SHORTENED_ADDRESS_EXTRA, getCurrentShortenedAddress());
                     intent.putExtra(SearchForLocationActivity.CURRENT_LOCATION_EXTRA, location);
                     startActivity(intent);
                     finish();
@@ -251,7 +274,7 @@ public class SearchedLocationActivity extends AppCompatActivity {
     private void saveLocation() {
         setLocationDataSource(new LocationDataSource(this));
         //Need a dialog for user to enter the display name
-        getLocationDataSource().create(getLocation(),getUserSavedName(),getAddress());
+        getLocationDataSource().create(getLocation(),getUserSavedName(),getSearchedStandardAddress(),getSearchedShortenedAddress());
         Toast.makeText(this, "Saved the Location!", Toast.LENGTH_SHORT).show();
     }
 
@@ -285,7 +308,7 @@ public class SearchedLocationActivity extends AppCompatActivity {
         mOzoneValue.setText(String.format("%s %s",forecast.getCurrent().getOzone(),getString(R.string.units_dobson)));
         mSummaryValue.setText(String.format("%s", forecast.getCurrent().getSummary()));
         mTimeUntilPrecipValue.setText(String.format("%s",forecast.getTimeUntilPrecipitation()));
-        mLocationLabel.setText(String.format("%s", getAddress()));
+        mLocationLabel.setText(String.format("%s", getSearchedStandardAddress()));
         Drawable drawable = ContextCompat.getDrawable(this, forecast.getCurrent().getIconId(mTempestatibusApplicationSettings.getAppThemePreference(),this));
         mIconImageView.setImageDrawable(drawable);
         mDailyGridView.setAdapter(new DayAdapter(this, forecast.getDailyForecastList()));
@@ -373,7 +396,7 @@ public class SearchedLocationActivity extends AppCompatActivity {
         //Don't start this activity if there is no forecast data
         if (getForecast() != null && getForecast().getDailyForecastList() != null) {
             Intent intent = new Intent(this, DailyForecastActivity.class);
-            intent.putExtra(SearchedLocationActivity.ADDRESS_EXTRA, getAddress());
+            intent.putExtra(SearchedLocationActivity.ADDRESS_EXTRA, getSearchedStandardAddress());
             intent.putExtra(SearchedLocationActivity.DAILY_FORECAST_PARCEL, getForecast().getDailyForecastList().get(item));
             startActivity(intent);
         }

@@ -3,7 +3,6 @@ package com.codeoregonapp.patrickleonard.tempestatibus.ui;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,9 +38,6 @@ import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.F
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalServiceConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.googleAPIUtils.GoogleAPIConnectionConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Forecast;
-import com.codeoregonapp.patrickleonard.tempestatibus.widget.TempestatibusLargeWidgetProvider;
-import com.codeoregonapp.patrickleonard.tempestatibus.widget.TempestatibusMediumWidgetProvider;
-import com.codeoregonapp.patrickleonard.tempestatibus.widget.TempestatibusSmallWidgetProvider;
 import com.codeoregonapp.patrickleonard.tempestatibus.widget.WidgetForecastUpdateService;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -63,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String HOURLY_FORECAST_PARCEL = "HOURLY FORECAST"; //Hourly Forecast data
     public static final String ADDRESS_EXTRA = "ADDRESS"; //Address Data
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2; //Access to phone location
-    private String mAddress;
+    private String mStandardAddress;
+    private String mShortenedAddress;
     private String mUserSavedName;
+    private String mLocationType;
     private Forecast mForecast;
     private boolean mLocationPermission;
     private boolean mAppResolvingError;
@@ -85,14 +83,30 @@ public class MainActivity extends AppCompatActivity {
         mForecast = forecast;
     }
 
-    public void setAddress(String address) {
-        mAddress = address;
+    public void setStandardAddress(String standardAddress) {
+        mStandardAddress = standardAddress;
     }
 
-    public String getAddress() {
-        return mAddress;
+    public String getStandardAddress() {
+        return mStandardAddress;
     }
 
+    public void setShortenedAddress(String ShortenedAddress) {
+        mShortenedAddress = ShortenedAddress;
+    }
+
+    public String getLocationType() {
+        return mLocationType;
+    }
+
+    public void setLocationType(String mLocationType) {
+        this.mLocationType = mLocationType;
+    }
+
+    public String getShortenedAddress() {
+        return mShortenedAddress;
+    }
+    
     public String getUserSavedName() {
         return mUserSavedName;
     }
@@ -211,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(getForecast() != null) {
                     Intent intent = new Intent(MainActivity.this, SearchForLocationActivity.class);
-                    intent.putExtra(SearchForLocationActivity.CURRENT_ADDRESS_EXTRA, getAddress());
+                    intent.putExtra(SearchForLocationActivity.CURRENT_STANDARD_ADDRESS_EXTRA, getStandardAddress());
+                    intent.putExtra(SearchForLocationActivity.CURRENT_SHORTENED_ADDRESS_EXTRA, getShortenedAddress());
                     intent.putExtra(SearchForLocationActivity.CURRENT_LOCATION_EXTRA, getLocation());
                     startActivity(intent);
                 }
@@ -254,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
             startForecastRetrievalService();
             startUpdateWidgetService();
         }
+
     }
 
     @NonNull
@@ -305,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
         mOzoneValue.setText(String.format("%s %s",forecast.getCurrent().getOzone(),getString(R.string.units_dobson)));
         mSummaryValue.setText(String.format("%s", forecast.getCurrent().getSummary()));
         mTimeUntilPrecipValue.setText(String.format("%s",forecast.getTimeUntilPrecipitation()));
-        mLocationLabel.setText(String.format("%s", getAddress()));
+        mLocationLabel.setText(String.format("%s", getStandardAddress()));
         Drawable drawable = ContextCompat.getDrawable(this, forecast.getCurrent().getIconId(mTempestatibusApplicationSettings.getAppThemePreference(),this));
         mIconImageView.setImageDrawable(drawable);
         mDailyGridView.setAdapter(new DayAdapter(this, forecast.getDailyForecastList()));
@@ -316,6 +332,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         toggleRefresh();
+        if(getLocationType().equals(ForecastRetrievalServiceConstants.LAST_KNOWN_LOCATION)) {
+            Toast.makeText(this,"Using Last Known Location",Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Utility functions to determine the proper units and associated strings for the forecast data
@@ -424,6 +443,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Check if the API considers physical location as a "Dangerous Permission"
     private boolean checkIfNeedPermissionRequest() {
+        Log.v(MainActivity.TAG,"Checking location permissions.");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 int locationDangerCheck = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
@@ -444,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
         //Don't start this activity if there is no forecast data
         if (getForecast() != null && getForecast().getDailyForecastList() != null) {
             Intent intent = new Intent(this, DailyForecastActivity.class);
-            intent.putExtra(MainActivity.ADDRESS_EXTRA, getAddress());
+            intent.putExtra(MainActivity.ADDRESS_EXTRA, getStandardAddress());
             intent.putExtra(MainActivity.DAILY_FORECAST_PARCEL,getForecast().getDailyForecastList().get(item));
             startActivity(intent);
         }
@@ -574,7 +594,7 @@ public class MainActivity extends AppCompatActivity {
     private void saveLocation() {
         setLocationDataSource(new LocationDataSource(this));
         //Need a dialog for user to enter the display name
-        getLocationDataSource().create(getLocation(), getUserSavedName(), getAddress());
+        getLocationDataSource().create(getLocation(), getUserSavedName(), getStandardAddress(),getShortenedAddress());
         Toast.makeText(this, "Saved the Location!", Toast.LENGTH_SHORT).show();
     }
 }

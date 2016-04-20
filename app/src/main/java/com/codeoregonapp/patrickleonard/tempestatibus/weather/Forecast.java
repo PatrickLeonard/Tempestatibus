@@ -98,7 +98,9 @@ public class Forecast implements Parcelable {
         setCurrent(new Current(getContext(),
                 forecast.getJSONObject(getContext().getString(R.string.JSON_Object_name_currently)),
                 getUnits()));
-        setTimeUntilPrecipitation(createTimeUntilPrecipitationString(forecast.getJSONObject("minutely")));
+        if(forecast.has("minutely")) {
+            setTimeUntilPrecipitation(createTimeUntilPrecipitationString(forecast.getJSONObject("minutely")));
+        }
         parseJSONForecastData(forecast);
     }
 

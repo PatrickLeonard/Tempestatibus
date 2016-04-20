@@ -2,15 +2,20 @@ package com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility;
 
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
+import com.codeoregonapp.patrickleonard.tempestatibus.database.LocationDataSource;
+import com.codeoregonapp.patrickleonard.tempestatibus.database.SavedLocationModel;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.addressUtils.AddressFetchConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.addressUtils.AddressFetchIntentService;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.addressUtils.AddressResultReceiver;
@@ -29,6 +34,8 @@ import com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Forecast;
 import com.codeoregonapp.patrickleonard.tempestatibus.widget.WidgetForecastUpdateService;
 
+import java.util.List;
+
 
 /**
  * Service to update the widgets as needed
@@ -45,8 +52,17 @@ public class ForecastRetrievalService extends Service {
     private ResultReceiver mMainReceiver;
     private ResultReceiver mWidgetReceiver;
     private String mCallingClassName;
+    private String mLocationType;
     private Long mLastSuccessfulRequestSystemTime;
     private boolean mIsRunning;
+
+    public String getLocationType() {
+        return mLocationType;
+    }
+
+    public void setLocationType(String mLocationType) {
+        this.mLocationType = mLocationType;
+    }
 
     public void setLastSuccessfulRequestSystemTime(Long lastSuccessfulRequestSystemTime) {
         mLastSuccessfulRequestSystemTime = lastSuccessfulRequestSystemTime;
@@ -160,10 +176,35 @@ public class ForecastRetrievalService extends Service {
     //Function to start the LocationFetchService
     protected void startLocationFetchService() {
         mIsRunning = true;
-        Intent intent = new Intent(this, LocationFetchService.class);
-        LocationResultReceiver resultReceiver = new LocationResultReceiver(new Handler(), this);
-        intent.putExtra(LocationFetchConstants.RECEIVER, resultReceiver);
-        startService(intent);
+        if(checkLocationServicesEnabled()) {
+            Intent intent = new Intent(this, LocationFetchService.class);
+            LocationResultReceiver resultReceiver = new LocationResultReceiver(new Handler(), this);
+            intent.putExtra(LocationFetchConstants.RECEIVER, resultReceiver);
+            setLocationType(ForecastRetrievalServiceConstants.CURRENT_LOCATION);
+            startService(intent);
+        }
+        else {
+            assignLastKnownLocation();
+            startForecastFetchIntentService();
+        }
+    }
+
+    private boolean checkLocationServicesEnabled() {
+        LocationManager lm = (LocationManager)getBaseContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled;
+        boolean network_enabled;
+        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return gps_enabled || network_enabled;
+    }
+
+    private void assignLastKnownLocation() {
+        LocationDataSource locationDataSource = new LocationDataSource(getApplicationContext());
+        List<SavedLocationModel> lastKnown = locationDataSource.readLastKnown();
+        setShortenedAddress(lastKnown.get(0).getShortenedAddress());
+        setStandardAddress(lastKnown.get(0).getStandardAddress());
+        setLocation(lastKnown.get(0).getLocation());
+        setLocationType(ForecastRetrievalServiceConstants.LAST_KNOWN_LOCATION);
     }
 
     //Function to start the GoogleAPIConnectionService
@@ -187,16 +228,23 @@ public class ForecastRetrievalService extends Service {
 
     //Function to start the ForecastFetchIntentService
     public void startForecastFetchIntentService() {
-        if(mStandardAddress.equals(getString(R.string.no_address_found))) {
+        if(getStandardAddress().equals(getString(R.string.no_address_found))) {
             deliverError(ForecastRetrievalServiceConstants.FAILURE_RESULT,getString(R.string.no_address_found));
         }
         else {
             Intent intent = new Intent(this, com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.forecastUtils.ForecastFetchIntentService.class);
             ForecastResultReceiver resultReceiver = new ForecastResultReceiver(new Handler(), this);
+            updateLastKnownLocationModel();
             intent.putExtra(ForecastFetchConstants.RECEIVER, resultReceiver);
             intent.putExtra(ForecastFetchConstants.LOCATION_DATA_EXTRA,getLocation());
             startService(intent);
         }
+    }
+
+    private void updateLastKnownLocationModel() {
+        LocationDataSource locationDataSource = new LocationDataSource(getApplicationContext());
+        Log.v(ForecastRetrievalService.TAG,"Updating Last Known: " + getStandardAddress() + " || " + getShortenedAddress() + " || " + getLocation().getLatitude() + " || " + getLocation().getLongitude());
+        locationDataSource.updateLastKnown(getStandardAddress(),getShortenedAddress(),getLocation().getLatitude(),getLocation().getLongitude());
     }
 
     //Function to start the JSONExtractionIntentService
@@ -219,6 +267,7 @@ public class ForecastRetrievalService extends Service {
         setLastSuccessfulRequestSystemTime(System.currentTimeMillis());
         bundle.putString(ForecastRetrievalServiceConstants.STANDARD_ADDRESS_DATA_KEY, getStandardAddress());
         bundle.putString(ForecastRetrievalServiceConstants.SHORTENED_ADDRESS_DATA_KEY, getShortenedAddress());
+        bundle.putString(ForecastRetrievalServiceConstants.LOCATION_TYPE_DATA_KEY, getLocationType());
         bundle.putParcelable(ForecastRetrievalServiceConstants.RESULT_DATA_KEY, getForecast());
         sendData(ForecastRetrievalServiceConstants.SUCCESS_RESULT,bundle);
     }

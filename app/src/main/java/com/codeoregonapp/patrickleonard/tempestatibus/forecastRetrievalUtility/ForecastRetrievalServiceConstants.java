@@ -16,6 +16,12 @@ public final class ForecastRetrievalServiceConstants {
             ".ERROR_CODE_KEY";
     public static final String ERROR_MESSAGE_KEY = PACKAGE_NAME +
             ".ERROR_MESSAGE_KEY";
+    public static final String CURRENT_LOCATION = PACKAGE_NAME +
+            ".CURRENT_LOCATION";
+    public static final String LAST_KNOWN_LOCATION = PACKAGE_NAME +
+            ".LAST_KNOWN_LOCATION";
+    public static final String LOCATION_TYPE_DATA_KEY = PACKAGE_NAME +
+            ".LOCATION_TYPE_DATA_KEY";
     public static final String STANDARD_ADDRESS_DATA_KEY = PACKAGE_NAME +
             ".STANDARD_ADDRESS_DATA_KEY";
     public static final String SHORTENED_ADDRESS_DATA_KEY = PACKAGE_NAME +

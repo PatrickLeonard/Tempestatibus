@@ -13,13 +13,15 @@ public class SavedLocationModel implements Parcelable {
     private Location mLocation;
     private int mId;
     private String mName;
-    private String mAddress;
+    private String mStandardAddress;
+    private String mShortenedAddress;
 
     protected SavedLocationModel(Parcel in) {
         mLocation = in.readParcelable(Location.class.getClassLoader());
         mId = in.readInt();
         mName = in.readString();
-        mAddress = in.readString();
+        mStandardAddress = in.readString();
+        mShortenedAddress = in.readString();
     }
 
     public static final Creator<SavedLocationModel> CREATOR = new Creator<SavedLocationModel>() {
@@ -42,12 +44,20 @@ public class SavedLocationModel implements Parcelable {
         mLocation = location;
     }
 
-    public String getAddress() {
-        return mAddress;
+    public String getStandardAddress() {
+        return mStandardAddress;
     }
 
-    public void setAddress(String address) {
-        mAddress = address;
+    public void setStandardAddress(String standardAddress) {
+        mStandardAddress = standardAddress;
+    }
+
+    public String getShortenedAddress() {
+        return mShortenedAddress;
+    }
+
+    public void setShortenedAddress(String shortenedAddress) {
+        mShortenedAddress = shortenedAddress;
     }
 
     public int getId() {
@@ -66,8 +76,8 @@ public class SavedLocationModel implements Parcelable {
         mName = name;
     }
 
-    public SavedLocationModel(Location location, int id, String name,String address) {
-        setId(id); setLocation(location); setName(name); setAddress(address);
+    public SavedLocationModel(Location location, int id, String name,String standardAddress,String shortenedAddress) {
+        setId(id); setLocation(location); setName(name); setStandardAddress(standardAddress); setShortenedAddress(shortenedAddress);
     }
 
     @Override
@@ -80,6 +90,7 @@ public class SavedLocationModel implements Parcelable {
         dest.writeParcelable(mLocation, flags);
         dest.writeInt(mId);
         dest.writeString(mName);
-        dest.writeString(mAddress);
+        dest.writeString(mStandardAddress);
+        dest.writeString(mShortenedAddress);
     }
 }
