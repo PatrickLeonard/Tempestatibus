@@ -115,6 +115,10 @@ public class Forecast implements Parcelable {
         if(forecast.has("minutely")) {
             setTimeUntilPrecipitation(createTimeUntilPrecipitationString(forecast.getJSONObject("minutely")));
         }
+        else {
+            setTimeUntilPrecipitation(mContext.getString(R.string.empty_two_digit_number));
+        }
+
         parseJSONForecastData(forecast);
     }
 

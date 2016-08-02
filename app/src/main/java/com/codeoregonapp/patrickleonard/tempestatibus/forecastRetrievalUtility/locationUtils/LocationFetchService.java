@@ -27,7 +27,7 @@ import java.util.TimerTask;
 public class LocationFetchService extends Service {
 
     public static final String TAG = LocationFetchService.class.getSimpleName();
-    private static final long FIVE_SECONDS = 1000 * 5;
+    private static final long TEN_SECONDS = 1000 * 10;
     private ResultReceiver mReceiver;
     private FallbackLocationTracker mFallbackLocationTracker;
     private Timer mTimeoutTimer;
@@ -45,7 +45,6 @@ public class LocationFetchService extends Service {
             if (checkLocationServicesEnabled()) {
                 if(mFallbackLocationTracker == null) {
                     mFallbackLocationTracker = new FallbackLocationTracker(this);
-                    mTimeoutTimer = new Timer();
                 }
                 if (mFallbackLocationTracker.hasLocation()) {
                     deliverResultToReceiver(LocationFetchConstants.SUCCESS_RESULT, mFallbackLocationTracker.getLocation());
@@ -119,19 +118,19 @@ public class LocationFetchService extends Service {
 
     private void startTimeoutTimer() {
         Log.d(LocationFetchService.TAG,"Starting timeout timer");
-        if(mTimeoutTimer != null) {
-            mTimeoutTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if(mFallbackLocationTracker != null) {
-                        mFallbackLocationTracker.stop();
-                        stopTimeoutTimer();
-                        Log.d(LocationFetchService.TAG,"TIMED OUT!!");
-                        deliverResultToReceiver(ForecastFetchConstants.FAILURE_RESULT,null);
-                    }
+        mTimeoutTimer = new Timer();
+        mTimeoutTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(mFallbackLocationTracker != null) {
+                    mFallbackLocationTracker.stop();
+                    stopTimeoutTimer();
+                    Log.d(LocationFetchService.TAG,"TIMED OUT!!");
+                    deliverResultToReceiver(ForecastFetchConstants.FAILURE_RESULT,null);
                 }
-            }, FIVE_SECONDS);
-        }
+            }
+        }, TEN_SECONDS);
+
     }
 
     private void stopTimeoutTimer() {

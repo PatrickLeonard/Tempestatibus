@@ -6,23 +6,29 @@ package com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.
 */
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 public class FallbackLocationTracker  implements LocationTracker, LocationTracker.LocationUpdateListener {
 
     private static final String TAG = FallbackLocationTracker.class.getSimpleName();
     private boolean isRunning;
+    // The minimum time before a location is considered "stale" or old data
+    // Cache the location for 4 minutes
     private static final int FOUR_MINUTES = 1000 * 60 * 4;
+    // Cache the stale location for 8 minutes
+    private static final int EIGHT_MINUTES = 1000 * 60 * 8;
     private ProviderLocationTracker gps;
     private ProviderLocationTracker net;
 
     private LocationUpdateListener mListener;
 
-    Location lastLoc;
-    long lastTime;
+    Location mLastLoc;
+    long mLastTime;
 
     public FallbackLocationTracker(Context context) {
         gps = new ProviderLocationTracker(context, ProviderLocationTracker.ProviderType.GPS);
         net = new ProviderLocationTracker(context, ProviderLocationTracker.ProviderType.NETWORK);
+        mLastTime = System.currentTimeMillis();
     }
 
     public void start(long minUpdateTime, long minUpdateDistance){
@@ -53,12 +59,15 @@ public class FallbackLocationTracker  implements LocationTracker, LocationTracke
 
     public boolean hasLocation(){
         //If either has a location, use it
-        return gps.hasLocation() || net.hasLocation();
+        return (gps.hasLocation() || net.hasLocation()) &&
+                !(System.currentTimeMillis() - mLastTime > FOUR_MINUTES);
     }
 
     public boolean hasPossiblyStaleLocation(){
         //If either has a location, use it
-        return gps.hasPossiblyStaleLocation() || net.hasPossiblyStaleLocation();
+        Log.d(FallbackLocationTracker.TAG,"Difference between last time and system time: " + (System.currentTimeMillis() - mLastTime));
+        return (gps.hasPossiblyStaleLocation() || net.hasPossiblyStaleLocation()) &&
+                !(System.currentTimeMillis() - mLastTime > EIGHT_MINUTES);
     }
 
     public Location getLocation(){
@@ -79,15 +88,15 @@ public class FallbackLocationTracker  implements LocationTracker, LocationTracke
 
     public void onUpdate(Location oldLoc, long oldTime, Location newLoc, long newTime) {
         boolean update = false;
-        if(isBetterLocation(newLoc,lastLoc)) {
+        if(isBetterLocation(newLoc, mLastLoc)) {
             update = true;
         }
         if(update){
             if(mListener != null) {
-                mListener.onUpdate(lastLoc, lastTime, newLoc, newTime);
+                mListener.onUpdate(mLastLoc, mLastTime, newLoc, newTime);
             }
-            lastLoc = newLoc;
-            lastTime = newTime;
+            mLastLoc = newLoc;
+            mLastTime = newTime;
         }
     }
 

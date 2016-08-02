@@ -36,7 +36,7 @@ public class ForecastFetchIntentService extends IntentService {
 
     public static final String TAG = ForecastFetchIntentService.class.getSimpleName();
 
-    private static final long TWO_SECONDS = 2 * 1000;
+    private static final long FIVE_SECONDS = 5 * 1000;
 
     public String mName;
     private ResultReceiver mReceiver;
@@ -76,9 +76,9 @@ public class ForecastFetchIntentService extends IntentService {
             String forecastURL = constructForecastURL();
             if (mOkHttpClient == null) {
                 mOkHttpClient = new OkHttpClient();
-                mOkHttpClient.setConnectTimeout(TWO_SECONDS, TimeUnit.MILLISECONDS); //This request should not take a long time.
-                mOkHttpClient.setWriteTimeout(TWO_SECONDS, TimeUnit.MILLISECONDS);  //The user isn't going to sit and wait for the spinner
-                mOkHttpClient.setReadTimeout(TWO_SECONDS, TimeUnit.MILLISECONDS);  //Error out if this request doesn't happen fast enough??
+                mOkHttpClient.setConnectTimeout(FIVE_SECONDS, TimeUnit.MILLISECONDS); //This request should not take a long time.
+                mOkHttpClient.setWriteTimeout(FIVE_SECONDS, TimeUnit.MILLISECONDS);  //The user isn't going to sit and wait for the spinner
+                mOkHttpClient.setReadTimeout(FIVE_SECONDS, TimeUnit.MILLISECONDS);  //Error out if this request doesn't happen fast enough??
             }
             final Request request = getRequest(forecastURL);
             if (request == null) {
