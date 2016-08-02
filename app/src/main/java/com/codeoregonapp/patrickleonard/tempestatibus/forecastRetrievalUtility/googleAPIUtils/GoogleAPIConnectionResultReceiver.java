@@ -17,7 +17,6 @@ public class GoogleAPIConnectionResultReceiver extends ResultReceiver {
 
     private final ForecastRetrievalService mForecastRetrievalService;
     public static Creator CREATOR = ResultReceiver.CREATOR;
-    public int mResultCode;
 
 
     public GoogleAPIConnectionResultReceiver(Handler handler, ForecastRetrievalService forecastRetrievalService) {
@@ -31,20 +30,14 @@ public class GoogleAPIConnectionResultReceiver extends ResultReceiver {
         //If it did connect fetch the human address from the AddressFetchIntentService
         int errorCode = resultData.getInt(GoogleAPIConnectionConstants.RESULT_DATA_KEY);
         if (resultCode == GoogleAPIConnectionConstants.SUCCESS_RESULT) {
-            mResultCode = resultCode;
-            mForecastRetrievalService.startAddressFetchIntentService();
-        }
-        //Or there is an error that is being attempted to resolve
-        else if ((resultCode == GoogleAPIConnectionConstants.REQUEST_RESOLVE_ERROR) ||
-                (resultCode == GoogleAPIConnectionConstants.CONNECTION_SUSPENDED)) {
-            mForecastRetrievalService.deliverGoogleError(errorCode, "Attempting to resolve request");
+            mForecastRetrievalService.googleConnectionSuccess();
         }
         else {
             //Or there was some other error to be delivered
             Log.e(GoogleAPIConnectionResultReceiver.TAG, "Result failure in onReceiveResult");
             Log.e(GoogleAPIConnectionResultReceiver.TAG, "Result code: " + resultCode);
             Log.e(GoogleAPIConnectionResultReceiver.TAG, "Error Code: " + errorCode);
-            mForecastRetrievalService.deliverGoogleError(errorCode,"Google API Connection Problem");
+            mForecastRetrievalService.googleConnectionFailure(errorCode);
         }
 
     }

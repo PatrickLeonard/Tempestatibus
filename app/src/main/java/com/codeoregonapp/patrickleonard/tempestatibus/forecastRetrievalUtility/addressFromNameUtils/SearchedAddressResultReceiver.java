@@ -4,11 +4,9 @@ import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.util.Log;
 
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
 import com.codeoregonapp.patrickleonard.tempestatibus.ui.AlertDialogFragment;
-import com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity;
 import com.codeoregonapp.patrickleonard.tempestatibus.ui.SearchForLocationActivity;
 
 import java.util.ArrayList;
@@ -44,6 +42,8 @@ public class SearchedAddressResultReceiver extends ResultReceiver {
             }
             case SearchedAddressFetchConstants.NOT_PRESENT: {
                 AlertDialogFragment dialog = new AlertDialogFragment();
+                Bundle args = new Bundle();
+                args.putString(AlertDialogFragment.ALERT_MESSAGE,mSearchForLocationActivity.getString(R.string.no_geocode_present));
                 dialog.show(mSearchForLocationActivity.getFragmentManager(), mSearchForLocationActivity.getString(R.string.error_dialog));
                 break;
             }

@@ -14,9 +14,6 @@ import android.util.Log;
 
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
 import com.codeoregonapp.patrickleonard.tempestatibus.TempestatibusApplicationSettings;
-import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalService;
-import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalServiceConstants;
-import com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -26,6 +23,7 @@ import com.squareup.okhttp.Response;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
 
@@ -37,6 +35,8 @@ import java.util.zip.GZIPInputStream;
 public class ForecastFetchIntentService extends IntentService {
 
     public static final String TAG = ForecastFetchIntentService.class.getSimpleName();
+
+    private static final long TWO_SECONDS = 2 * 1000;
 
     public String mName;
     private ResultReceiver mReceiver;
@@ -76,6 +76,9 @@ public class ForecastFetchIntentService extends IntentService {
             String forecastURL = constructForecastURL();
             if (mOkHttpClient == null) {
                 mOkHttpClient = new OkHttpClient();
+                mOkHttpClient.setConnectTimeout(TWO_SECONDS, TimeUnit.MILLISECONDS); //This request should not take a long time.
+                mOkHttpClient.setWriteTimeout(TWO_SECONDS, TimeUnit.MILLISECONDS);  //The user isn't going to sit and wait for the spinner
+                mOkHttpClient.setReadTimeout(TWO_SECONDS, TimeUnit.MILLISECONDS);  //Error out if this request doesn't happen fast enough??
             }
             final Request request = getRequest(forecastURL);
             if (request == null) {
@@ -112,8 +115,8 @@ public class ForecastFetchIntentService extends IntentService {
             });
         //No network...that's no good.
         } else {
-            Log.e(ForecastFetchIntentService.TAG, "Network Unavailable");
-            deliverResultToReceiver(ForecastFetchConstants.NOT_PRESENT,"Network Unavailable");
+            Log.e(ForecastFetchIntentService.TAG, getString(R.string.network_unavailable_text));
+            deliverResultToReceiver(ForecastFetchConstants.FAILURE_RESULT,getString(R.string.network_unavailable_text));
         }
     }
 
@@ -188,7 +191,6 @@ public class ForecastFetchIntentService extends IntentService {
         }
         catch (PackageManager.NameNotFoundException e) {
             Log.e(ForecastFetchIntentService.TAG, "Error extracting key.", e);
-            deliverResultToReceiver(ForecastFetchConstants.FAILURE_RESULT,"Error extracting key.");
         }
         return apiKey;
     }

@@ -19,7 +19,6 @@ public class ForecastRetrievalServiceWidgetProviderResultReceiver extends Result
 
     private final WidgetForecastUpdateService mWidgetForecastUpdateService;
     public static Creator CREATOR = ResultReceiver.CREATOR;
-    public int mResultCode;
 
     public ForecastRetrievalServiceWidgetProviderResultReceiver(Handler handler,WidgetForecastUpdateService widgetForecastUpdateService) {
         super(handler);
@@ -30,20 +29,39 @@ public class ForecastRetrievalServiceWidgetProviderResultReceiver extends Result
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         int errorCode = resultData.getInt(ForecastRetrievalServiceConstants.ERROR_CODE_KEY);
         String errorMessage = resultData.getString(ForecastRetrievalServiceConstants.ERROR_MESSAGE_KEY);
-        if (resultCode == ForecastRetrievalServiceConstants.SUCCESS_RESULT) {
-            mResultCode = resultCode;
-            Forecast forecast = resultData.getParcelable(ForecastRetrievalServiceConstants.RESULT_DATA_KEY);
-            String address = resultData.getString(ForecastRetrievalServiceConstants.SHORTENED_ADDRESS_DATA_KEY);
-            mWidgetForecastUpdateService.setForecast(forecast);
-            mWidgetForecastUpdateService.setAddress(address);
-            WidgetForecastUpdateService.staticForecast = forecast;
-            WidgetForecastUpdateService.staticAddress = address;
-            mWidgetForecastUpdateService.setHasRetrievalError(false);
-        }
-        else {
-            logError(resultCode, errorCode, errorMessage);
+        displayResultsOnWidgets(resultData);
+        switch(resultCode) {
+            case ForecastRetrievalServiceConstants.FAILURE_RESULT:  { //Display a generic error message
+                logError(resultCode, errorCode, errorMessage);
+                mWidgetForecastUpdateService.setHasRetrievalError(true);
+            }
+            case ForecastRetrievalServiceConstants.GOOGLE_CONNECTION_ERROR:  { //Do nothing from widget...maybe later??
+
+            }
+            case ForecastRetrievalServiceConstants.LOCATION_FAILURE_RESULT: { //Do nothing from widget...maybe later??
+                //Default Location should be used.
+            }
+            case ForecastRetrievalServiceConstants.NETWORK_FAILURE_RESULT: { //Do nothing from widget...maybe later??
+               //Default Data should be used.
+            }
+            case ForecastRetrievalServiceConstants.SUCCESS_RESULT: {
+                break; // do nothing, no error
+            }
+            default: {
+                logError(resultCode,errorCode,errorMessage);
+            }
         }
         mWidgetForecastUpdateService.updateAppWidgets(mWidgetForecastUpdateService.getAllAppWidgetIdsFromAllProviders());
+    }
+
+    private void displayResultsOnWidgets(Bundle resultData) {
+        Forecast forecast = resultData.getParcelable(ForecastRetrievalServiceConstants.RESULT_DATA_KEY);
+        String address = resultData.getString(ForecastRetrievalServiceConstants.SHORTENED_ADDRESS_DATA_KEY);
+        mWidgetForecastUpdateService.setForecast(forecast);
+        mWidgetForecastUpdateService.setAddress(address);
+        WidgetForecastUpdateService.staticForecast = forecast;
+        WidgetForecastUpdateService.staticAddress = address;
+        mWidgetForecastUpdateService.setHasRetrievalError(false);
     }
 
     private void logError(int resultCode, int errorCode, String errorMessage) {

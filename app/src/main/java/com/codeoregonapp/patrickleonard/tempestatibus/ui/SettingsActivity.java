@@ -92,15 +92,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     public static boolean getUnitsPreference(PreferenceActivity activity) {
         TempestatibusApplicationSettings tempestatibusApplicationSettings = new TempestatibusApplicationSettings();
         tempestatibusApplicationSettings.createSharedPreferenceContext(activity);
-        boolean units_preference = tempestatibusApplicationSettings.getAppUnitsPreference();
-        return units_preference;
+        return tempestatibusApplicationSettings.getAppUnitsPreference();
     }
 
     public static boolean getHourlyExtendPreference(PreferenceActivity activity) {
         TempestatibusApplicationSettings tempestatibusApplicationSettings = new TempestatibusApplicationSettings();
         tempestatibusApplicationSettings.createSharedPreferenceContext(activity);
-        boolean hourly_extend_preference = tempestatibusApplicationSettings.getHourlyExtendPreference();
-        return hourly_extend_preference;
+        return tempestatibusApplicationSettings.getHourlyExtendPreference();
     }
 
     @Override

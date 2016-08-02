@@ -5,8 +5,8 @@ package com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.
  * Created by Patrick Leonard on 2/6/2016.
  */
 public final class SearchedAddressFetchConstants {
-    public static final int SUCCESS_RESULT = 0;
-    public static final int FAILURE_RESULT = 1;
+    public static final int FAILURE_RESULT = 0;
+    public static final int SUCCESS_RESULT = 1;
     public static final int NOT_PRESENT = 2;
     public static final String PACKAGE_NAME =
             "com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.searchedLocationAddressUtils";
@@ -15,6 +15,4 @@ public final class SearchedAddressFetchConstants {
             ".RESULT_DATA_KEY";
     public static final String ENTERED_TEXT_KEY = PACKAGE_NAME +
             ".ENTERED_TEXT";
-    public static final String CURRENT_LOCATION_DATA = PACKAGE_NAME +
-            ".CURRENT_LOCATION";
 }

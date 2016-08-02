@@ -1,7 +1,6 @@
 package com.codeoregonapp.patrickleonard.tempestatibus.ui;
 
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
@@ -9,7 +8,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -25,7 +26,7 @@ import com.codeoregonapp.patrickleonard.tempestatibus.R;
 import com.codeoregonapp.patrickleonard.tempestatibus.TempestatibusApplicationSettings;
 import com.codeoregonapp.patrickleonard.tempestatibus.adapters.LocationAdapter;
 import com.codeoregonapp.patrickleonard.tempestatibus.adapters.UnfilteredArrayAdapter;
-import com.codeoregonapp.patrickleonard.tempestatibus.database.LocationDataSource;
+import com.codeoregonapp.patrickleonard.tempestatibus.database.CachedLocationDataSource;
 import com.codeoregonapp.patrickleonard.tempestatibus.database.SavedLocationModel;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.addressFromNameUtils.SearchedAddressFetchConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.addressFromNameUtils.SearchedAddressFetchIntentService;
@@ -41,7 +42,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
     public static final String CURRENT_LOCATION_EXTRA = "CURRENT_LOCATION";
     public static final String CURRENT_STANDARD_ADDRESS_EXTRA = "CURRENT_STANDARD_ADDRESS";
     public static final String CURRENT_SHORTENED_ADDRESS_EXTRA = "CURRENT_SHORTENED_ADDRESS";
-    private LocationDataSource mLocationDataSource;
+    private CachedLocationDataSource mCachedLocationDataSource;
     private ArrayList<Address> mAddresses;
     private ArrayList<String> mDisplayStrings;
     private ArrayList<SavedLocationModel> mSavedLocationModels;
@@ -51,12 +52,12 @@ public class SearchForLocationActivity extends AppCompatActivity {
     private String mCurrentShortenedAddress;
     private String mUserSavedName;
 
-    public LocationDataSource getLocationDataSource() {
-        return mLocationDataSource;
+    public CachedLocationDataSource getLocationDataSource() {
+        return mCachedLocationDataSource;
     }
 
-    public void setLocationDataSource(LocationDataSource locationDataSource) {
-        mLocationDataSource = locationDataSource;
+    public void setLocationDataSource(CachedLocationDataSource cachedLocationDataSource) {
+        mCachedLocationDataSource = cachedLocationDataSource;
     }
 
     public ArrayList<String> getDisplayStrings() {
@@ -156,9 +157,9 @@ public class SearchForLocationActivity extends AppCompatActivity {
     }
 
     private void configureSavedLocationsListView() {
-        setLocationDataSource(new LocationDataSource(this));
-        setSavedLocationModels(getLocationDataSource().read());
-        getLocationDataSource().readLastKnown();
+        setLocationDataSource(new CachedLocationDataSource(this));
+        setSavedLocationModels(getLocationDataSource().readLocationsWrapper());
+        getLocationDataSource().readLastKnownLocationWrapper();
         getListView().setAdapter(new LocationAdapter(this, getSavedLocationModels()));
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -228,7 +229,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
 
     private void createRenameLocationDialog(int position) {
         final int mPosition = position;
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this,TempestatibusApplicationSettings.getAlertDialogThemeId());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,TempestatibusApplicationSettings.getAlertDialogThemeId());
         //Set up the title
         builder.setTitle("Rename Location");
         //Set up the input EditText
@@ -249,18 +250,18 @@ public class SearchForLocationActivity extends AppCompatActivity {
                 Toast.makeText(SearchForLocationActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
             }
         });
-        android.support.v7.app.AlertDialog dialog = builder.show();
-        dialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE).
+        AlertDialog dialog = builder.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).
                 setTextColor(ContextCompat.getColor(SearchForLocationActivity.this,
                 TempestatibusApplicationSettings.getTextColorId()));
-        dialog.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE).
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).
                 setTextColor(ContextCompat.getColor(SearchForLocationActivity.this,
                 TempestatibusApplicationSettings.getTextColorId()));
     }
 
     private void renameLocation(int position) {
         int locationId = getSavedLocationModels().get(position).getId();
-        getLocationDataSource().update(locationId,getUserSavedName());
+        getLocationDataSource().updateLocation(locationId,getUserSavedName());
         getSavedLocationModels().get(position).setName(getUserSavedName());
         LocationAdapter locationAdapter = (LocationAdapter)getListView().getAdapter();
         locationAdapter.notifyDataSetChanged();
@@ -268,7 +269,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
 
     private void deleteSavedLocation(int position) {
         int locationId = getSavedLocationModels().get(position).getId();
-        getLocationDataSource().delete(locationId);
+        getLocationDataSource().deleteLocation(locationId);
         getSavedLocationModels().remove(position);
         LocationAdapter locationAdapter = (LocationAdapter)getListView().getAdapter();
         locationAdapter.notifyDataSetChanged();
@@ -325,7 +326,6 @@ public class SearchForLocationActivity extends AppCompatActivity {
         SearchedAddressResultReceiver searchedAddressResultReceiver = new SearchedAddressResultReceiver(new Handler(),this);
         intent.putExtra(SearchedAddressFetchConstants.ENTERED_TEXT_KEY,inputText);
         intent.putExtra((SearchedAddressFetchConstants.RECEIVER), searchedAddressResultReceiver);
-        intent.putExtra(SearchedAddressFetchConstants.CURRENT_LOCATION_DATA, getCurrentLocation());
         startService(intent);
     }
 

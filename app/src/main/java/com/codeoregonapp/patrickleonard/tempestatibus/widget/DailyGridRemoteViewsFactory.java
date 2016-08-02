@@ -54,7 +54,7 @@ public class DailyGridRemoteViewsFactory implements RemoteViewsService.RemoteVie
         Bundle bundle = new Bundle();
         bundle.putParcelable(Day.TAG,day);
         Intent fillInIntent = new Intent();
-        fillInIntent.putExtra(TempestatibusSmallWidgetProvider.DAY_BUNDLE,bundle);
+        fillInIntent.putExtra(TempestatibusLargeWidgetProvider.DAY_BUNDLE,bundle);
         fillInIntent.putExtra(MainActivity.ADDRESS_EXTRA, mAddress);
         remoteViews.setOnClickFillInIntent(R.id.grid_item_layout, fillInIntent);
         return remoteViews;

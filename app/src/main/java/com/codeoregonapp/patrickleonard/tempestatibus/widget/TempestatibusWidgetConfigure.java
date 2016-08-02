@@ -41,6 +41,7 @@ public class TempestatibusWidgetConfigure extends AppCompatActivity {
     private int mAppWidgetId;
     private Intent mResultValue;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTempestatibusApplicationSettings = new TempestatibusApplicationSettings();
@@ -122,7 +123,10 @@ public class TempestatibusWidgetConfigure extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(),
                 WidgetForecastUpdateService.class);
         int[] widgetIds = {mAppWidgetId};
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+        String appWidgetProvider = appWidgetManager.getAppWidgetInfo(mAppWidgetId).provider.getClass().getSimpleName();
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+        intent.putExtra(WidgetForecastUpdateService.CALLING_CLASS,getProviderName(appWidgetProvider));
         startService(intent);
         setResult(RESULT_OK, mResultValue);
         finish(); //Finish this activity with OK result
@@ -143,4 +147,18 @@ public class TempestatibusWidgetConfigure extends AppCompatActivity {
         }
     }
 
+    private String getProviderName(String className) {
+        if(className.equals(TempestatibusSmallWidgetProvider.class.getSimpleName())) {
+            return TempestatibusSmallWidgetProvider.NAME;
+        }
+        else if(className.equals(TempestatibusMediumWidgetProvider.class.getSimpleName())) {
+            return TempestatibusMediumWidgetProvider.NAME;
+        }
+        else if(className.equals(TempestatibusLargeWidgetProvider.class.getSimpleName())) {
+            return TempestatibusLargeWidgetProvider.NAME;
+        }
+        else {
+            return TempestatibusSmallWidgetProvider.NAME;
+        }
+    }
 }

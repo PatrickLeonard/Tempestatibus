@@ -45,6 +45,27 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/first_widget_layout_data_table_bottom_margin"
+                    android:layout_marginStart="@dimen/first_widget_layout_data_table_bottom_margin"
+                    android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
+                    android:duplicateParentState="true"
+                    android:id="@+id/progressBarLayout">
+
+                    <ProgressBar
+                        android:layout_width="36dip"
+                        android:layout_height="36dip"
+                        android:id="@+id/progressBar"
+                        style="@style/WHITE.INDETERMINATE_PROGRESS_STYLE"
+                        android:background="@android:color/transparent"
+                        android:layout_centerVertical="true"
+                        android:duplicateParentState="true"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,7 +88,7 @@
                     android:text="@string/empty_two_digit_number"
                     android:textColor="@android:color/white"
                     android:id="@+id/firstWidgetTemperatureValue"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:layout_marginRight="3dp"
                     android:layout_marginEnd="3dp"
                     android:background="@android:color/transparent"/>
@@ -91,7 +112,7 @@
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
                     android:background="@android:color/transparent"
-                    android:layout_marginTop="2dp"
+                    android:layout_alignBottom="@+id/firstWidgetTemperatureValue"
                     android:layout_toRightOf="@id/firstWidgetTemperatureDegreeSymbol"
                     android:layout_toEndOf="@id/firstWidgetTemperatureDegreeSymbol"/>
 

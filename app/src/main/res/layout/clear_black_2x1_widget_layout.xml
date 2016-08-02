@@ -5,10 +5,12 @@
              android:clickable="true"
              android:layout_margin="10dp"
              android:background="@android:color/transparent">
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/first_widget_outer_relative_layout"
         android:gravity="center"
         android:weightSum="2"
         android:layout_gravity="center">
@@ -18,6 +20,26 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/first_widget_layout_data_table_bottom_margin"
+                android:layout_marginStart="@dimen/first_widget_layout_data_table_bottom_margin"
+                android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
+                android:duplicateParentState="true"
+                android:id="@+id/progressBarLayout">
+
+                <ProgressBar
+                    android:layout_width="36dip"
+                    android:layout_height="36dip"
+                    android:id="@+id/progressBar"
+                    style="@style/BLACK.INDETERMINATE_PROGRESS_STYLE"
+                    android:background="@android:color/transparent"
+                    android:layout_centerVertical="true"
+                    android:duplicateParentState="true"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
 
             <ImageView
                 android:layout_width="wrap_content"

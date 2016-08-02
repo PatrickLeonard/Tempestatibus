@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -33,7 +34,7 @@ import android.widget.Toast;
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
 import com.codeoregonapp.patrickleonard.tempestatibus.TempestatibusApplicationSettings;
 import com.codeoregonapp.patrickleonard.tempestatibus.adapters.DayAdapter;
-import com.codeoregonapp.patrickleonard.tempestatibus.database.LocationDataSource;
+import com.codeoregonapp.patrickleonard.tempestatibus.database.CachedLocationDataSource;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalService;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalServiceConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.googleAPIUtils.GoogleAPIConnectionConstants;
@@ -62,19 +63,18 @@ public class MainActivity extends AppCompatActivity {
     private String mStandardAddress;
     private String mShortenedAddress;
     private String mUserSavedName;
-    private String mLocationType;
     private Forecast mForecast;
-    private boolean mLocationPermission;
     private boolean mAppResolvingError;
-    private LocationDataSource mLocationDataSource;
+    private boolean mRefusedSettings;
+    private CachedLocationDataSource mCachedLocationDataSource;
     private TempestatibusApplicationSettings mTempestatibusApplicationSettings;
 
-    public LocationDataSource getLocationDataSource() {
-        return mLocationDataSource;
+    public CachedLocationDataSource getLocationDataSource() {
+        return mCachedLocationDataSource;
     }
 
-    public void setLocationDataSource(LocationDataSource locationDataSource) {
-        mLocationDataSource = locationDataSource;
+    public void setLocationDataSource(CachedLocationDataSource cachedLocationDataSource) {
+        mCachedLocationDataSource = cachedLocationDataSource;
     }
 
     public Forecast getForecast() { return mForecast; }
@@ -95,14 +95,6 @@ public class MainActivity extends AppCompatActivity {
         mShortenedAddress = ShortenedAddress;
     }
 
-    public String getLocationType() {
-        return mLocationType;
-    }
-
-    public void setLocationType(String mLocationType) {
-        this.mLocationType = mLocationType;
-    }
-
     public String getShortenedAddress() {
         return mShortenedAddress;
     }
@@ -113,6 +105,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUserSavedName(String userSavedName) {
         mUserSavedName = userSavedName;
+    }
+
+    public boolean getRefusedSettings() {
+        return mRefusedSettings;
+    }
+
+    public void setRefusedSettings(boolean mEnteredSettings) {
+        this.mRefusedSettings = mEnteredSettings;
     }
 
     public boolean isAppResolvingError() {
@@ -196,11 +196,16 @@ public class MainActivity extends AppCompatActivity {
         //Set the theme, the content layout, and Bind views using Butterknife
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        //Apply the current app theme, make the indeterminant progress bar visible
+        //Apply the current app theme
         applyCurrentTheme();
         //Note if the application is still attempting to resolve an error from the Google API
         setAppResolvingError(savedInstanceState != null
                 && savedInstanceState.getBoolean(GoogleAPIConnectionConstants.STATE_RESOLVING_ERROR, false));
+        //Default the refresh and progress bar
+        //start with the ability to click the update image, so spinner invisible
+        mProgressBar.setVisibility(View.INVISIBLE);
+        //Make the refresh button visible
+        mRefreshImageView.setVisibility(View.VISIBLE);
         //Set the onClick listener for the data refresh button
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 //Toggle refresh and get data
                 toggleRefresh();
                 startForecastRetrievalService();
+                startUpdateWidgetService();
             }
         });
         //Set onClick Listener for the Settings icon (Cog)
@@ -261,15 +267,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Check if need to request permission to get phone location
-        if (checkIfNeedPermissionRequest()) {
-            mProgressBar.setVisibility(View.VISIBLE);
-            //Make the refresh button invisible
-            mRefreshImageView.setVisibility(View.INVISIBLE);
+        if (checkAndroidVersionForLocationPermission()) {
+            Log.d(MainActivity.TAG,"No need to check for location permission.");
+            toggleRefresh();
             //Get forecast data
             startForecastRetrievalService();
             startUpdateWidgetService();
         }
 
+        //Set refused settings to false
+        setRefusedSettings(false);
+        Log.d(MainActivity.TAG,"Finishing MainActivity OnCreate.");
     }
 
     @NonNull
@@ -305,111 +313,53 @@ public class MainActivity extends AppCompatActivity {
 
     //Display the data from the weather forecast to the user (Nicely formatted)
     public void updateCurrentDisplay(Forecast forecast) {
-        mTemperatureLabel.setText(String.format("%s", forecast.getCurrent().getTemperature()));
-        mTemperatureValueUnits.setText(String.format("%s", getTemperatureUnits()));
-        mApparentTemperatureValue.setText(String.format("%s",forecast.getCurrent().getApparentTemperature()));
-        mApparentTemperatureUnits.setText(String.format("%s", getTemperatureUnits()));
-        mTimeLabel.setText(String.format(getString(R.string.time_label_format_string), forecast.getCurrent().getFormattedTime()));
-        mHumidityValue.setText(String.format("%s%%", forecast.getCurrent().getHumidity()));
-        mPrecipitationChanceValue.setText(String.format("%s%%", forecast.getCurrent().getPrecipitationProbability()));
-        mWindValue.setText(String.format("%s %s %s", forecast.getCurrent().getWindSpeed(), getVelocityUnits(),determineWindBearing(forecast)));
-        mStormValue.setText(String.format("%s %s %s",forecast.getCurrent().getNearestStormDistance(),getDistanceUnits(),determineStormBearing(forecast)));
-        mDewValue.setText(String.format("%s",forecast.getCurrent().getDewPoint()));
-        mDewValueUnits.setText(String.format("%s", getTemperatureUnits()));
-        mVisibilityValue.setText(String.format("%s %s",forecast.getCurrent().getVisibility(),getDistanceUnits()));
-        mPressureValue.setText(String.format("%s %s",forecast.getCurrent().getPressure(),getPressureUnits()));
-        mOzoneValue.setText(String.format("%s %s",forecast.getCurrent().getOzone(),getString(R.string.units_dobson)));
-        mSummaryValue.setText(String.format("%s", forecast.getCurrent().getSummary()));
-        mTimeUntilPrecipValue.setText(String.format("%s",forecast.getTimeUntilPrecipitation()));
-        mLocationLabel.setText(String.format("%s", getStandardAddress()));
-        Drawable drawable = ContextCompat.getDrawable(this, forecast.getCurrent().getIconId(mTempestatibusApplicationSettings.getAppThemePreference(),this));
-        mIconImageView.setImageDrawable(drawable);
-        mDailyGridView.setAdapter(new DayAdapter(this, forecast.getDailyForecastList()));
-        mDailyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startDailyActivity(position);
-            }
-        });
+        if(forecast != null) {
+            mTemperatureLabel.setText(String.format("%s", forecast.getCurrent().getTemperature()));
+            mTemperatureValueUnits.setText(String.format("%s", getString(forecast.getTemperatureUnitsId())));
+            mApparentTemperatureValue.setText(String.format("%s", forecast.getCurrent().getApparentTemperature()));
+            mApparentTemperatureUnits.setText(String.format("%s", getString(forecast.getTemperatureUnitsId())));
+            mTimeLabel.setText(String.format(getString(R.string.time_label_format_string), forecast.getCurrent().getFormattedTime()));
+            mHumidityValue.setText(String.format("%s%%", forecast.getCurrent().getHumidity()));
+            mPrecipitationChanceValue.setText(String.format("%s%%", forecast.getCurrent().getPrecipitationProbability()));
+            mWindValue.setText(String.format("%s %s %s", forecast.getCurrent().getWindSpeed(), getString(forecast.getVelocityUnitsId()), forecast.determineWindBearing(forecast)));
+            mStormValue.setText(String.format("%s %s %s", forecast.getCurrent().getNearestStormDistance(), getString(forecast.getDistanceUnitsId()), forecast.determineStormBearing(forecast)));
+            mDewValue.setText(String.format("%s", forecast.getCurrent().getDewPoint()));
+            mDewValueUnits.setText(String.format("%s", getString(forecast.getTemperatureUnitsId())));
+            mVisibilityValue.setText(String.format("%s %s", forecast.getCurrent().getVisibility(), getString(forecast.getDistanceUnitsId())));
+            mPressureValue.setText(String.format("%s %s", forecast.getCurrent().getPressure(), getString(forecast.getPressureUnitsId())));
+            mOzoneValue.setText(String.format("%s %s", forecast.getCurrent().getOzone(), getString(R.string.units_dobson)));
+            mSummaryValue.setText(String.format("%s", forecast.getCurrent().getSummary()));
+            mTimeUntilPrecipValue.setText(String.format("%s", forecast.getTimeUntilPrecipitation()));
+            mLocationLabel.setText(String.format("%s", getStandardAddress()));
+            Drawable drawable = ContextCompat.getDrawable(this, forecast.getCurrent().getIconId(mTempestatibusApplicationSettings.getAppThemePreference(), this));
+            mIconImageView.setImageDrawable(drawable);
+            mDailyGridView.setAdapter(new DayAdapter(this, forecast.getDailyForecastList()));
+            mDailyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    startDailyActivity(position);
+                }
+            });
+        }
         toggleRefresh();
-        if(getLocationType().equals(ForecastRetrievalServiceConstants.LAST_KNOWN_LOCATION)) {
-            Toast.makeText(this,"Using Last Known Location",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    //Utility functions to determine the proper units and associated strings for the forecast data
-    private String determineStormBearing(Forecast forecast) {
-        String stormBearing;
-        if(!forecast.getCurrent().getNearestStormDistance().equals("0")) {
-            stormBearing = forecast.getCurrent().getNearestStormBearing();
-        }
-        else {
-            stormBearing = "";
-        }
-        return stormBearing;
-    }
-
-    private String determineWindBearing(Forecast forecast) {
-        String windBearing;
-        if(!forecast.getCurrent().getWindSpeed().equals("0")) {
-            windBearing = forecast.getCurrent().getWindBearing();
-        }
-        else {
-            windBearing = "";
-        }
-        return windBearing;
-    }
-
-    private String getDistanceUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_kilometers);
-        }
-        else {
-            return getString(R.string.us_unit_miles);
-        }
-    }
-
-    private String getVelocityUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_kilometers_per_hour);
-        }
-        else {
-            return getString(R.string.us_units_miles_per_hour);
-        }
-    }
-
-    private String getTemperatureUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_celsius);
-        }
-        else {
-            return getString(R.string.us_units_fahrenheit);
-        }
-    }
-
-    private String getPressureUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_hectoPascals);
-        }
-        else {
-            return getString(R.string.us_units_millibars);
-        }
     }
 
     //This function displays a generic error the user
-    public void alertUserAboutError() {
-        toggleRefresh(); //stop the progressBar and display Refresh Image
-        AlertDialogFragment dialog = new AlertDialogFragment();
+    public void alertUserAboutError(String title,String message,int errorType) {
+        AlertDialogFragment dialog = new
+                AlertDialogFragment();
+        Bundle dialogBundle = new Bundle();
+        dialogBundle.putString(AlertDialogFragment.ALERT_MESSAGE,message);
+        dialogBundle.putString(AlertDialogFragment.ALERT_TITLE,title);
+        dialogBundle.putInt(AlertDialogFragment.ERROR_TYPE,errorType);
+        dialog.setArguments(dialogBundle);
         dialog.show(getFragmentManager(), getString(R.string.error_dialog));
     }
 
     //This function handles requesting the phone location from the user
     //Straight from the Google Developers web page
     private void requestLocationPermission() {
+        Log.d(MainActivity.TAG,"Requesting location permission.");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (shouldShowRequestPermissionRationale(
                     android.Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -433,23 +383,29 @@ public class MainActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.length > 0)
                         && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    mLocationPermission = true;
+                    Log.d(MainActivity.TAG,"Location Permission Granted.");
+                    toggleRefresh();
+                    //Get forecast data
+                    startForecastRetrievalService();
+                    startUpdateWidgetService();
                 } else {
-                    alertUserAboutError();
+                    alertUserAboutError(getString(R.string.no_location_found_address),"Open Settings?",ForecastRetrievalServiceConstants.LOCATION_FAILURE_RESULT);
                 }
             }
         }
     }
 
     //Check if the API considers physical location as a "Dangerous Permission"
-    private boolean checkIfNeedPermissionRequest() {
+    private boolean checkAndroidVersionForLocationPermission() {
         Log.v(MainActivity.TAG,"Checking location permissions.");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Log.d(MainActivity.TAG,"Calling checkSelfPermission: Access Fine Location.");
                 int locationDangerCheck = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
                 if (!(locationDangerCheck == PackageManager.PERMISSION_GRANTED)) {
+                    Log.d(MainActivity.TAG,"locationCheck: " + locationDangerCheck);
                     requestLocationPermission();
-                    return mLocationPermission;
+                    return false;
                 }
             }
             return true;
@@ -457,6 +413,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d(MainActivity.TAG, getString(R.string.error_message), e);
             return false;
         }
+    }
+
+    public void startLocationSettingsActivity() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
+    }
+
+    public void startWirelessSettingsActivity() {
+        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+        startActivity(intent);
     }
 
     //Start the DailyForecastActivity with the List<Day> data
@@ -592,9 +558,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveLocation() {
-        setLocationDataSource(new LocationDataSource(this));
+        setLocationDataSource(new CachedLocationDataSource(this));
         //Need a dialog for user to enter the display name
-        getLocationDataSource().create(getLocation(), getUserSavedName(), getStandardAddress(),getShortenedAddress());
+        getLocationDataSource().createLocation(getLocation(), getUserSavedName(), getStandardAddress(),getShortenedAddress());
         Toast.makeText(this, "Saved the Location!", Toast.LENGTH_SHORT).show();
     }
 }

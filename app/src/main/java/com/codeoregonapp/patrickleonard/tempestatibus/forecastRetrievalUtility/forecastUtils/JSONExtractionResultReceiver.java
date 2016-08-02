@@ -18,7 +18,7 @@ public class JSONExtractionResultReceiver extends ResultReceiver {
 
     private final ForecastRetrievalService mForecastRetrievalService;
     public static Creator CREATOR = ResultReceiver.CREATOR;
-    public int mResultCode;
+    public int mServiceResultCode;
 
     public JSONExtractionResultReceiver(Handler handler, ForecastRetrievalService forecastRetrievalService) {
         super(handler);
@@ -29,16 +29,14 @@ public class JSONExtractionResultReceiver extends ResultReceiver {
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         //If the JSON Extraction was successful, deliver the Forecast Data Model to the ForecastRetrievalService
         if (resultCode == JSONExtractionConstants.SUCCESS_RESULT) {
-            mResultCode = resultCode;
+            mServiceResultCode = resultCode;
             Forecast mForecastOutput = resultData.getParcelable(JSONExtractionConstants.RESULT_DATA_KEY);
-            mForecastRetrievalService.setForecast(mForecastOutput);
-            mForecastRetrievalService.setLastSuccessfulRequestSystemTime(System.currentTimeMillis());
-            mForecastRetrievalService.deliverForecastAndAddress();
+            mForecastRetrievalService.jsonExtractionSuccess(mForecastOutput);
         }
         else {
             //Or deliver an error code and message
             String errorMessage = resultData.getParcelable(JSONExtractionConstants.RESULT_DATA_KEY);
-            mForecastRetrievalService.deliverError(resultCode,errorMessage);
+            mForecastRetrievalService.jsonExtractionFailure(errorMessage,resultCode);
         }
     }
 }

@@ -207,4 +207,11 @@
         <item name="android:background">@color/button_background_color</item>
     </style>
 
+    <style name="BLACK.INDETERMINATE_PROGRESS_STYLE" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/indeterminate_progress_black</item>
+    </style>
+
+    <style name="WHITE.INDETERMINATE_PROGRESS_STYLE" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/indeterminate_progress_white</item>
+    </style>
 </resources>

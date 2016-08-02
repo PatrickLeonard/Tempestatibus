@@ -22,77 +22,89 @@
         android:orientation="vertical"
         android:weightSum="5">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
+            android:weightSum="5"
             android:layout_weight="1.1">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp">
+                android:layout_weight="1">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/hourglassIconImageView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_centerInParent="true"
                     android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/saveIconImageView"
-                    android:layout_marginLeft="36dp"
-                    android:layout_marginStart="36dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/hourglassIconImageView"
-                    android:layout_toEndOf="@id/hourglassIconImageView"/>
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/refreshImageView"
+                    android:background="@android:color/transparent"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/refresh_image_description"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"
+                    android:background="@android:color/transparent"
+                    android:layout_centerInParent="true"/>
 
             </RelativeLayout>
 
-
-            <ImageView
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/refreshImageView"
-                android:layout_centerHorizontal="true"
-                android:nestedScrollingEnabled="true"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/refresh_image_description"/>
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/searchIconImageView"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
 
-            <ProgressBar
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
-                android:background="@android:color/transparent"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"/>
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/settingsImageView"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/setting_icon_content_description"
+                    android:background="@android:color/transparent" />
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchIconImageView"
-                android:layout_marginLeft="48sp"
-                android:layout_marginStart="48dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/progressBar"
-                android:layout_toEndOf="@id/progressBar"/>
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".95">
+            android:layout_weight=".99">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,7 +127,7 @@
                     android:id="@+id/temperatureLabel"
                     android:background="@android:color/transparent"
                     android:layout_centerInParent="true"
-                    android:textSize="120sp"/>
+                    android:textSize="90sp"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,7 +135,7 @@
                     android:layout_toRightOf="@+id/temperatureLabel"
                     android:layout_toEndOf="@+id/temperatureLabel"
                     android:background="@android:color/transparent"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:contentDescription="@string/degrees_image_description"/>
@@ -133,7 +145,7 @@
                     android:text="@string/empty_two_digit_number"
                     android:id="@+id/temperatureValueUnits"
                     android:background="@android:color/transparent"
-                    android:textSize="80sp"
+                    android:textSize="70sp"
                     android:layout_toEndOf="@id/degreeImageView"
                     android:layout_toRightOf="@id/degreeImageView"
                     android:layout_alignBaseline="@id/temperatureLabel"/>
@@ -146,7 +158,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.12">
+            android:layout_weight="1.09">
 
 
             <TextView
@@ -419,6 +431,8 @@
                             android:text="@string/storm_distance_label"
                             android:textSize="12sp"
                             android:id="@+id/stormLabel"
+                            android:lines="1"
+                            android:gravity="center"
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/sub_text_color"
                             android:background="@android:color/transparent"/>
@@ -445,6 +459,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/apparent_temp_label"
                             android:textSize="12sp"
+                            android:lines="1"
+                            android:gravity="center"
                             android:id="@+id/apparentTemperatureLabel"
                             android:background="@android:color/transparent"
                             android:textColor="@color/sub_text_color"

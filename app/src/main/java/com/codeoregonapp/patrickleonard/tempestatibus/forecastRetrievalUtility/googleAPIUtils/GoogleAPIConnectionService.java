@@ -36,6 +36,11 @@ public class GoogleAPIConnectionService extends Service implements GoogleApiClie
 
     @Override
     public int onStartCommand(Intent intent, int flags, int ids) {
+        //If this is not registered due to previous error, then register it.
+        if(!mGoogleApiClient.isConnectionFailedListenerRegistered(this)) {
+            mGoogleApiClient.registerConnectionFailedListener(this);
+        }
+
         //Set the receiver and connect to the Google API
         if(intent != null) {
             mReceiver = intent.getParcelableExtra(GoogleAPIConnectionConstants.RECEIVER);
@@ -100,6 +105,7 @@ public class GoogleAPIConnectionService extends Service implements GoogleApiClie
         } else {
             deliverResultToReceiver(GoogleAPIConnectionConstants.FAILURE_RESULT, GoogleAPIConnectionConstants.NO_RESOLUTION);
         }
+        mGoogleApiClient.unregisterConnectionFailedListener(this); //Balance calls to onConnectionFailed with unregisterConnectionFailListener
         Log.e(GoogleAPIConnectionService.TAG, "Connection Failed");
         Log.e(GoogleAPIConnectionService.TAG, String.format("Error code: %s", connectionResult.getErrorCode()));
     }

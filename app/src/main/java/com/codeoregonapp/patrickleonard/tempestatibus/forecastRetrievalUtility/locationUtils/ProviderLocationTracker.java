@@ -10,19 +10,21 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.net.ConnectivityManagerCompat;
+
+
+
 
 public class ProviderLocationTracker implements LocationListener, LocationTracker {
 
+    private static final String TAG = ProviderLocationTracker.class.getSimpleName();
     // The minimum time before a location is considered "stale" or old data
     // Cache the location for 4 minutes.
     private static final long STALE_LOCATION_TIME = 1000 * 60 * 4;
-
     private LocationManager lm;
     private ConnectivityManager mConnectivityManager;
+
     public enum ProviderType{
         NETWORK,
         GPS
@@ -31,7 +33,7 @@ public class ProviderLocationTracker implements LocationListener, LocationTracke
     private String provider;
 
     private Location lastLocation;
-    private long lastTime;
+    private long mLastTime;
 
     private boolean isRunning;
 
@@ -66,7 +68,6 @@ public class ProviderLocationTracker implements LocationListener, LocationTracke
         isRunning = true;
         lm.requestLocationUpdates(provider, minUpdateTime, minUpdateDistance, this);
         lastLocation = null;
-        lastTime = 0;
     }
 
     private boolean checkNetworkConnection() {
@@ -91,12 +92,13 @@ public class ProviderLocationTracker implements LocationListener, LocationTracke
 
     public boolean hasLocation(){
         return ((lastLocation!=null) &&
-                (!(System.currentTimeMillis() - lastTime > STALE_LOCATION_TIME)));
+                (!(System.currentTimeMillis() - mLastTime > STALE_LOCATION_TIME)));
     }
 
     @Override
     public boolean hasPossiblyStaleLocation() throws SecurityException {
-        return lm.getLastKnownLocation(provider)!= null;
+        return ((lm.getLastKnownLocation(provider)!= null) &&
+                (!(System.currentTimeMillis() - mLastTime > 2*STALE_LOCATION_TIME)));
     }
 
     public Location getLocation(){
@@ -112,10 +114,10 @@ public class ProviderLocationTracker implements LocationListener, LocationTracke
         long now = System.currentTimeMillis();
         if(isBetterLocation(newLoc,lastLocation)) {
             if (listener != null) {
-                listener.onUpdate(lastLocation, lastTime, newLoc, now);
+                listener.onUpdate(lastLocation, mLastTime, newLoc, now);
             }
             lastLocation = newLoc;
-            lastTime = now;
+            mLastTime = now;
         }
     }
 

@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
 import com.codeoregonapp.patrickleonard.tempestatibus.TempestatibusApplicationSettings;
 import com.codeoregonapp.patrickleonard.tempestatibus.adapters.DayAdapter;
-import com.codeoregonapp.patrickleonard.tempestatibus.database.LocationDataSource;
+import com.codeoregonapp.patrickleonard.tempestatibus.database.CachedLocationDataSource;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.SearchedLocationForecastRetrievalService;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.SearchedLocationForecastRetrievalServiceConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Forecast;
@@ -62,7 +62,7 @@ public class SearchedLocationActivity extends AppCompatActivity {
     private String mCurrentShortenedAddress;
     private Forecast mForecast;
     private TempestatibusApplicationSettings mTempestatibusApplicationSettings;
-    private LocationDataSource mLocationDataSource;
+    private CachedLocationDataSource mCachedLocationDataSource;
     private String mUserSavedName;
 
     public Forecast getForecast() { return mForecast; }
@@ -134,12 +134,12 @@ public class SearchedLocationActivity extends AppCompatActivity {
         return mTempestatibusApplicationSettings;
     }
 
-    public LocationDataSource getLocationDataSource() {
-        return mLocationDataSource;
+    public CachedLocationDataSource getLocationDataSource() {
+        return mCachedLocationDataSource;
     }
 
-    public void setLocationDataSource(LocationDataSource locationDataSource) {
-        mLocationDataSource = locationDataSource;
+    public void setLocationDataSource(CachedLocationDataSource cachedLocationDataSource) {
+        mCachedLocationDataSource = cachedLocationDataSource;
     }
 
     //Use ButterKnife to Bind Views to Variables
@@ -272,9 +272,9 @@ public class SearchedLocationActivity extends AppCompatActivity {
     }
 
     private void saveLocation() {
-        setLocationDataSource(new LocationDataSource(this));
+        setLocationDataSource(new CachedLocationDataSource(this));
         //Need a dialog for user to enter the display name
-        getLocationDataSource().create(getLocation(),getUserSavedName(),getSearchedStandardAddress(),getSearchedShortenedAddress());
+        getLocationDataSource().createLocation(getLocation(),getUserSavedName(),getSearchedStandardAddress(),getSearchedShortenedAddress());
         Toast.makeText(this, "Saved the Location!", Toast.LENGTH_SHORT).show();
     }
 
@@ -292,102 +292,46 @@ public class SearchedLocationActivity extends AppCompatActivity {
 
     //Display the data from the weather forecast to the user (Nicely formatted)
     public void updateCurrentDisplay(Forecast forecast) {
-        mTemperatureLabel.setText(String.format("%s", forecast.getCurrent().getTemperature()));
-        mTemperatureValueUnits.setText(String.format("%s", getTemperatureUnits()));
-        mApparentTemperatureValue.setText(String.format("%s",forecast.getCurrent().getApparentTemperature()));
-        mApparentTemperatureUnits.setText(String.format("%s", getTemperatureUnits()));
-        mTimeLabel.setText(String.format(getString(R.string.time_label_format_string), forecast.getCurrent().getFormattedTime()));
-        mHumidityValue.setText(String.format("%s%%", forecast.getCurrent().getHumidity()));
-        mPrecipitationChanceValue.setText(String.format("%s%%", forecast.getCurrent().getPrecipitationProbability()));
-        mWindValue.setText(String.format("%s %s %s", forecast.getCurrent().getWindSpeed(), getVelocityUnits(),determineWindBearing(forecast)));
-        mStormValue.setText(String.format("%s %s %s",forecast.getCurrent().getNearestStormDistance(),getDistanceUnits(),determineStormBearing(forecast)));
-        mDewValue.setText(String.format("%s",forecast.getCurrent().getDewPoint()));
-        mDewValueUnits.setText(String.format("%s", getTemperatureUnits()));
-        mVisibilityValue.setText(String.format("%s %s",forecast.getCurrent().getVisibility(),getDistanceUnits()));
-        mPressureValue.setText(String.format("%s %s",forecast.getCurrent().getPressure(),getPressureUnits()));
-        mOzoneValue.setText(String.format("%s %s",forecast.getCurrent().getOzone(),getString(R.string.units_dobson)));
-        mSummaryValue.setText(String.format("%s", forecast.getCurrent().getSummary()));
-        mTimeUntilPrecipValue.setText(String.format("%s",forecast.getTimeUntilPrecipitation()));
-        mLocationLabel.setText(String.format("%s", getSearchedStandardAddress()));
-        Drawable drawable = ContextCompat.getDrawable(this, forecast.getCurrent().getIconId(mTempestatibusApplicationSettings.getAppThemePreference(),this));
-        mIconImageView.setImageDrawable(drawable);
-        mDailyGridView.setAdapter(new DayAdapter(this, forecast.getDailyForecastList()));
-        mDailyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startDailyActivity(position);
-            }
-        });
+        if(forecast != null) {
+            mTemperatureLabel.setText(String.format("%s", forecast.getCurrent().getTemperature()));
+            mTemperatureValueUnits.setText(String.format("%s", getString(forecast.getTemperatureUnitsId())));
+            mApparentTemperatureValue.setText(String.format("%s", forecast.getCurrent().getApparentTemperature()));
+            mApparentTemperatureUnits.setText(String.format("%s", getString(forecast.getTemperatureUnitsId())));
+            mTimeLabel.setText(String.format(getString(R.string.time_label_format_string), forecast.getCurrent().getFormattedTime()));
+            mHumidityValue.setText(String.format("%s%%", forecast.getCurrent().getHumidity()));
+            mPrecipitationChanceValue.setText(String.format("%s%%", forecast.getCurrent().getPrecipitationProbability()));
+            mWindValue.setText(String.format("%s %s %s", forecast.getCurrent().getWindSpeed(), getString(forecast.getVelocityUnitsId()), forecast.determineWindBearing(forecast)));
+            mStormValue.setText(String.format("%s %s %s", forecast.getCurrent().getNearestStormDistance(), getString(forecast.getDistanceUnitsId()), forecast.determineStormBearing(forecast)));
+            mDewValue.setText(String.format("%s", forecast.getCurrent().getDewPoint()));
+            mDewValueUnits.setText(String.format("%s", getString(forecast.getTemperatureUnitsId())));
+            mVisibilityValue.setText(String.format("%s %s", forecast.getCurrent().getVisibility(), getString(forecast.getDistanceUnitsId())));
+            mPressureValue.setText(String.format("%s %s", forecast.getCurrent().getPressure(), getString(forecast.getPressureUnitsId())));
+            mOzoneValue.setText(String.format("%s %s", forecast.getCurrent().getOzone(), getString(R.string.units_dobson)));
+            mSummaryValue.setText(String.format("%s", forecast.getCurrent().getSummary()));
+            mTimeUntilPrecipValue.setText(String.format("%s", forecast.getTimeUntilPrecipitation()));
+            mLocationLabel.setText(String.format("%s", getSearchedStandardAddress()));
+            Drawable drawable = ContextCompat.getDrawable(this, forecast.getCurrent().getIconId(mTempestatibusApplicationSettings.getAppThemePreference(), this));
+            mIconImageView.setImageDrawable(drawable);
+            mDailyGridView.setAdapter(new DayAdapter(this, forecast.getDailyForecastList()));
+            mDailyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    startDailyActivity(position);
+                }
+            });
+        }
         toggleRefresh();
     }
 
-    //Utility functions to determine the proper units and associated strings for the forecast data
-    private String determineStormBearing(Forecast forecast) {
-        String stormBearing;
-        if(!forecast.getCurrent().getNearestStormDistance().equals("0")) {
-            stormBearing = forecast.getCurrent().getNearestStormBearing();
-        }
-        else {
-            stormBearing = "";
-        }
-        return stormBearing;
-    }
-
-    private String determineWindBearing(Forecast forecast) {
-        String windBearing;
-        if(!forecast.getCurrent().getWindSpeed().equals("0")) {
-            windBearing = forecast.getCurrent().getWindBearing();
-        }
-        else {
-            windBearing = "";
-        }
-        return windBearing;
-    }
-
-    private String getDistanceUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_kilometers);
-        }
-        else {
-            return getString(R.string.us_unit_miles);
-        }
-    }
-
-    private String getVelocityUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_kilometers_per_hour);
-        }
-        else {
-            return getString(R.string.us_units_miles_per_hour);
-        }
-    }
-
-    private String getTemperatureUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_celsius);
-        }
-        else {
-            return getString(R.string.us_units_fahrenheit);
-        }
-    }
-
-    private String getPressureUnits() {
-        getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
-        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
-            return getString(R.string.si_units_hectoPascals);
-        }
-        else {
-            return getString(R.string.us_units_millibars);
-        }
-    }
-
     //This function displays a generic error the user
-    public void alertUserAboutError() {
-        toggleRefresh(); //stop the progressBar and display Refresh Image
-        AlertDialogFragment dialog = new AlertDialogFragment();
+    public void alertUserAboutError(String title,String message,int errorType) {
+        AlertDialogFragment dialog = new
+                AlertDialogFragment();
+        Bundle dialogBundle = new Bundle();
+        dialogBundle.putString(AlertDialogFragment.ALERT_MESSAGE,message);
+        dialogBundle.putString(AlertDialogFragment.ALERT_TITLE,title);
+        dialogBundle.putInt(AlertDialogFragment.ERROR_TYPE,errorType);
+        dialog.setArguments(dialogBundle);
         dialog.show(getFragmentManager(), getString(R.string.error_dialog));
     }
 

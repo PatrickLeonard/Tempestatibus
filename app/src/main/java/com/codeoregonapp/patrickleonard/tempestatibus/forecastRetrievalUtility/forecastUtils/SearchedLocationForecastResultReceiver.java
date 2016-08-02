@@ -33,11 +33,6 @@ public class SearchedLocationForecastResultReceiver extends ResultReceiver {
             mSearchedLocationForecastRetrievalService.setJSONData(mForecastOutput);
             mSearchedLocationForecastRetrievalService.startJSONExtractionIntentService();
         }
-        //Send an error if the network was not available
-        else if(resultCode == ForecastFetchConstants.NOT_PRESENT) {
-            mResultCode = resultCode;
-        }
-        //Send a generic error
         else {
             String errorMessage = resultData.getString(ForecastFetchConstants.RESULT_DATA_KEY);
             mSearchedLocationForecastRetrievalService.deliverError(ForecastFetchConstants.FAILURE_RESULT,errorMessage);

@@ -56,6 +56,10 @@ public class TempestatibusApplicationSettings {
         mSharedPreferences.edit().putString(WIDGET_THEME_PREFERENCE+widgetId,theme).apply();
     }
 
+    public void removeWidgetThemePreference(int widgetId) {
+        mSharedPreferences.edit().remove(WIDGET_THEME_PREFERENCE+widgetId).apply();
+    }
+
     public boolean getAppUnitsPreference() {
         return mSharedPreferences.getBoolean(APP_UNITS_PREFERENCE, determineDefaultUnits());
     }

@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
+import com.codeoregonapp.patrickleonard.tempestatibus.TempestatibusApplicationSettings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,11 +24,20 @@ public class Forecast implements Parcelable {
     private Current mCurrent;
     private List<Hour> mHourlyForecast;
     private List<Day> mDailyForecast;
+    private List<WeatherAlert> mWeatherAlerts;
     private String mUnits;
     private String mTimeUntilPrecipitation;
     private Double mLatitude;
     private Double mLongitude;
+    private TempestatibusApplicationSettings mTempestatibusApplicationSettings;
 
+    public TempestatibusApplicationSettings getTempestatibusApplicationSettings() {
+        if(mTempestatibusApplicationSettings == null) {
+            mTempestatibusApplicationSettings = new TempestatibusApplicationSettings();
+        }
+        return mTempestatibusApplicationSettings;
+    }
+    
     public String getTimeUntilPrecipitation() {
         return mTimeUntilPrecipitation;
     }
@@ -80,6 +90,8 @@ public class Forecast implements Parcelable {
 
     public List<Hour> getHourlyForecastList() { return mHourlyForecast; }
 
+    public List<WeatherAlert> getWeatherAlerts() { return mWeatherAlerts; }
+
     public void setHourlyForecast(List<Hour> hourlyForecast) {
         mHourlyForecast = hourlyForecast;
     }
@@ -87,6 +99,8 @@ public class Forecast implements Parcelable {
     public void setDailyForecast(List<Day> dailyForecast) {
         mDailyForecast = dailyForecast;
     }
+
+    public void setWeatherAlerts(List<WeatherAlert> weatherAlerts) { mWeatherAlerts = weatherAlerts;    }
 
     public Forecast(String jsonData,Context context) throws JSONException {
         JSONObject forecast = new JSONObject(jsonData);
@@ -139,6 +153,7 @@ public class Forecast implements Parcelable {
         dest.writeParcelable(mCurrent, flags);
         dest.writeList(mHourlyForecast);
         dest.writeList(mDailyForecast);
+        dest.writeList(mWeatherAlerts);
         dest.writeString(mUnits);
         dest.writeString(mTimeUntilPrecipitation);
     }
@@ -149,6 +164,8 @@ public class Forecast implements Parcelable {
         in.readList(mHourlyForecast, Hour.class.getClassLoader());
         mDailyForecast = new ArrayList<>();
         in.readList(mDailyForecast, Day.class.getClassLoader());
+        mWeatherAlerts = new ArrayList<>();
+        in.readList(mWeatherAlerts, WeatherAlert.class.getClassLoader());
         mUnits = in.readString();
         mTimeUntilPrecipitation = in.readString();
     }
@@ -168,6 +185,25 @@ public class Forecast implements Parcelable {
     private void parseJSONForecastData(JSONObject forecast) throws JSONException {
         setHourlyForecast(parseHourlyForecast(forecast));
         setDailyForecast(parseDailyForecast(forecast));
+        setWeatherAlerts(parseWeatherAlerts(forecast));
+    }
+
+    private List<WeatherAlert> parseWeatherAlerts(JSONObject forecast) throws JSONException {
+        JSONArray alertArray;
+        List<WeatherAlert> weatherAlerts = new ArrayList<>();
+        if(forecast.has("alerts")) {
+            alertArray = forecast.getJSONArray("alerts");
+            for(int i=0;i<alertArray.length();i++) {
+                JSONObject alert = alertArray.getJSONObject(i);
+                WeatherAlert weatherAlert = new WeatherAlert(alert.getString("title"),
+                        alert.getLong("time"),
+                        alert.getLong("expires"),
+                        alert.getString("description"),
+                        alert.getString("uri"));
+                weatherAlerts.add(i,weatherAlert);
+            }
+        }
+        return  weatherAlerts;
     }
 
     private List<Day> parseDailyForecast(JSONObject forecast) throws JSONException {
@@ -188,5 +224,68 @@ public class Forecast implements Parcelable {
             hourlyForecast.add(i, new Hour(mContext, data.getJSONObject(i),getUnits()));
         }
         return hourlyForecast;
+    }
+
+    //Utility functions to determine the proper units and associated strings for the forecast data
+    public String determineStormBearing(Forecast forecast) {
+        String stormBearing;
+        if(!forecast.getCurrent().getNearestStormDistance().equals("0")) {
+            stormBearing = forecast.getCurrent().getNearestStormBearing();
+        }
+        else {
+            stormBearing = "";
+        }
+        return stormBearing;
+    }
+
+    public String determineWindBearing(Forecast forecast) {
+        String windBearing;
+        if(!forecast.getCurrent().getWindSpeed().equals("0")) {
+            windBearing = forecast.getCurrent().getWindBearing();
+        }
+        else {
+            windBearing = "";
+        }
+        return windBearing;
+    }
+
+    public int getDistanceUnitsId() {
+        getTempestatibusApplicationSettings().createSharedPreferenceContext(getContext());
+        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
+            return R.string.si_units_kilometers;
+        }
+        else {
+            return R.string.us_unit_miles;
+        }
+    }
+
+    public int getVelocityUnitsId() {
+        getTempestatibusApplicationSettings().createSharedPreferenceContext(getContext());
+        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
+            return R.string.si_units_kilometers_per_hour;
+        }
+        else {
+            return R.string.us_units_miles_per_hour;
+        }
+    }
+
+    public int getTemperatureUnitsId() {
+        getTempestatibusApplicationSettings().createSharedPreferenceContext(getContext());
+        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
+            return R.string.si_units_celsius;
+        }
+        else {
+            return R.string.us_units_fahrenheit;
+        }
+    }
+
+    public int getPressureUnitsId() {
+        getTempestatibusApplicationSettings().createSharedPreferenceContext(getContext());
+        if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
+            return R.string.si_units_hectoPascals;
+        }
+        else {
+            return R.string.us_units_millibars;
+        }
     }
 }

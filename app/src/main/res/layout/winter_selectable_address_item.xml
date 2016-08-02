@@ -9,7 +9,7 @@
           android:paddingBottom="15dp"
           android:layout_width="match_parent"
           android:singleLine="true"
-          android:textSize="16sp"
+          android:textSize="14sp"
           android:textColor="@color/winter_text_color"
           android:background="@android:color/transparent"
           android:layout_height="match_parent"/>

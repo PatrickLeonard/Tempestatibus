@@ -5,9 +5,12 @@ package com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility;
  * Created by Patrick Leonard on 11/8/2015.
  */
 public final class ForecastRetrievalServiceConstants {
-    public static final int SUCCESS_RESULT = 0;
-    public static final int FAILURE_RESULT = 1;
+    public static final int NULL_RESULT = -1;
+    public static final int FAILURE_RESULT = 0;
+    public static final int SUCCESS_RESULT = 1;
     public static final int GOOGLE_CONNECTION_ERROR = 2;
+    public static final int NETWORK_FAILURE_RESULT = 3;
+    public static final int LOCATION_FAILURE_RESULT =4;
     public static final String PACKAGE_NAME =
             "com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility";
     public static final String MAIN_ACTIVITY_RECEIVER = PACKAGE_NAME + ".RECEIVER_MAIN_ACTIVITY";
@@ -16,12 +19,6 @@ public final class ForecastRetrievalServiceConstants {
             ".ERROR_CODE_KEY";
     public static final String ERROR_MESSAGE_KEY = PACKAGE_NAME +
             ".ERROR_MESSAGE_KEY";
-    public static final String CURRENT_LOCATION = PACKAGE_NAME +
-            ".CURRENT_LOCATION";
-    public static final String LAST_KNOWN_LOCATION = PACKAGE_NAME +
-            ".LAST_KNOWN_LOCATION";
-    public static final String LOCATION_TYPE_DATA_KEY = PACKAGE_NAME +
-            ".LOCATION_TYPE_DATA_KEY";
     public static final String STANDARD_ADDRESS_DATA_KEY = PACKAGE_NAME +
             ".STANDARD_ADDRESS_DATA_KEY";
     public static final String SHORTENED_ADDRESS_DATA_KEY = PACKAGE_NAME +
@@ -30,4 +27,5 @@ public final class ForecastRetrievalServiceConstants {
             ".RESULT_DATA_KEY";
     public static final String CALLING_CLASS_NAME_DATA_EXTRA = PACKAGE_NAME +
             ".CALLING_CLASS_NAME_DATA_EXTRA";
+
 }

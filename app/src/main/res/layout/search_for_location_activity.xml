@@ -10,7 +10,7 @@
         android:id="@+id/searchForLocationTitleText"
         android:text="Location Search"
         android:gravity="center_horizontal"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:layout_marginBottom="12dp"/>
 
     <TextView
@@ -18,14 +18,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchForLocationText"
         android:text="Enter address"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:layout_marginBottom="8dp"
         android:layout_below="@id/searchForLocationTitleText"/>
 
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:id="@+id/autoCompleteTextView"
         android:layout_below="@id/searchForLocationText"/>
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/selectSavedLocationText"
         android:text="Select saved location"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_below="@id/autoCompleteTextView"/>
