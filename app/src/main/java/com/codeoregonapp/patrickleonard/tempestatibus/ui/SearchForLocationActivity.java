@@ -278,11 +278,11 @@ public class SearchForLocationActivity extends AppCompatActivity {
     private void configureAutoCompleteTextView() {
         setDisplayStrings(new ArrayList<String>());
         getDisplayStrings().add(getCurrentStandardAddress());
+        getDisplayStrings().add(getString(R.string.powered_by_google));
         setUnfilteredArrayAdapter(new UnfilteredArrayAdapter
-                (this, TempestatibusApplicationSettings.getAddressSearchItemLayoutId(), getDisplayStrings()));
+                (this, R.layout.powered_by_google_item, getDisplayStrings()));
         getAutoCompleteTextView().setThreshold(1);
         getAutoCompleteTextView().setTextColor(ContextCompat.getColor(this,TempestatibusApplicationSettings.getTextColorId()));
-        getAutoCompleteTextView().setCompletionHint("Tap to see weather forecast.");
         getAutoCompleteTextView().setDropDownBackgroundResource(TempestatibusApplicationSettings.getBackgroundDrawableId());
         getAutoCompleteTextView().setAdapter(getUnfilteredArrayAdapter());
         getAutoCompleteTextView().addTextChangedListener(new TextWatcher() {
@@ -304,7 +304,13 @@ public class SearchForLocationActivity extends AppCompatActivity {
         getAutoCompleteTextView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startSearchedLocationActivity(createSavedLocationModelFromSearchedLocation(position));
+                String displayString = getDisplayStrings().get(position);
+                if(displayString.equals(getString(R.string.powered_by_google))) {
+                    //TODO Set this up to go to the Google Terms of Service for Android Places API
+                }
+                else {
+                    startSearchedLocationActivity(createSavedLocationModelFromSearchedLocation(position,displayString));
+                }
             }
         });
     }
@@ -356,8 +362,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
     }
 
 
-    private SavedLocationModel createSavedLocationModelFromSearchedLocation(int itemPosition) {
-        String displayString = getDisplayStrings().get(itemPosition);
+    private SavedLocationModel createSavedLocationModelFromSearchedLocation(int itemPosition,String displayString) {
         Location location = new Location(LocationManager.PASSIVE_PROVIDER);
         if(displayString.equals(getCurrentStandardAddress())) {
             location.setLatitude(getCurrentLocation().getLatitude());

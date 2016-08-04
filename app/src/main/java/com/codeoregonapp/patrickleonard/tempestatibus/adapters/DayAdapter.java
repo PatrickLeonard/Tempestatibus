@@ -48,7 +48,7 @@ public class DayAdapter extends BaseAdapter {
 
         //If not already tagged to the ViewHolder inflate the view and bind to the View variables
         if(convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.daily_grid_item,null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.daily_grid_item,parent,false);
             viewHolder = new ViewHolder();
             viewHolder.iconImageView = (ImageView)convertView.findViewById(R.id.dailyGridIconImageView);
             viewHolder.maxTemperatureSmallDegreeSymbol = (ImageView)convertView.findViewById(R.id.dailyGridMMaxTempSmallDegreeImageView);

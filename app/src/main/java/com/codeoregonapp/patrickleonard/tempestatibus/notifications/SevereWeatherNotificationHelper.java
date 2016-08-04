@@ -85,13 +85,13 @@ public class SevereWeatherNotificationHelper  {
             WeatherAlert incoming = getIncomingAlerts().get(i);
             matched = false;
             for(int j=0;j<getCurrentAlerts().size();++j) {
-                if(!getCurrentAlerts().get(j).equals(incoming)) {
+                if(getCurrentAlerts().get(j).equals(incoming)) {
                     matched = true;
                     break;
                 }
             }
             if(!matched) {
-                getCurrentAlerts().add(incoming);
+                addIncomingToCurrent(incoming);
             }
         }
     }

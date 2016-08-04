@@ -260,26 +260,6 @@ public class TempestatibusApplicationSettings {
 
     }
 
-    public static int getAddressSearchItemLayoutId() {
-        String currentTheme = SettingsActivity.CURRENT_THEME;
-
-        switch(currentTheme) {
-            case TempestatibusApplicationSettings.AUTUMN_THEME_PREFERENCE: {
-                return R.layout.autumn_selectable_address_item;
-            }
-            case TempestatibusApplicationSettings.SPRING_THEME_PREFERENCE: {
-                return R.layout.spring_selectable_address_item;
-            }
-            case TempestatibusApplicationSettings.SUMMER_THEME_PREFERENCE: {
-                return R.layout.summer_selectable_address_item;
-            }
-            case TempestatibusApplicationSettings.WINTER_THEME_PREFERENCE: {
-                return R.layout.winter_selectable_address_item;
-            }
-            default: return R.layout.summer_selectable_address_item;
-        }
-    }
-
     public static int getBackgroundDrawableId() {
         String currentTheme = SettingsActivity.CURRENT_THEME;
         switch(currentTheme) {

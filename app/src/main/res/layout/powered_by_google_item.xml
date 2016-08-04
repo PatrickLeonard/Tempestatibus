@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/googleItemRootLayout"
+    android:padding="@dimen/daily_grid_item_padding"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addressText"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subText"
+        android:layout_below="@id/addressText"
+        android:textSize="12sp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/poweredByGoogle"
+        android:padding="8dp"
+        android:clickable="false"
+        android:src="@drawable/powered_by_google_on_non_white"
+        android:contentDescription="@string/powered_by_google"
+        android:background="@android:color/transparent"/>
+
+</RelativeLayout>

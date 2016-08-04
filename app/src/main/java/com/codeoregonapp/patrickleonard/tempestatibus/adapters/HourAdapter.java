@@ -109,8 +109,7 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.HourViewHolder
             String time = mTimeLabel.getText().toString();
             String temp = mTemperatureLabel.getText().toString();
             String summary = mSummaryLabel.getText().toString();
-            String message = String.format(mContext.getString(R.string.hour_list_toast_message),
-                    time, temp, summary);
+            String message = String.format(mContext.getString(R.string.hour_list_toast_message),time, temp, summary);
             Toast.makeText(mContext,message,Toast.LENGTH_LONG).show();
         }
     }

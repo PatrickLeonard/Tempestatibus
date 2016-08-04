@@ -13,6 +13,7 @@ import java.util.TimeZone;
  */
 public class WeatherAlert implements Parcelable {
 
+    private static final String TAG = WeatherAlert.class.getSimpleName();
     private String mTitle;
     private long mTime;
     private long mExpires;
@@ -141,11 +142,12 @@ public class WeatherAlert implements Parcelable {
     public boolean equals(Object another) {
         if(another instanceof WeatherAlert) {
             WeatherAlert alert = (WeatherAlert)another;
-            return alert.getTitle().equals(this.getTitle()) &&
-                    (alert.getTime() == this.getTime()) &&
-                    (alert.getExpires() == this.getExpires()) &&
-                    alert.getDescription().equals(this.getDescription()) &&
-                    alert.getUriString().equals(this.getUriString());
+            boolean titleMatch = alert.getTitle().equals(this.getTitle());
+            boolean timeMatch = alert.getTime() == this.getTime();
+            boolean expireMatch = alert.getExpires() == this.getExpires();
+            boolean descMatch = alert.getDescription().equals(this.getDescription());
+            boolean uriMatch = alert.getUriString().equals(this.getUriString());
+            return titleMatch && timeMatch && expireMatch && descMatch && uriMatch;
         }
         else {
             return false;

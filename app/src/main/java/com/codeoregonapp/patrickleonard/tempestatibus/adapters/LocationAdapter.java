@@ -45,7 +45,7 @@ public class LocationAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         //If not already tagged to the ViewHolder inflate the view and bind to the View variables
         if(convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.selectable_saved_location_item,null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.selectable_saved_location_item,parent,false);
             viewHolder = new ViewHolder();
             viewHolder.locationNameLabel = (TextView)convertView.findViewById(R.id.savedLocationNameLabel);
             convertView.setTag(viewHolder);
