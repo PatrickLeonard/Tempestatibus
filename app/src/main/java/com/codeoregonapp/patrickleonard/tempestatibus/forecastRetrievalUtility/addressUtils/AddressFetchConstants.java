@@ -11,6 +11,8 @@ public final class AddressFetchConstants {
     public static final String PACKAGE_NAME =
             "com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.addressUtils";
     public static final String RECEIVER = PACKAGE_NAME + ".RECEIVER";
+    public static final String ERROR_MESSAGE_DATA_KEY = PACKAGE_NAME +
+            ".ERROR_MESSAGE_DATA_KEY";
     public static final String STANDARD_RESULT_DATA_KEY = PACKAGE_NAME +
             ".STANDARD_RESULT_DATA_KEY";
     public static final String SHORTENED_RESULT_DATA_KEY = PACKAGE_NAME +

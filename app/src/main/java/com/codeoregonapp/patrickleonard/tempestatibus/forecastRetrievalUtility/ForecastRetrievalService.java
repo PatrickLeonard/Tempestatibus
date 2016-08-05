@@ -306,10 +306,11 @@ public class ForecastRetrievalService extends Service {
         startForecastFetchIntentService();
     }
 
-    public void fetchAddressFailure(String standardAddress, String shortenedAddress, int resultCode) {
-        setStandardAddress(standardAddress);
-        setShortenedAddress(shortenedAddress);
-        sendData(ForecastRetrievalServiceConstants.LOCATION_FAILURE_RESULT, resultCode,standardAddress);
+    public void fetchAddressFailure(String errorMessage) {
+        setResultMessage(errorMessage);
+        assignLastKnownLocation();
+        setResultCode(ForecastRetrievalServiceConstants.LOCATION_FAILURE_RESULT);
+        startForecastFetchIntentService();
     }
 
     public void fetchForecastSuccess(String forecastOutput) {
@@ -318,6 +319,7 @@ public class ForecastRetrievalService extends Service {
     }
 
     public void fetchForecastFailure(String forecastOutput) {
+        assignLastKnownLocation(); //The last cached location should match the last cached data retrieved
         assignLastRetrievedData();
         setResultCode(ForecastRetrievalServiceConstants.NETWORK_FAILURE_RESULT);
         setResultMessage(forecastOutput);

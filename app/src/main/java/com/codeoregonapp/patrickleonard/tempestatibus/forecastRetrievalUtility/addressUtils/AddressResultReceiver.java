@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 
-import com.codeoregonapp.patrickleonard.tempestatibus.R;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalService;
-import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalServiceConstants;
+
 
 /**
  * This class receives the results from the AddressFetchIntentService and reacts to the results in the
@@ -21,6 +20,7 @@ public class AddressResultReceiver extends ResultReceiver {
     public static Creator CREATOR = ResultReceiver.CREATOR;
     public String mStandardAddressOutput;
     public String mShortenedAddressOutput;
+    public String mErrorMessage;
 
     public AddressResultReceiver(Handler handler, ForecastRetrievalService forecastRetrievalService) {
         super(handler);
@@ -37,8 +37,8 @@ public class AddressResultReceiver extends ResultReceiver {
         }
         //If Geocoder isn't present deliver that no location was found
         else  {
-            mStandardAddressOutput = mForecastRetrievalService.getString(R.string.no_location_found_address);
-            mForecastRetrievalService.fetchAddressFailure(mStandardAddressOutput,mStandardAddressOutput,resultCode);
+            mErrorMessage = resultData.getString(AddressFetchConstants.ERROR_MESSAGE_DATA_KEY);
+            mForecastRetrievalService.fetchAddressFailure(mErrorMessage);
         }
     }
 }

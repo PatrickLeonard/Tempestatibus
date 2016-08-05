@@ -159,7 +159,6 @@ public class SearchForLocationActivity extends AppCompatActivity {
     private void configureSavedLocationsListView() {
         setLocationDataSource(new CachedLocationDataSource(this));
         setSavedLocationModels(getLocationDataSource().readLocationsWrapper());
-        getLocationDataSource().readLastKnownLocationWrapper();
         getListView().setAdapter(new LocationAdapter(this, getSavedLocationModels()));
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -306,7 +305,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String displayString = getDisplayStrings().get(position);
                 if(displayString.equals(getString(R.string.powered_by_google))) {
-                    //TODO Set this up to go to the Google Terms of Service for Android Places API
+                    //Don't do anything right now.
                 }
                 else {
                     startSearchedLocationActivity(createSavedLocationModelFromSearchedLocation(position,displayString));
@@ -358,6 +357,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
     public void addCurrentAndNotify() {
         getDisplayStrings().add(getCurrentStandardAddress());
         getUnfilteredArrayAdapter().addAll(getDisplayStrings());
+        getDisplayStrings().add(getString(R.string.powered_by_google));
         getUnfilteredArrayAdapter().notifyDataSetChanged();
     }
 

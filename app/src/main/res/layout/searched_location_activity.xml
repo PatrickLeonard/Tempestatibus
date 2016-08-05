@@ -2,7 +2,12 @@
                 xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".ui.SearchedLocationActivity"
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:paddingRight="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
                 android:id="@+id/main_layout">
 
     <TextView
@@ -226,6 +231,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/humidity_all_caps"
                             android:textSize="12sp"
+                            android:padding="2dp"
                             android:id="@+id/humidityLabel"
                             android:textColor="@color/sub_text_color"
                             android:layout_centerHorizontal="true"
@@ -235,6 +241,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_two_digit_number"
+                            android:layout_marginTop="2dp"
                             android:id="@+id/humidityValue"
                             android:layout_centerHorizontal="true"
                             android:layout_below="@id/humidityLabel"
@@ -254,6 +261,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/rain_slash_snow_all_caps"
                             android:textSize="12sp"
+                            android:padding="2dp"
                             android:id="@+id/precipLabel"
                             android:textColor="@color/sub_text_color"
                             android:layout_centerHorizontal="true"
@@ -263,6 +271,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_two_digit_number"
+                            android:layout_marginTop="2dp"
                             android:id="@+id/precipValue"
                             android:background="@android:color/transparent"
                             android:layout_centerHorizontal="true"
@@ -282,6 +291,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/wind_speed_label"
                             android:textSize="12sp"
+                            android:padding="2dp"
                             android:id="@+id/windLabel"
                             android:textColor="@color/sub_text_color"
                             android:layout_centerHorizontal="true"
@@ -291,6 +301,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_two_digit_number"
+                            android:layout_marginTop="2dp"
                             android:id="@+id/windValue"
                             android:layout_centerHorizontal="true"
                             android:layout_below="@id/windLabel"
@@ -319,6 +330,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/visibility_label"
                             android:textSize="12sp"
+                            android:padding="2dp"
                             android:id="@+id/visibilityLabel"
                             android:textColor="@color/sub_text_color"
                             android:background="@android:color/transparent"
@@ -328,6 +340,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_two_digit_number"
+                            android:layout_marginTop="2dp"
                             android:id="@+id/visibilityValue"
                             android:background="@android:color/transparent"
                             android:layout_below="@id/visibilityLabel"
@@ -346,6 +359,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/dew_point_label"
                             android:textSize="12sp"
+                            android:padding="2dp"
                             android:id="@+id/dewLabel"
                             android:textColor="@color/sub_text_color"
                             android:layout_centerHorizontal="true"
@@ -355,6 +369,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/dewLabel"
+                            android:layout_marginTop="2dp"
                             android:layout_centerHorizontal="true">
 
                             <TextView
@@ -395,6 +410,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/ozone_label"
                             android:textSize="12sp"
+                            android:padding="2dp"
                             android:id="@+id/ozoneLabel"
                             android:textColor="@color/sub_text_color"
                             android:background="@android:color/transparent"
@@ -404,6 +420,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_two_digit_number"
+                            android:layout_marginTop="2dp"
                             android:id="@+id/ozoneValue"
                             android:background="@android:color/transparent"
                             android:layout_below="@id/ozoneLabel"
@@ -433,6 +450,7 @@
                             android:id="@+id/stormLabel"
                             android:lines="1"
                             android:gravity="center"
+                            android:padding="2dp"
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/sub_text_color"
                             android:background="@android:color/transparent"/>
@@ -441,6 +459,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_two_digit_number"
+                            android:layout_marginTop="2dp"
                             android:id="@+id/stormValue"
                             android:layout_below="@id/stormLabel"
                             android:layout_centerHorizontal="true"
@@ -461,6 +480,7 @@
                             android:textSize="12sp"
                             android:lines="1"
                             android:gravity="center"
+                            android:padding="2dp"
                             android:id="@+id/apparentTemperatureLabel"
                             android:background="@android:color/transparent"
                             android:textColor="@color/sub_text_color"
@@ -469,6 +489,7 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
                             android:layout_below="@id/apparentTemperatureLabel"
                             android:layout_centerHorizontal="true">
                             <TextView
@@ -509,6 +530,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/pressure_label"
                             android:textSize="12sp"
+                            android:padding="2dp"
                             android:id="@+id/pressureLabel"
                             android:background="@android:color/transparent"
                             android:textColor="@color/sub_text_color"
@@ -518,6 +540,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/empty_two_digit_number"
+                            android:layout_marginTop="2dp"
                             android:id="@+id/pressureValue"
                             android:background="@android:color/transparent"
                             android:layout_below="@id/pressureLabel"
@@ -541,19 +564,18 @@
                 android:layout_marginBottom="16dp"
                 android:id="@+id/daily_grid_view"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/powered_by_forecast"
-                android:id="@+id/poweredByForecast"
-                android:textSize="10sp"
-                android:paddingBottom="4dp"
-                android:layout_marginBottom="4dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/sub_text_color"/>
         </RelativeLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by_forecast"
+        android:id="@+id/poweredByForecast"
+        android:textSize="12sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/sub_text_color"/>
 
 </RelativeLayout>

@@ -5,7 +5,6 @@
     <gradient android:startColor="@color/winter_bg_gradient_start"
               android:endColor="@color/winter_bg_gradient_end"
               android:angle="270"
-              android:type="linear"
-        />
+              android:type="linear"/>
 
 </shape>

@@ -72,17 +72,17 @@ public class AddressFetchIntentService extends IntentService {
                     errorMessage = getString(R.string.no_address_found);
                     Log.e(AddressFetchIntentService.TAG, errorMessage);
                 }
-                deliverResultToReceiver(AddressFetchConstants.FAILURE_RESULT, errorMessage,errorMessage);
+                deliverResultToReceiver(AddressFetchConstants.FAILURE_RESULT, null,null,errorMessage);
             } else {
                 Address address = addresses.get(0);
                 createAddressStrings(address);
                 deliverResultToReceiver(AddressFetchConstants.SUCCESS_RESULT,
-                        mStandardAddress, mShortenedAddress);
+                        mStandardAddress, mShortenedAddress,null);
             }
         }
         else {
             deliverResultToReceiver(AddressFetchConstants.NOT_PRESENT,
-                    getString(R.string.no_geocode_present),null);
+                    null,null,getString(R.string.no_geocode_present));
         }
     }
 
@@ -102,8 +102,9 @@ public class AddressFetchIntentService extends IntentService {
     }
 
     //Deliver results bas to the calling thread
-    private void deliverResultToReceiver(int resultCode, String standardMessage,String shortenedMessage) {
+    private void deliverResultToReceiver(int resultCode, String standardMessage,String shortenedMessage,String errorMessage) {
         Bundle bundle = new Bundle();
+        bundle.putString(AddressFetchConstants.ERROR_MESSAGE_DATA_KEY,errorMessage);
         bundle.putString(AddressFetchConstants.STANDARD_RESULT_DATA_KEY, standardMessage);
         bundle.putString(AddressFetchConstants.SHORTENED_RESULT_DATA_KEY, shortenedMessage);
         mReceiver.send(resultCode, bundle);
