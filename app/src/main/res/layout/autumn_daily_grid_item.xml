@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              tools:background="@drawable/bg_gradient_autumn"
               android:orientation="vertical"
               android:layout_width="30dp"
               android:layout_height="90dp"
               android:id="@+id/grid_item_layout"
+              android:gravity="center"
               android:padding="2dp">
 
     <TextView
@@ -23,6 +23,7 @@
         android:id="@+id/dailyGridIconImageView"
         android:background="@android:color/transparent"
         android:layout_gravity="center_horizontal"
+        android:src="@drawable/summer_cloudy_night"
         android:contentDescription="@string/icon_image_description"
         />
 

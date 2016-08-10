@@ -111,6 +111,8 @@
     <string name="units_dobson" translatable="false">DU</string>
     <string name="title_activity_search_for_location" translatable="false">SearchForLocationActivity</string>
     <string name="powered_by_forecast" translatable="false"><u>Powered by Forecast</u></string>
+    ---Needs to be translated
+
     ---Has been translated
 
     <string name="error_title">Oops! Sorry!</string>
@@ -264,5 +266,6 @@
     <string name="transparent_background_hint">Layout app widget with transparent background</string>
 
     <string name="match_app_theme_text">Match App Theme</string>
+
     <string name="powered_by_google">Powered By Google</string>
 </resources>

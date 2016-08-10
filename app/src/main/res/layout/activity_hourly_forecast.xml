@@ -5,7 +5,12 @@
     tools:context="com.codeoregonapp.patrickleonard.tempestatibus.ui.HourlyForecastActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp">
+    android:paddingTop="10dp"
+    android:paddingLeft="8dp"
+    android:paddingStart="8dp"
+    android:paddingRight="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="4dp">
 
 
     <android.support.v7.widget.RecyclerView
@@ -14,7 +19,7 @@
         android:id="@+id/recyclerView"
         android:background="@android:color/transparent"
         android:clipToPadding="true"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="18dp">
     </android.support.v7.widget.RecyclerView>
 
 
@@ -24,8 +29,21 @@
         android:text="@string/powered_by_forecast"
         android:id="@+id/poweredByForecast"
         android:textSize="12sp"
-        android:textColor="@color/sub_text_color"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/sub_text_color"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/poweredByGoogle"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/powered_by_google_on_non_white"
+        android:contentDescription="@string/powered_by_google"
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>

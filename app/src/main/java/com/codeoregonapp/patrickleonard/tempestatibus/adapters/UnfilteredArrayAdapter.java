@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -42,12 +41,10 @@ public class UnfilteredArrayAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        boolean lastItem = position == (getCount()-1);
         //If not already tagged to the TextViewHolder inflate the view and bind to the View variables
         if(convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.powered_by_google_item,parent,false);
-            viewHolder.poweredByGoogle = (ImageView)convertView.findViewById(R.id.poweredByGoogle);
             viewHolder.addressLabel = (TextView)convertView.findViewById(R.id.addressText);
             viewHolder.subText = (TextView)convertView.findViewById(R.id.subText);
             convertView.setTag(viewHolder);
@@ -56,20 +53,14 @@ public class UnfilteredArrayAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) convertView.getTag(); //Views already bound
         }
 
-        if(!lastItem) {
-            //Get the data from the list for the corresponding item
-            String address = mAddressList.get(position);
-            viewHolder.addressLabel.setText(address);
-            viewHolder.subText.setText("Tap to see weather forecast.");
-            viewHolder.poweredByGoogle.setVisibility(View.GONE);
-            viewHolder.addressLabel.setVisibility(View.VISIBLE);
-            viewHolder.subText.setVisibility(View.VISIBLE);
-        }
-        else {
-            viewHolder.poweredByGoogle.setVisibility(View.VISIBLE);
-            viewHolder.addressLabel.setVisibility(View.GONE);
-            viewHolder.subText.setVisibility(View.GONE);
-        }
+
+        //Get the data from the list for the corresponding item
+        String address = mAddressList.get(position);
+        viewHolder.addressLabel.setText(address);
+        viewHolder.subText.setText("Tap to see weather forecast.");
+        viewHolder.addressLabel.setVisibility(View.VISIBLE);
+        viewHolder.subText.setVisibility(View.VISIBLE);
+
         return convertView;
     }
 
@@ -77,7 +68,6 @@ public class UnfilteredArrayAdapter extends ArrayAdapter<String> {
     private static class ViewHolder {
         TextView addressLabel;
         TextView subText;
-        ImageView poweredByGoogle;
     }
 
     /**

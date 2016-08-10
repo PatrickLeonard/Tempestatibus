@@ -170,7 +170,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.2"
+            android:layout_weight="1.21"
             android:gravity="center">
 
             <ImageView
@@ -446,6 +446,7 @@
                             android:text="@string/apparent_max_temp_label"
                             android:textSize="12sp"
                             android:padding="2dp"
+                            android:lines="1"
                             android:id="@+id/maxApparentTemperatureLabel"
                             android:background="@android:color/transparent"
                             android:textColor="@color/sub_text_color"
@@ -674,6 +675,7 @@
                             android:id="@+id/maxTimeLabel"
                             android:textSize="12sp"
                             android:padding="2dp"
+                            android:lines="1"
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/sub_text_color"
                             android:background="@android:color/transparent"/>
@@ -759,8 +761,20 @@
         android:id="@+id/poweredByForecast"
         android:textSize="12sp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:textColor="@color/sub_text_color"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/poweredByGoogle"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/powered_by_google_on_non_white"
+        android:contentDescription="@string/powered_by_google"
+        android:background="@android:color/transparent"/>
 </RelativeLayout>
 
 

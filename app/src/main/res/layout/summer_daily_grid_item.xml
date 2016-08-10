@@ -6,6 +6,7 @@
               android:layout_width="30dp"
               android:layout_height="90dp"
               android:id="@+id/grid_item_layout"
+              android:gravity="center"
               android:padding="2dp">
 
     <TextView

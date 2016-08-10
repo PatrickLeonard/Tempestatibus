@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
@@ -136,6 +137,8 @@ public class SearchForLocationActivity extends AppCompatActivity {
     AutoCompleteTextView mAutoCompleteTextView;
     @Bind(android.R.id.list)
     ListView mListView;
+    @Bind(R.id.poweredByForecast)
+    TextView mPoweredByForecast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +150,15 @@ public class SearchForLocationActivity extends AppCompatActivity {
         setCurrentData();
         configureSavedLocationsListView();
         configureAutoCompleteTextView();
+        mPoweredByForecast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Create an intent to open the default browser and travel to http://forecast.io
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.forecast_io_url)));
+                startActivity(browserIntent);
+            }
+        });
+
     }
 
     private void setCurrentData() {
@@ -277,7 +289,6 @@ public class SearchForLocationActivity extends AppCompatActivity {
     private void configureAutoCompleteTextView() {
         setDisplayStrings(new ArrayList<String>());
         getDisplayStrings().add(getCurrentStandardAddress());
-        getDisplayStrings().add(getString(R.string.powered_by_google));
         setUnfilteredArrayAdapter(new UnfilteredArrayAdapter
                 (this, R.layout.powered_by_google_item, getDisplayStrings()));
         getAutoCompleteTextView().setThreshold(1);
@@ -303,13 +314,7 @@ public class SearchForLocationActivity extends AppCompatActivity {
         getAutoCompleteTextView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String displayString = getDisplayStrings().get(position);
-                if(displayString.equals(getString(R.string.powered_by_google))) {
-                    //Don't do anything right now.
-                }
-                else {
-                    startSearchedLocationActivity(createSavedLocationModelFromSearchedLocation(position,displayString));
-                }
+                startSearchedLocationActivity(createSavedLocationModelFromSearchedLocation(position,getDisplayStrings().get(position)));
             }
         });
     }
@@ -357,7 +362,6 @@ public class SearchForLocationActivity extends AppCompatActivity {
     public void addCurrentAndNotify() {
         getDisplayStrings().add(getCurrentStandardAddress());
         getUnfilteredArrayAdapter().addAll(getDisplayStrings());
-        getDisplayStrings().add(getString(R.string.powered_by_google));
         getUnfilteredArrayAdapter().notifyDataSetChanged();
     }
 
