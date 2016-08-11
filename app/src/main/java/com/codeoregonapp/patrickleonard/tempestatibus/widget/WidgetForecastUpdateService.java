@@ -40,12 +40,10 @@ public class WidgetForecastUpdateService extends Service {
     public static final String TAG = WidgetForecastUpdateService.class.getSimpleName();
     public static Forecast staticForecast;
     public static String staticAddress;
-    public static final String CALLING_CLASS = ".widget.WidgetForecastUpdateService.CALLING_CLASS";
     public static final String DELETE_WIDGET = ".widget.WidgetForecastUpdateService.DELETE_WIDGET";
     public static final String RESTORE_WIDGET = ".widget.WidgetForecastUpdateService.RESTORE_WIDGET";
     public static final String OLD_WIDGET_IDS = ".widget.WidgetForecastUpdateService.OLD_WIDGET_IDS";
     private String mAddress;
-    private String mCallingClass;
     private Forecast mForecast;
     private ResultReceiver mReceiver;
     private TempestatibusApplicationSettings mTempestatibusApplicationSettings;
@@ -59,6 +57,9 @@ public class WidgetForecastUpdateService extends Service {
     private boolean mLayoutHasGridView;
 
     public TempestatibusApplicationSettings getTempestatibusApplicationSettings() {
+        if(mTempestatibusApplicationSettings == null) {
+            setTempestatibusApplicationSettings(new TempestatibusApplicationSettings());
+        }
         return mTempestatibusApplicationSettings;
     }
 
@@ -90,14 +91,6 @@ public class WidgetForecastUpdateService extends Service {
         mForecast = forecast;
     }
 
-    public String getCallingClass() {
-        return mCallingClass;
-    }
-
-    public void setCallingClass(String callingClass) {
-        mCallingClass = callingClass;
-    }
-
     public String getAddress() {
         return mAddress;
     }
@@ -108,8 +101,8 @@ public class WidgetForecastUpdateService extends Service {
 
     @Override
     public void onCreate() {
-         setTempestatibusApplicationSettings(new TempestatibusApplicationSettings());
          mRemoteViewsMap = new HashMap<>();
+         mIsRunning = false;
     }
 
     @Override
@@ -117,18 +110,11 @@ public class WidgetForecastUpdateService extends Service {
         int[] appWidgetIds;
         if(intent != null) {
             appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
-            String callingClass = intent.getStringExtra(WidgetForecastUpdateService.CALLING_CLASS);
-            if(callingClass != null) {
-                setCallingClass(callingClass);
-            }
-            else {
-                setCallingClass(TempestatibusSmallWidgetProvider.NAME);
-            }
             if(appWidgetIds != null) {
                 getTempestatibusApplicationSettings().createSharedPreferenceContext(this);
                 boolean deleteWidget = intent.getBooleanExtra(WidgetForecastUpdateService.DELETE_WIDGET,false);
                 boolean restoreWidget = intent.getBooleanExtra(WidgetForecastUpdateService.RESTORE_WIDGET,false);
-                boolean optionChange = intent.getBooleanExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
+                boolean optionChange = intent.getBooleanExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,false);
                 Log.d(WidgetForecastUpdateService.TAG,"RemoteViews Map size: " + mRemoteViewsMap.size());
                 if(deleteWidget) {
                     for(int widgetId : appWidgetIds) {
@@ -150,7 +136,7 @@ public class WidgetForecastUpdateService extends Service {
                 }
                 else if (!optionChange && !mIsRunning) {
                     mIsRunning = true;
-                    startIndeterminateProgressBar(getApplicationContext(),appWidgetIds);
+                    startIndeterminateProgressBar(getApplicationContext());
                     startForecastRetrievalService();
                 } else if (optionChange) {
                     updateAppWidgets(appWidgetIds);
@@ -160,11 +146,14 @@ public class WidgetForecastUpdateService extends Service {
         return super.onStartCommand(intent,flags,ids);
     }
 
-    private void startIndeterminateProgressBar(Context context, int[] appWidgetIds) {
+    private void startIndeterminateProgressBar(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = getAllAppWidgetIdsFromAllProviders();
         for(int widgetId : appWidgetIds) {
             RemoteViews remoteViews = mRemoteViewsMap.get(widgetId);
             if (remoteViews != null) {
+                Log.d(WidgetForecastUpdateService.TAG,"App Widget IDs Length: " + appWidgetIds.length);
+                Log.d(WidgetForecastUpdateService.TAG,"WidgetID should have the progress bar visible: " + widgetId);
                 Log.d(WidgetForecastUpdateService.TAG, "Spinner should now be visible.");
                 remoteViews.setViewVisibility(R.id.progressBarLayout, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.iconImageView,View.INVISIBLE);
@@ -250,25 +239,22 @@ public class WidgetForecastUpdateService extends Service {
     private RemoteViews getStaticRemoteViews(int widgetId) {
         int height = -1;
         int width = -1;
-        switch (getCallingClass()) {
-            case TempestatibusSmallWidgetProvider.NAME : {
-                height = TempestatibusSmallWidgetProvider.CELL_HEIGHT;
-                width = TempestatibusSmallWidgetProvider.CELL_WIDTH;
-                break;
-            }
-            case TempestatibusMediumWidgetProvider.NAME : {
-                height = TempestatibusMediumWidgetProvider.CELL_HEIGHT;
-                width = TempestatibusMediumWidgetProvider.CELL_WIDTH;
-                break;
-            }
-            case TempestatibusLargeWidgetProvider.NAME : {
-                height = TempestatibusLargeWidgetProvider.CELL_HEIGHT;
-                width = TempestatibusLargeWidgetProvider.CELL_WIDTH;
-                break;
-            }
-            default: {
-                //Do nothing
-            }
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
+        String providerClassName = appWidgetManager.getAppWidgetInfo(widgetId).provider.getClassName();
+        if(providerClassName.equals(TempestatibusSmallWidgetProvider.NAME)) {
+            height = TempestatibusSmallWidgetProvider.CELL_HEIGHT;
+            width = TempestatibusSmallWidgetProvider.CELL_WIDTH;
+        }
+        else if(providerClassName.equals(TempestatibusMediumWidgetProvider.NAME)) {
+            height = TempestatibusMediumWidgetProvider.CELL_HEIGHT;
+            width = TempestatibusMediumWidgetProvider.CELL_WIDTH;
+        }
+        else if(providerClassName.equals(TempestatibusLargeWidgetProvider.NAME)) {
+            height = TempestatibusLargeWidgetProvider.CELL_HEIGHT;
+            width = TempestatibusLargeWidgetProvider.CELL_WIDTH;
+        }
+        else {
+           //Do nothing
         }
         return new RemoteViews(getApplicationContext().getPackageName(),
                 getLayoutId(height,width,widgetId));
@@ -323,6 +309,7 @@ public class WidgetForecastUpdateService extends Service {
         remoteViews.setImageViewResource(R.id.iconImageView, current.getIconId(getTempestatibusApplicationSettings().getWidgetThemePreference(widgetId), this));
         remoteViews.setViewVisibility(R.id.progressBarLayout, View.INVISIBLE);
         remoteViews.setViewVisibility(R.id.iconImageView,View.VISIBLE);
+        Log.d(WidgetForecastUpdateService.TAG,"WidgetID should have the progress bar invisible: " + widgetId);
         Log.v(WidgetForecastUpdateService.TAG,"Spinner should now be invisible");
         if(getTempestatibusApplicationSettings().getAppUnitsPreference()) {
             remoteViews = changeTempUnitsToSI(remoteViews); //Layout defaults are US units, change to SI
@@ -379,30 +366,23 @@ public class WidgetForecastUpdateService extends Service {
     private RemoteViews registerUpdateOnClickListener(int widgetId, RemoteViews remoteViews) {
         // Register an onClickListener
         Intent clickIntent;
-        switch (getCallingClass()) {
-            case TempestatibusSmallWidgetProvider.NAME : {
-                clickIntent = new Intent(this.getApplicationContext(),
-                        TempestatibusSmallWidgetProvider.class);
-                break;
-            }
-            case TempestatibusMediumWidgetProvider.NAME : {
-                clickIntent = new Intent(this.getApplicationContext(),
-                        TempestatibusMediumWidgetProvider.class);
-                break;
-            }
-            case TempestatibusLargeWidgetProvider.NAME : {
-                clickIntent = new Intent(this.getApplicationContext(),
-                        TempestatibusLargeWidgetProvider.class);
-                break;
-            }
-            default: {
-                clickIntent = new Intent(this.getApplicationContext(),
-                        TempestatibusSmallWidgetProvider.class);
-                break;
-            }
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
+        String providerClassName = appWidgetManager.getAppWidgetInfo(widgetId).provider.getClassName();
+        if(providerClassName.equals(TempestatibusSmallWidgetProvider.NAME)) {
+            clickIntent = new Intent(this.getApplicationContext(),TempestatibusSmallWidgetProvider.class);
+        }
+        else if(providerClassName.equals(TempestatibusMediumWidgetProvider.NAME)) {
+            clickIntent = new Intent(this.getApplicationContext(),TempestatibusMediumWidgetProvider.class);
+        }
+        else if(providerClassName.equals(TempestatibusLargeWidgetProvider.NAME)) {
+            clickIntent = new Intent(this.getApplicationContext(),TempestatibusLargeWidgetProvider.class);
+        }
+        else {
+            clickIntent = new Intent(this.getApplicationContext(),TempestatibusSmallWidgetProvider.class);
         }
         clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         int[] allWidgetIds = {widgetId};
+        Log.d(WidgetForecastUpdateService.TAG,"WidgetID having listener registered: " + widgetId);
         clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
                 allWidgetIds);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, clickIntent,

@@ -17,7 +17,7 @@ import com.codeoregonapp.patrickleonard.tempestatibus.weather.Day;
  */
 public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
     public static final String TAG = TempestatibusSmallWidgetProvider.class.getSimpleName();
-    public static final String NAME = "SmallProvider";
+    public static final String NAME = TempestatibusSmallWidgetProvider.class.getName();
     public static final String DAY_ITEM_CLICK_ACTION = ".widget.Tempestatibus.DAY_ITEM_CLICK_ACTION";
     public static final String DAY_BUNDLE = ".widget.Tempestatibus.DAY_BUNDLE";
     public static final int CELL_WIDTH = 2;
@@ -32,7 +32,6 @@ public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
         // Custom Extra Boolean to signify NOT an option change
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        intent.putExtra(WidgetForecastUpdateService.CALLING_CLASS,TempestatibusSmallWidgetProvider.NAME);
         // Update the widgets via the service
         context.startService(intent);
     }
@@ -47,7 +46,6 @@ public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
         // Custom Extra Boolean to signify an option change
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, true);
-        intent.putExtra(WidgetForecastUpdateService.CALLING_CLASS,TempestatibusSmallWidgetProvider.NAME);
         // Update the widgets via the service
         context.startService(intent);
     }
@@ -85,7 +83,6 @@ public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
         intent.putExtra(WidgetForecastUpdateService.DELETE_WIDGET,true);
-        intent.putExtra(WidgetForecastUpdateService.CALLING_CLASS,TempestatibusSmallWidgetProvider.NAME);
         // Update the widgets via the service
         context.startService(intent);
         super.onDeleted(context,appWidgetIds);
@@ -100,7 +97,6 @@ public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
         intent.putExtra(WidgetForecastUpdateService.OLD_WIDGET_IDS, oldWidgetIds);
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
         intent.putExtra(WidgetForecastUpdateService.RESTORE_WIDGET,true);
-        intent.putExtra(WidgetForecastUpdateService.CALLING_CLASS,TempestatibusSmallWidgetProvider.NAME);
         context.startService(intent);
         super.onRestored(context,oldWidgetIds,newWidgetIds);
     }
