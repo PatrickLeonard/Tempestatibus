@@ -1,8 +1,6 @@
-package com.codeoregonapp.patrickleonard.tempestatibus.widget;
+package com.codeoregonapp.patrickleonard.tempestatibus.appwidget;
 
 import android.content.Intent;
-
-import android.util.Log;
 
 import android.widget.RemoteViewsService;
 

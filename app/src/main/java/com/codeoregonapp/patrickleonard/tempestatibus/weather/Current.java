@@ -74,7 +74,7 @@ public class Current extends WeatherData implements Parcelable {
     }
 
     public String getFormattedDayAndTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("EEE, h a", Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE, h:mm a", Locale.getDefault());
         formatter.setTimeZone(TimeZone.getDefault());
         Date date = new Date(getTime()*1000);
         return formatter.format(date);

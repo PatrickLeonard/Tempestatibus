@@ -7,7 +7,7 @@
                     android:previewImage="@layout/summer_3x2_widget_layout"
                     android:initialLayout="@layout/summer_3x2_widget_layout"
                     android:initialKeyguardLayout="@layout/summer_3x2_widget_layout"
-                    android:configure="com.codeoregonapp.patrickleonard.tempestatibus.widget.TempestatibusWidgetConfigure"
+                    android:configure="com.codeoregonapp.patrickleonard.tempestatibus.appwidget.WidgetConfigureActivity"
                     android:resizeMode="horizontal|vertical"
                     android:widgetCategory="keyguard|home_screen"
                     android:updatePeriodMillis="3600000" >

@@ -1,10 +1,8 @@
 package com.codeoregonapp.patrickleonard.tempestatibus.ui;
 
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -39,7 +37,7 @@ import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.F
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalServiceConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.googleAPIUtils.GoogleAPIConnectionConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Forecast;
-import com.codeoregonapp.patrickleonard.tempestatibus.widget.WidgetForecastUpdateService;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
@@ -211,9 +209,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Toggle refresh and get data
-                toggleRefresh();
-                startForecastRetrievalService();
-                startUpdateWidgetService();
+                start();
             }
         });
         //Set onClick Listener for the Settings icon (Cog)
@@ -267,17 +263,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Check if need to request permission to get phone location
+        //Check for GoogleApiAvailability
         if (checkAndroidVersionForLocationPermission()) {
             Log.d(MainActivity.TAG,"No need to check for location permission.");
-            toggleRefresh();
-            //Get forecast data
-            startForecastRetrievalService();
-            startUpdateWidgetService();
+            if(checkGoogleApiAvailability()) {
+                start();
+            }
         }
 
         //Set refused settings to false
         setRefusedSettings(false);
         Log.d(MainActivity.TAG,"Finishing MainActivity OnCreate.");
+    }
+
+    private void start() {
+        toggleRefresh();
+        //Get forecast data
+        startForecastRetrievalService();
     }
 
     @NonNull
@@ -286,16 +288,6 @@ public class MainActivity extends AppCompatActivity {
         location.setLatitude(getForecast().getLatitude());
         location.setLongitude(getForecast().getLongitude());
         return location;
-    }
-
-
-    //Starts the WidgetForecastUpdateService to update all the widgets to utilize new data fetch
-    private void startUpdateWidgetService() {
-        Intent intent = new Intent(this,
-                WidgetForecastUpdateService.class);
-        intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false); //Not an option change
-        // Update the widgets via the service
-        startService(intent);
     }
 
     private void toggleRefresh() {
@@ -384,10 +376,9 @@ public class MainActivity extends AppCompatActivity {
                 if ((grantResults.length > 0)
                         && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     Log.d(MainActivity.TAG,"Location Permission Granted.");
-                    toggleRefresh();
-                    //Get forecast data
-                    startForecastRetrievalService();
-                    startUpdateWidgetService();
+                    if(checkGoogleApiAvailability()) {
+                        start();
+                    }
                 } else {
                     alertUserAboutError(getString(R.string.no_location_found_address),"Open Settings?",ForecastRetrievalServiceConstants.LOCATION_FAILURE_RESULT);
                 }
@@ -458,50 +449,51 @@ public class MainActivity extends AppCompatActivity {
     // The rest of this code is all about building the error dialog
 
     /* Creates a dialog for an error message */
-    public void showErrorDialog(int errorCode) {
-        // Create a fragment for the error dialog
-        GoogleErrorDialogFragment dialogFragment = new GoogleErrorDialogFragment();
-        // Pass the error that should be displayed
-        Bundle args = new Bundle();
-        args.putInt(GoogleAPIConnectionConstants.DIALOG_ERROR, errorCode);
-        dialogFragment.setArguments(args);
-        dialogFragment.show(getFragmentManager(), "errorDialog");
-    }
-
-    /* A fragment to display an error dialog */
-    public static class GoogleErrorDialogFragment extends DialogFragment {
-        public GoogleErrorDialogFragment() {
+    public void showGoogleErrorDialog(ConnectionResult connectionResult) {
+        try {
+            // Create a fragment for the error dialog
+            connectionResult.startResolutionForResult(this, GoogleAPIConnectionConstants.REQUEST_RESOLVE_ERROR);
         }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Get the error code and retrieve the appropriate dialog
-            int errorCode = this.getArguments().getInt(GoogleAPIConnectionConstants.DIALOG_ERROR);
-            return GoogleApiAvailability.getInstance().getErrorDialog(
-                    this.getActivity(), errorCode, GoogleAPIConnectionConstants.REQUEST_RESOLVE_ERROR);
-        }
-
-        @Override
-        public void onDismiss(DialogInterface dialog) {
-            super.onDismiss(dialog);
-            ((MainActivity)getActivity()).onDismissDialog();
+        catch (IntentSender.SendIntentException e) {
+            Log.e(MainActivity.TAG,"SendIntentException occurred.");
+            checkGoogleApiAvailability();
         }
     }
 
-    //Called in GoogleAPIConnectionResultMainActivityReceiver.GoogleErrorDialogFragment.onDismiss()
-    public void onDismissDialog() {
-        setAppResolvingError(false);
+    public boolean checkGoogleApiAvailability() {
+        Log.d(MainActivity.TAG,"Checking Google API Availability");
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
+        if(resultCode != ConnectionResult.SUCCESS) {
+            Log.d(MainActivity.TAG,"Google API is not available");
+            Log.d(MainActivity.TAG,"Result Code: " + resultCode);
+            if(googleApiAvailability.isUserResolvableError(resultCode)) {
+                Log.d(MainActivity.TAG,"Is a human resolvable error.");
+                setAppResolvingError(true);
+                googleApiAvailability.getErrorDialog(this, resultCode, GoogleAPIConnectionConstants.REQUEST_RESOLVE_ERROR).show();
+            }
+            else {
+                Log.d(MainActivity.TAG,"Error is not human resolvable");
+            }
+            return false;
+        }
+        else {
+            Log.d(MainActivity.TAG,"Google API is available");
+            return true;
+        }
     }
 
-    //Called from GoogleAPIConnectionResultMainActivityReceiver.GoogleErrorDialogFragment when the result is given
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GoogleAPIConnectionConstants.REQUEST_RESOLVE_ERROR) {
             setAppResolvingError(false);
             if (resultCode == RESULT_OK) {
-                // Make sure the app is not already connected or attempting to connect
-                Log.d(MainActivity.TAG,"Starting Forecast Retrieval from onActivityResult Google API");
-                startForecastRetrievalService();
+                //Google Play Services OK
+                start();
+            }
+            else {
+                //Google Play Services still do not work. Show non-fixable error dialog
+                alertUserAboutError(null,null,ForecastRetrievalServiceConstants.GOOGLE_CONNECTION_ERROR);
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.codeoregonapp.patrickleonard.tempestatibus.widget;
+package com.codeoregonapp.patrickleonard.tempestatibus.appwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
@@ -20,9 +20,9 @@ import butterknife.ButterKnife;
  * Activity to allow the user to configure the app widget. Simple and derpy
  * Created by Patrick Leonard on 1/30/2016.
  */
-public class TempestatibusWidgetConfigure extends AppCompatActivity {
+public class WidgetConfigureActivity extends AppCompatActivity {
 
-    private static final String TAG = TempestatibusWidgetConfigure.class.getSimpleName();
+    private static final String TAG = WidgetConfigureActivity.class.getSimpleName();
     private TempestatibusApplicationSettings mTempestatibusApplicationSettings;
 
     //User ButterKnife to bind the Views to variables
@@ -109,6 +109,7 @@ public class TempestatibusWidgetConfigure extends AppCompatActivity {
                     @Override
                     public void run() {
                         setSelectedWidgetTheme(mAppWidgetId); //Execute these functions when the user clicks
+                        setSelectedWidgetAsConfigured(mAppWidgetId);
                         UpdateWidgetAndFinish();  //Make sure it happens on the main ui thread
                     }
                 });
@@ -140,7 +141,11 @@ public class TempestatibusWidgetConfigure extends AppCompatActivity {
             mTempestatibusApplicationSettings.setWidgetThemePreference(TempestatibusApplicationSettings.CLEAR_BLACK_THEME_PREFERENCE,appWidgetId);
         }
         else {
-            Log.e(TempestatibusWidgetConfigure.TAG,"Bad selection for app widget");
+            Log.e(WidgetConfigureActivity.TAG,"Bad selection for app widget");
         }
+    }
+
+    private void setSelectedWidgetAsConfigured(int appWidgetId) {
+        mTempestatibusApplicationSettings.setWidgetConfigPreference(appWidgetId);
     }
 }

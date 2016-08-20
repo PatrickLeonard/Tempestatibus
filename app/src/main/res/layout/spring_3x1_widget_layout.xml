@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:clickable="true"
-             android:padding="2dp"
-             android:layout_margin="10dp"
-             android:background="@drawable/bg_widget_gradient_spring">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@drawable/bg_widget_gradient_spring">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tempestatibus"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:id="@+id/tempestatibusIcon"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/icon_image_description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:layout_toEndOf="@id/tempestatibusIcon"
+            android:layout_toRightOf="@id/tempestatibusIcon"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by_forecast"
+        android:id="@+id/poweredByForecast"
+        android:textSize="10sp"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
+        android:textColor="@android:color/white"/>
 
     <LinearLayout
         android:id="@+id/first_widget_outer_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="3"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -83,10 +122,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/us_units_fahrenheit"
                 android:id="@+id/firstWidgetTemperatureUnits"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textColor="@color/spring_text_color"
                 android:background="@android:color/transparent"
-                android:layout_marginTop="2dp"
+                android:layout_alignBottom="@+id/firstWidgetTemperatureValue"
                 android:layout_toRightOf="@id/firstWidgetTemperatureDegreeSymbol"
                 android:layout_toEndOf="@id/firstWidgetTemperatureDegreeSymbol"/>
 

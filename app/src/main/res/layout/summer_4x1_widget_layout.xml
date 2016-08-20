@@ -3,9 +3,46 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:clickable="true"
-             android:padding="2dp"
-             android:layout_margin="10dp"
              android:background="@drawable/bg_widget_gradient_summer">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tempestatibus"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:id="@+id/tempestatibusIcon"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/icon_image_description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_toEndOf="@id/tempestatibusIcon"
+            android:layout_toRightOf="@id/tempestatibusIcon"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by_forecast"
+        android:id="@+id/poweredByForecast"
+        android:textSize="10sp"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
+        android:textColor="@color/summer_text_color"/>
 
     <LinearLayout
         android:id="@+id/first_widget_outer_relative_layout"
@@ -13,7 +50,9 @@
         android:layout_height="match_parent"
         android:weightSum="4"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +108,6 @@
                 android:layout_marginRight="3dp"
                 android:layout_marginEnd="3dp"
                 android:background="@android:color/transparent"/>
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,10 +124,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/us_units_fahrenheit"
                 android:id="@+id/firstWidgetTemperatureUnits"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textColor="@color/summer_text_color"
                 android:background="@android:color/transparent"
-                android:layout_marginTop="2dp"
+                android:layout_alignBottom="@+id/firstWidgetTemperatureValue"
                 android:layout_toRightOf="@id/firstWidgetTemperatureDegreeSymbol"
                 android:layout_toEndOf="@id/firstWidgetTemperatureDegreeSymbol"/>
 
@@ -140,8 +178,6 @@
                         android:textColor="@color/summer_text_color"
                         android:id="@+id/firstWidgetHumidityLabel"
                         android:textSize="12sp"
-                        android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:background="@android:color/transparent"/>
 
                     <TextView
@@ -151,7 +187,6 @@
                         android:id="@+id/firstWidgetPrecipitationProbabilityLabel"
                         android:background="@android:color/transparent"
                         android:textSize="12sp"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:layout_marginRight="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:layout_marginEnd="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:paddingLeft="@dimen/first_widget_layout_data_table_bottom_margin"
@@ -185,8 +220,6 @@
                         android:textColor="@color/summer_text_color"
                         android:id="@+id/firstWidgetHumidityValue"
                         android:textSize="12sp"
-                        android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center"/>
 
@@ -198,7 +231,6 @@
                         android:id="@+id/firstWidgetPrecipitationProbabilityValue"
                         android:background="@android:color/transparent"
                         android:textSize="12sp"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:layout_gravity="center"/>
 
                     <TextView
@@ -227,8 +259,6 @@
                         android:textColor="@color/sub_text_color"
                         android:id="@+id/firstWidgetHumidityUnits"
                         android:textSize="12sp"
-                        android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:background="@android:color/transparent"/>
 
                     <TextView
@@ -238,7 +268,6 @@
                         android:textColor="@color/sub_text_color"
                         android:id="@+id/firstWidgetPrecipitationProbabilityUnits"
                         android:background="@android:color/transparent"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:textSize="12sp"/>
 
                     <TextView

@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".ui.MainActivity"
-                android:paddingTop="10dp"
+                android:paddingTop="4dp"
                 android:paddingLeft="8dp"
                 android:paddingStart="8dp"
                 android:paddingRight="8dp"
@@ -10,32 +10,37 @@
                 android:paddingBottom="4dp"
                 android:id="@+id/main_layout">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:clickable="true"
+        android:id="@+id/tempestatibus"
+        android:layout_centerHorizontal="true"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"/>
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_toStartOf="@id/tempestatibus"
+        android:layout_toLeftOf="@id/tempestatibus"
+        android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"
+        android:contentDescription="@string/icon_image_description"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_below="@id/tempestatibus"
         android:weightSum="4">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.1">
-            
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/empty_two_digit_number"
-                    android:id="@+id/locationLabel"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/sub_text_color"
-                    android:textSize="12sp"/>
-
-            </RelativeLayout>
+            android:layout_weight="1.16">
             
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -47,8 +52,8 @@
                     android:text="@string/this_weeks_forecast_string"
                     android:id="@+id/seven_day_forecast_header"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:textSize="30sp"/>
+                    android:layout_marginTop="4dp"
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -56,8 +61,15 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/seven_day_forecast_header"
                     android:id="@+id/timeLabel"
-                    android:textSize="16sp"
                     android:text="@string/empty_two_digit_number"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_two_digit_number"
+                    android:id="@+id/locationLabel"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/timeLabel"/>
 
             </RelativeLayout>
             
@@ -170,7 +182,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.21"
+            android:layout_weight="1.23"
             android:gravity="center">
 
             <ImageView
@@ -201,7 +213,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".63">
+            android:layout_weight=".55">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -759,11 +771,11 @@
         android:layout_height="wrap_content"
         android:text="@string/powered_by_forecast"
         android:id="@+id/poweredByForecast"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textColor="@color/sub_text_color"/>
+        android:textColor="@android:color/white"/>
 
     <ImageView
         android:layout_width="wrap_content"

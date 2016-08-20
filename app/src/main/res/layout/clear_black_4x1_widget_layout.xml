@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:clickable="true"
-             android:padding="2dp"
-             android:layout_margin="10dp"
-             android:background="@android:color/transparent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tempestatibus"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:id="@+id/tempestatibusIcon"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/icon_image_description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@android:color/black"
+            android:layout_toEndOf="@id/tempestatibusIcon"
+            android:layout_toRightOf="@id/tempestatibusIcon"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by_forecast"
+        android:id="@+id/poweredByForecast"
+        android:textSize="10sp"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
+        android:textColor="@android:color/black"/>
+
     <LinearLayout
         android:id="@+id/first_widget_outer_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="4"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,7 +86,6 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:background="@android:color/transparent"
-                android:src="@drawable/partly_cloudy"
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/icon_image_description"
@@ -63,11 +103,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/empty_two_digit_number"
+                android:textColor="@android:color/black"
                 android:id="@+id/firstWidgetTemperatureValue"
                 android:textSize="24sp"
                 android:layout_marginRight="3dp"
                 android:layout_marginEnd="3dp"
-                android:textColor="@android:color/black"
                 android:background="@android:color/transparent"/>
 
             <ImageView
@@ -86,10 +126,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/us_units_fahrenheit"
                 android:id="@+id/firstWidgetTemperatureUnits"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textColor="@android:color/black"
                 android:background="@android:color/transparent"
-                android:layout_marginTop="2dp"
+                android:layout_alignBottom="@+id/firstWidgetTemperatureValue"
                 android:layout_toRightOf="@id/firstWidgetTemperatureDegreeSymbol"
                 android:layout_toEndOf="@id/firstWidgetTemperatureDegreeSymbol"/>
 
@@ -104,14 +144,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@android:color/black"
                 android:text="@string/empty_two_digit_number"
                 android:id="@+id/firstWidgetSummaryValue"
                 android:background="@android:color/transparent"
                 android:textSize="12sp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@android:color/black"/>
 
         </RelativeLayout>
 
@@ -123,9 +163,9 @@
 
 
             <LinearLayout android:orientation="horizontal"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-                          android:gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -140,8 +180,6 @@
                         android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetHumidityLabel"
                         android:textSize="12sp"
-                        android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:background="@android:color/transparent"/>
 
                     <TextView
@@ -151,23 +189,22 @@
                         android:id="@+id/firstWidgetPrecipitationProbabilityLabel"
                         android:background="@android:color/transparent"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:layout_marginRight="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:layout_marginEnd="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:paddingLeft="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:paddingStart="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:paddingRight="0dp"
-                        android:paddingEnd="0dp"/>
+                        android:paddingEnd="0dp"
+                        android:textColor="@android:color/black"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/first_widget_wind_speed_label"
+                        android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetWindSpeedLabel"
                         android:textSize="12sp"
                         android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
-                        android:textColor="@android:color/black"
                         android:background="@android:color/transparent"/>
 
                 </LinearLayout>
@@ -182,11 +219,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/empty_two_digit_number"
+                        android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetHumidityValue"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center"/>
 
@@ -194,20 +229,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/empty_two_digit_number"
+                        android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetPrecipitationProbabilityValue"
                         android:background="@android:color/transparent"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:layout_gravity="center"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/empty_two_digit_number"
+                        android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetWindSpeedValue"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
                         android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:background="@android:color/transparent"
                         android:layout_gravity="center"/>
@@ -224,30 +258,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/percent_symbol"
+                        android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetHumidityUnits"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:background="@android:color/transparent"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/percent_symbol"
+                        android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetPrecipitationProbabilityUnits"
                         android:background="@android:color/transparent"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:textSize="12sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/us_units_miles_per_hour"
+                        android:textColor="@android:color/black"
                         android:id="@+id/firstWidgetWindSpeedUnits"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
                         android:paddingLeft="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:paddingStart="@dimen/first_widget_layout_data_table_bottom_margin"
                         android:paddingRight="3dp"

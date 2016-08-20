@@ -95,9 +95,15 @@ public class AddressFetchIntentService extends IntentService {
             mStandardAddress += address.getAddressLine(i);
             mStandardAddress += " ";
         }
-        for (;j<=address.getMaxAddressLineIndex();++j) {
-            mShortenedAddress += address.getAddressLine(j);
-            mShortenedAddress += " ";
+
+        if(address.getMaxAddressLineIndex() == 1) {
+            mShortenedAddress = mStandardAddress;
+        }
+        else {
+            for (; j <= address.getMaxAddressLineIndex(); ++j) {
+                mShortenedAddress += address.getAddressLine(j);
+                mShortenedAddress += " ";
+            }
         }
     }
 

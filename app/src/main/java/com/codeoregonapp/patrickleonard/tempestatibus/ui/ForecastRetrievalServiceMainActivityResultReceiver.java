@@ -8,7 +8,9 @@ import android.util.Log;
 
 import com.codeoregonapp.patrickleonard.tempestatibus.R;
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalServiceConstants;
+import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.googleAPIUtils.GoogleAPIConnectionConstants;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Forecast;
+import com.google.android.gms.common.ConnectionResult;
 
 /**
  * This receiver gets the results from the ForecastRetrievalService and reacts to them in the
@@ -39,7 +41,8 @@ public class ForecastRetrievalServiceMainActivityResultReceiver extends ResultRe
                 mMainActivity.alertUserAboutError(mMainActivity.getString(R.string.error_title),mMainActivity.getString(R.string.error_message),resultCode); break;
             }
             case ForecastRetrievalServiceConstants.GOOGLE_CONNECTION_ERROR:  { //Display the Google error message
-                mMainActivity.showErrorDialog(errorCode); break;
+                ConnectionResult connectionResult = resultData.getParcelable(GoogleAPIConnectionConstants.CONNECTION_RESULT_KEY);
+                mMainActivity.showGoogleErrorDialog(connectionResult); break;
             }
             case ForecastRetrievalServiceConstants.LOCATION_FAILURE_RESULT: { //Display the incoming location error message
                 if(!mMainActivity.getRefusedSettings()) {

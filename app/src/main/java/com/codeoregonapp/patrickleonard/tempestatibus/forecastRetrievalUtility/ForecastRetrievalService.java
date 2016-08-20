@@ -1,5 +1,6 @@
 package com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
@@ -31,7 +32,8 @@ import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.l
 import com.codeoregonapp.patrickleonard.tempestatibus.notifications.SevereWeatherNotificationHelper;
 import com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Forecast;
-import com.codeoregonapp.patrickleonard.tempestatibus.widget.WidgetForecastUpdateService;
+import com.codeoregonapp.patrickleonard.tempestatibus.appwidget.WidgetForecastUpdateService;
+import com.google.android.gms.common.ConnectionResult;
 
 import java.util.List;
 
@@ -54,6 +56,7 @@ public class ForecastRetrievalService extends Service {
     private String mCallingClassName;
     private boolean mIsRunning;
     private int mResultCode;
+    private ConnectionResult mConnectionResult;
     private String mResultMessage;
 
     public SevereWeatherNotificationHelper getSevereWeatherNotificationHelper() {
@@ -281,6 +284,9 @@ public class ForecastRetrievalService extends Service {
         bundle.putString(ForecastRetrievalServiceConstants.STANDARD_ADDRESS_DATA_KEY, getStandardAddress());
         bundle.putString(ForecastRetrievalServiceConstants.SHORTENED_ADDRESS_DATA_KEY, getShortenedAddress());
         bundle.putParcelable(ForecastRetrievalServiceConstants.RESULT_DATA_KEY, getForecast());
+        if(mConnectionResult != null) {
+            bundle.putParcelable(GoogleAPIConnectionConstants.CONNECTION_RESULT_KEY,mConnectionResult);
+        }
         return bundle;
     }
 
@@ -336,11 +342,13 @@ public class ForecastRetrievalService extends Service {
     }
 
     public void googleConnectionSuccess() {
+        mConnectionResult = null;//No error occurred, make sure to set to null
         startAddressFetchIntentService();
     }
 
-    public void googleConnectionFailure(int errorCode) {
-       sendData(ForecastRetrievalServiceConstants.GOOGLE_CONNECTION_ERROR,errorCode,"Google API Connection Problem");
+    public void googleConnectionFailure(int errorCode, ConnectionResult connectionResult) {
+        mConnectionResult = connectionResult;
+        sendData(ForecastRetrievalServiceConstants.GOOGLE_CONNECTION_ERROR,errorCode,connectionResult.getErrorMessage());
     }
 
     public void fetchLocationSuccess(Location location) {

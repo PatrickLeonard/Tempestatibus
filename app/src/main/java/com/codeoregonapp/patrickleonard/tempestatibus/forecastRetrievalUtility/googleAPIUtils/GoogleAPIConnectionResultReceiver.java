@@ -6,6 +6,7 @@ import android.os.ResultReceiver;
 import android.util.Log;
 
 import com.codeoregonapp.patrickleonard.tempestatibus.forecastRetrievalUtility.ForecastRetrievalService;
+import com.google.android.gms.common.ConnectionResult;
 
 /**
  * Result Receive for connecting to the Google Services API
@@ -33,11 +34,12 @@ public class GoogleAPIConnectionResultReceiver extends ResultReceiver {
             mForecastRetrievalService.googleConnectionSuccess();
         }
         else {
+            ConnectionResult connectionResult = resultData.getParcelable(GoogleAPIConnectionConstants.CONNECTION_RESULT_KEY);
             //Or there was some other error to be delivered
             Log.e(GoogleAPIConnectionResultReceiver.TAG, "Result failure in onReceiveResult");
             Log.e(GoogleAPIConnectionResultReceiver.TAG, "Result code: " + resultCode);
             Log.e(GoogleAPIConnectionResultReceiver.TAG, "Error Code: " + errorCode);
-            mForecastRetrievalService.googleConnectionFailure(errorCode);
+            mForecastRetrievalService.googleConnectionFailure(errorCode,connectionResult);
         }
 
     }

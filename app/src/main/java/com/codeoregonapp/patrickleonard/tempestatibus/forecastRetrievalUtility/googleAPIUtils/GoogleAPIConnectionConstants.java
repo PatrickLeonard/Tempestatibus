@@ -15,12 +15,11 @@ public final class GoogleAPIConnectionConstants {
     public static final String RESULT_DATA_KEY = PACKAGE_NAME +
             ".RESULT_DATA_KEY";
     public static final String STATE_RESOLVING_ERROR = "resolving_error";
-    public static final String RESOLUTION_INTENT_KEY = PACKAGE_NAME +
-            "PENDING_INTENT";
+    public static final String CONNECTION_RESULT_KEY = PACKAGE_NAME +
+            "CONNECTION_RESULT";
     // Request code to use when launching the resolution activity
     public static final int REQUEST_RESOLVE_ERROR = 1001;
-    // Code to use when there is no resolution to the connection problem found
-    public static final int NO_RESOLUTION = -1;
+    //Geocoder constants
     public static final int GEOCODER_PRESENT = -2;
     public static final int GEOCODER_NOT_PRESENT = -3;
     // Unique tag for the error dialog fragment

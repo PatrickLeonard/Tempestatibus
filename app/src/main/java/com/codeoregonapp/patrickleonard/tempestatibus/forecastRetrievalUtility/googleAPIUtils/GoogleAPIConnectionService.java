@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -26,7 +27,7 @@ public class GoogleAPIConnectionService extends Service implements GoogleApiClie
 
     private ResultReceiver mReceiver;
     private GoogleApiClient mGoogleApiClient;
-    private boolean mResolvingError;
+
 
     @Override
     public void onCreate() {
@@ -44,7 +45,6 @@ public class GoogleAPIConnectionService extends Service implements GoogleApiClie
         //Set the receiver and connect to the Google API
         if(intent != null) {
             mReceiver = intent.getParcelableExtra(GoogleAPIConnectionConstants.RECEIVER);
-            mResolvingError = intent.getBooleanExtra(GoogleAPIConnectionConstants.STATE_RESOLVING_ERROR,false);
             if(!mGoogleApiClient.isConnected() && !mGoogleApiClient.isConnecting()) {
                 mGoogleApiClient.connect();
             }
@@ -101,9 +101,9 @@ public class GoogleAPIConnectionService extends Service implements GoogleApiClie
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         if (connectionResult.hasResolution()) {
-            deliverResultToReceiver(GoogleAPIConnectionConstants.REQUEST_RESOLVE_ERROR, connectionResult.getErrorCode(),connectionResult.getResolution());
+            deliverResultToReceiver(GoogleAPIConnectionConstants.REQUEST_RESOLVE_ERROR, connectionResult);
         } else {
-            deliverResultToReceiver(GoogleAPIConnectionConstants.FAILURE_RESULT, GoogleAPIConnectionConstants.NO_RESOLUTION);
+            deliverResultToReceiver(GoogleAPIConnectionConstants.FAILURE_RESULT, connectionResult);
         }
         mGoogleApiClient.unregisterConnectionFailedListener(this); //Balance calls to onConnectionFailed with unregisterConnectionFailListener
         Log.e(GoogleAPIConnectionService.TAG, "Connection Failed");
@@ -123,16 +123,14 @@ public class GoogleAPIConnectionService extends Service implements GoogleApiClie
     private void deliverResultToReceiver(int resultCode, int errorCode) {
         Bundle bundle = new Bundle();
         bundle.putInt(GoogleAPIConnectionConstants.RESULT_DATA_KEY, errorCode);
-        bundle.putBoolean(GoogleAPIConnectionConstants.STATE_RESOLVING_ERROR, mResolvingError);
         mReceiver.send(resultCode, bundle);
     }
 
     //Deliver results to receiver that does have an error to resolve
-    private void deliverResultToReceiver(int resultCode, int errorCode, PendingIntent pendingIntent) {
+    private void deliverResultToReceiver(int resultCode, ConnectionResult connectionResult) {
         Bundle bundle = new Bundle();
-        bundle.putInt(GoogleAPIConnectionConstants.RESULT_DATA_KEY, errorCode);
-        bundle.putParcelable(GoogleAPIConnectionConstants.RESOLUTION_INTENT_KEY, pendingIntent);
-        bundle.putBoolean(GoogleAPIConnectionConstants.STATE_RESOLVING_ERROR, mResolvingError);
+        bundle.putInt(GoogleAPIConnectionConstants.RESULT_DATA_KEY, connectionResult.getErrorCode());
+        bundle.putParcelable(GoogleAPIConnectionConstants.CONNECTION_RESULT_KEY, connectionResult);
         mReceiver.send(resultCode, bundle);
     }
 }

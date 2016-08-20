@@ -1,4 +1,4 @@
-package com.codeoregonapp.patrickleonard.tempestatibus.widget;
+package com.codeoregonapp.patrickleonard.tempestatibus.appwidget;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,8 +57,8 @@ public class ForecastRetrievalServiceWidgetProviderResultReceiver extends Result
     private void displayResultsOnWidgets(Bundle resultData) {
         Forecast forecast = resultData.getParcelable(ForecastRetrievalServiceConstants.RESULT_DATA_KEY);
         String address = resultData.getString(ForecastRetrievalServiceConstants.SHORTENED_ADDRESS_DATA_KEY);
-        mWidgetForecastUpdateService.setForecast(forecast);
-        mWidgetForecastUpdateService.setAddress(address);
+        mWidgetForecastUpdateService.getRemoteViewsManager().setForecast(forecast);
+        mWidgetForecastUpdateService.getRemoteViewsManager().setAddress(address);
         WidgetForecastUpdateService.staticForecast = forecast;
         WidgetForecastUpdateService.staticAddress = address;
         mWidgetForecastUpdateService.setHasRetrievalError(false);

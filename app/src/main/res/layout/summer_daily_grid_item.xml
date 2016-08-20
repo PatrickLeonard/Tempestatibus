@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               tools:background="@drawable/bg_gradient_summer"
               android:orientation="vertical"
-              android:layout_width="30dp"
+              android:layout_width="fill_parent"
               android:layout_height="90dp"
               android:id="@+id/grid_item_layout"
               android:gravity="center"

@@ -1,4 +1,4 @@
-package com.codeoregonapp.patrickleonard.tempestatibus.widget;
+package com.codeoregonapp.patrickleonard.tempestatibus.appwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -13,13 +13,13 @@ import com.codeoregonapp.patrickleonard.tempestatibus.weather.Day;
  * App widget provider for the first widget of this application
  * Created by Patrick Leonard on 1/2/2016.
  */
-public class TempestatibusMediumWidgetProvider extends AppWidgetProvider {
-    public static final String TAG = TempestatibusMediumWidgetProvider.class.getSimpleName();
-    public static final String NAME = TempestatibusMediumWidgetProvider.class.getName();
+public class TempestatibusLargeWidgetProvider extends AppWidgetProvider {
+    public static final String TAG = TempestatibusLargeWidgetProvider.class.getSimpleName();
+    public static final String NAME = TempestatibusLargeWidgetProvider.class.getName();
     public static final String DAY_ITEM_CLICK_ACTION = ".widget.Tempestatibus.DAY_ITEM_CLICK_ACTION";
     public static final String DAY_BUNDLE = ".widget.Tempestatibus.DAY_BUNDLE";
-    public static final int CELL_WIDTH = 3;
-    public static final int CELL_HEIGHT = 2;
+    public static final int CELL_WIDTH = 4;
+    public static final int CELL_HEIGHT = 3;
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
@@ -54,7 +54,7 @@ public class TempestatibusMediumWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(DAY_ITEM_CLICK_ACTION)) {
             //Get Day class from a Bundle to work around NoClassDefFound Exception
-            Bundle dayBundle = intent.getBundleExtra(TempestatibusMediumWidgetProvider.DAY_BUNDLE);
+            Bundle dayBundle = intent.getBundleExtra(TempestatibusLargeWidgetProvider.DAY_BUNDLE);
             dayBundle.setClassLoader(Day.class.getClassLoader());
             Day clickedDay =  dayBundle.getParcelable(Day.TAG);
             //Don't forget the address
@@ -95,4 +95,5 @@ public class TempestatibusMediumWidgetProvider extends AppWidgetProvider {
         context.startService(intent);
         super.onRestored(context,oldWidgetIds,newWidgetIds);
     }
+
 }

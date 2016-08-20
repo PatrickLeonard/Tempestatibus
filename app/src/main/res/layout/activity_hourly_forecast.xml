@@ -5,13 +5,32 @@
     tools:context="com.codeoregonapp.patrickleonard.tempestatibus.ui.HourlyForecastActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
+    android:paddingTop="4dp"
     android:paddingLeft="8dp"
     android:paddingStart="8dp"
     android:paddingRight="8dp"
     android:paddingEnd="8dp"
     android:paddingBottom="4dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:clickable="true"
+        android:id="@+id/tempestatibus"
+        android:layout_centerHorizontal="true"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"/>
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_toStartOf="@id/tempestatibus"
+        android:layout_toLeftOf="@id/tempestatibus"
+        android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"
+        android:contentDescription="@string/icon_image_description"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -19,6 +38,7 @@
         android:id="@+id/recyclerView"
         android:background="@android:color/transparent"
         android:clipToPadding="true"
+        android:layout_below="@id/tempestatibus"
         android:layout_marginBottom="18dp">
     </android.support.v7.widget.RecyclerView>
 
@@ -28,12 +48,12 @@
         android:layout_height="wrap_content"
         android:text="@string/powered_by_forecast"
         android:id="@+id/poweredByForecast"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:clickable="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textColor="@color/sub_text_color"/>
+        android:textColor="@android:color/white"/>
 
     <ImageView
         android:layout_width="wrap_content"

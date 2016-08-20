@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:clickable="true"
-             android:padding="2dp"
-             android:layout_margin="10dp"
-             android:background="@drawable/bg_widget_gradient_summer">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:background="@drawable/bg_widget_gradient_summer">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tempestatibus"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:id="@+id/tempestatibusIcon"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/icon_image_description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_toEndOf="@id/tempestatibusIcon"
+            android:layout_toRightOf="@id/tempestatibusIcon"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by_forecast"
+        android:id="@+id/poweredByForecast"
+        android:textSize="12sp"
+        android:clickable="true"
+        android:layout_gravity="bottom|start"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/summer_text_color"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/poweredByGoogle"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/powered_by_google_on_non_white"
+        android:contentDescription="@string/powered_by_google"
+        android:background="@android:color/transparent"/>
 
     <LinearLayout
         android:id="@+id/first_widget_outer_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="2.9">
+        android:weightSum="2.9"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -191,8 +241,6 @@
                             android:text="@string/first_widget_humidity_label"
                             android:textColor="@color/summer_text_color"
                             android:id="@+id/firstWidgetHumidityLabel"
-                            android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                            android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                             android:background="@android:color/transparent"/>
 
                         <TextView
@@ -201,7 +249,6 @@
                             android:text="@string/first_widget_precipitation_probability_label"
                             android:id="@+id/firstWidgetPrecipitationProbabilityLabel"
                             android:background="@android:color/transparent"
-                            android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                             android:layout_marginRight="@dimen/first_widget_layout_data_table_bottom_margin"
                             android:layout_marginEnd="@dimen/first_widget_layout_data_table_bottom_margin"
                             android:paddingLeft="@dimen/first_widget_layout_data_table_bottom_margin"
@@ -233,8 +280,6 @@
                             android:text="@string/empty_two_digit_number"
                             android:textColor="@color/summer_text_color"
                             android:id="@+id/firstWidgetHumidityValue"
-                            android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                            android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                             android:background="@android:color/transparent"
                             android:layout_gravity="center"/>
 
@@ -245,7 +290,6 @@
                             android:textColor="@color/summer_text_color"
                             android:id="@+id/firstWidgetPrecipitationProbabilityValue"
                             android:background="@android:color/transparent"
-                            android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                             android:layout_gravity="center"/>
 
                         <TextView
@@ -272,8 +316,6 @@
                             android:text="@string/percent_symbol"
                             android:textColor="@color/sub_text_color"
                             android:id="@+id/firstWidgetHumidityUnits"
-                            android:layout_marginTop="@dimen/first_widget_layout_data_table_bottom_margin"
-                            android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"
                             android:background="@android:color/transparent"/>
 
                         <TextView
@@ -282,8 +324,7 @@
                             android:text="@string/percent_symbol"
                             android:textColor="@color/sub_text_color"
                             android:id="@+id/firstWidgetPrecipitationProbabilityUnits"
-                            android:background="@android:color/transparent"
-                            android:layout_marginBottom="@dimen/first_widget_layout_data_table_bottom_margin"/>
+                            android:background="@android:color/transparent" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -325,8 +366,10 @@
                 android:layout_height="wrap_content"
                 android:numColumns="8"
                 android:columnWidth="35dp"
+                tools:listitem="@layout/summer_daily_grid_item"
                 android:clipToPadding="false"
                 android:gravity="center"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/first_widget_daily_grid_view"/>
 
             <TextView

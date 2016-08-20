@@ -1,4 +1,4 @@
-package com.codeoregonapp.patrickleonard.tempestatibus.widget;
+package com.codeoregonapp.patrickleonard.tempestatibus.appwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;

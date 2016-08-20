@@ -17,6 +17,7 @@ public class TempestatibusApplicationSettings {
     public final static String TAG = TempestatibusApplication.class.getSimpleName();
     public final static String APP_THEME_PREFERENCE = "APP_THEME";
     public final static String WIDGET_THEME_PREFERENCE = "WIDGET_THEME";
+    public final static String WIDGET_CONFIG_PREFERENCE = "WIDGET_CONFIG";
     public final static String APP_UNITS_PREFERENCE = "APP_UNITS";
     public final static String HOURLY_EXTEND_APP_PREFERENCE = "APP_HOURLY_EXTEND";
     public final static boolean US_UNITS_PREFERENCE = false;
@@ -54,6 +55,18 @@ public class TempestatibusApplicationSettings {
 
     public void setWidgetThemePreference(String theme,int widgetId) {
         mSharedPreferences.edit().putString(WIDGET_THEME_PREFERENCE+widgetId,theme).apply();
+    }
+
+    public boolean getWidgetConfigPreference(int widgetId) {
+        return mSharedPreferences.getBoolean(WIDGET_CONFIG_PREFERENCE+widgetId,false);
+    }
+
+    public void setWidgetConfigPreference(int widgetId) {
+        mSharedPreferences.edit().putBoolean(WIDGET_CONFIG_PREFERENCE+widgetId,true).apply();
+    }
+
+    public void removeWidgetConfigPreference(int widgetId) {
+        mSharedPreferences.edit().remove(WIDGET_CONFIG_PREFERENCE+widgetId).apply();
     }
 
     public void removeWidgetThemePreference(int widgetId) {
@@ -615,5 +628,5 @@ public class TempestatibusApplicationSettings {
 
         return iconId;
     }
-    
+
 }
