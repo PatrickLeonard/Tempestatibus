@@ -88,10 +88,12 @@ public class DailyGridRemoteViewsFactory implements RemoteViewsService.RemoteVie
     public void onDataSetChanged() {
         Forecast forecast = WidgetForecastUpdateService.staticForecast;
         mAddress = WidgetForecastUpdateService.staticAddress;
-        mDays = forecast.getDailyForecastList();
-        TempestatibusApplicationSettings tempestatibusApplicationSettings = new TempestatibusApplicationSettings();
-        tempestatibusApplicationSettings.createSharedPreferenceContext(mContext);
-        mTheme = tempestatibusApplicationSettings.getWidgetThemePreference(mAppWidgetId);
+        if(forecast != null) {
+            mDays = forecast.getDailyForecastList();
+            TempestatibusApplicationSettings tempestatibusApplicationSettings = new TempestatibusApplicationSettings();
+            tempestatibusApplicationSettings.createSharedPreferenceContext(mContext);
+            mTheme = tempestatibusApplicationSettings.getWidgetThemePreference(mAppWidgetId);
+        }
     }
 
     @Override

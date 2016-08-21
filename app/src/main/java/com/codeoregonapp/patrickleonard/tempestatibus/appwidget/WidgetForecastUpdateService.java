@@ -98,31 +98,36 @@ public class WidgetForecastUpdateService extends Service {
         int[] appWidgetIds;
         if(intent != null) {
             appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+            boolean deleteWidget = false;
+            boolean restoreWidget = false;
+            boolean optionChange = false;
+
             if(appWidgetIds != null) {
-                boolean deleteWidget = intent.getBooleanExtra(WidgetForecastUpdateService.DELETE_WIDGET,false);
-                boolean restoreWidget = intent.getBooleanExtra(WidgetForecastUpdateService.RESTORE_WIDGET,false);
-                boolean optionChange = intent.getBooleanExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS,false);
-                Log.d(WidgetForecastUpdateService.TAG,"RemoteViews Map size: " + getRemoteViewsManager().getRemoteViewsArray().size());
-                if(deleteWidget) {
+                deleteWidget = intent.getBooleanExtra(WidgetForecastUpdateService.DELETE_WIDGET, false);
+                restoreWidget = intent.getBooleanExtra(WidgetForecastUpdateService.RESTORE_WIDGET, false);
+                optionChange = intent.getBooleanExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
+                Log.d(WidgetForecastUpdateService.TAG, "RemoteViews Map size: " + getRemoteViewsManager().getRemoteViewsArray().size());
+            }
+
+            if(deleteWidget) {
                     for(int widgetId : appWidgetIds) {
                        getRemoteViewsManager().deleteWidget(widgetId);
                     }
+            }
+            else if(restoreWidget) {
+                int[] oldWidgetIds = intent.getIntArrayExtra(WidgetForecastUpdateService.OLD_WIDGET_IDS);
+                for(int i=0;i<oldWidgetIds.length;++i) {
+                    getRemoteViewsManager().restoreWidget(appWidgetIds[i], oldWidgetIds[i]);
                 }
-                else if(restoreWidget) {
-                    int[] oldWidgetIds = intent.getIntArrayExtra(WidgetForecastUpdateService.OLD_WIDGET_IDS);
-                    for(int i=0;i<oldWidgetIds.length;++i) {
-                        getRemoteViewsManager().restoreWidget(appWidgetIds[i], oldWidgetIds[i]);
-                    }
+            }
+            else if (!optionChange && !mIsRunning) {
+                runUpdateService();
+            } else if (optionChange) {
+                if(getRemoteViewsManager().getForecast() != null) {
+                    updateAppWidgets(appWidgetIds);
                 }
-                else if (!optionChange && !mIsRunning) {
+                else {
                     runUpdateService();
-                } else if (optionChange) {
-                    if(getRemoteViewsManager().getForecast() != null) {
-                        updateAppWidgets(appWidgetIds);
-                    }
-                    else {
-                        runUpdateService();
-                    }
                 }
             }
         }
@@ -142,14 +147,15 @@ public class WidgetForecastUpdateService extends Service {
             boolean configured = getTempestatibusApplicationSettings().getWidgetConfigPreference(widgetId);
             if(configured) {
                 RemoteViews remoteViews = getRemoteViewsManager().getRemoteViewsArray().get(widgetId);
-                if (remoteViews != null) {
-                    Log.d(WidgetForecastUpdateService.TAG, "App Widget IDs Length: " + appWidgetIds.length);
-                    Log.d(WidgetForecastUpdateService.TAG, "WidgetID should have the progress bar visible: " + widgetId);
-                    Log.d(WidgetForecastUpdateService.TAG, "Spinner should now be visible.");
-                    remoteViews.setViewVisibility(R.id.progressBarLayout, View.VISIBLE);
-                    remoteViews.setViewVisibility(R.id.iconImageView, View.INVISIBLE);
-                    appWidgetManager.updateAppWidget(widgetId, remoteViews);
+                if (remoteViews == null) {
+                    remoteViews = getRemoteViewsManager().getRemoteViews(appWidgetManager, widgetId);
                 }
+                Log.d(WidgetForecastUpdateService.TAG, "App Widget IDs Length: " + appWidgetIds.length);
+                Log.d(WidgetForecastUpdateService.TAG, "WidgetID should have the progress bar visible: " + widgetId);
+                Log.d(WidgetForecastUpdateService.TAG, "Spinner should now be visible.");
+                remoteViews.setViewVisibility(R.id.progressBarLayout, View.VISIBLE);
+                remoteViews.setViewVisibility(R.id.iconImageView, View.INVISIBLE);
+                appWidgetManager.updateAppWidget(widgetId, remoteViews);
             }
         }
     }
