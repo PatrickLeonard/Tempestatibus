@@ -32,6 +32,7 @@ public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
         // Custom Extra Boolean to signify NOT an option change
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.PROVIDER_UPDATE_REQUEST,true);
         // Update the widgets via the service
         context.startService(intent);
     }
@@ -82,7 +83,7 @@ public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
         //Only need to update the widget that has had it's options changed/resized
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
-        intent.putExtra(WidgetForecastUpdateService.DELETE_WIDGET,true);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.DELETE_WIDGET,true);
         // Update the widgets via the service
         context.startService(intent);
         super.onDeleted(context,appWidgetIds);
@@ -94,9 +95,9 @@ public class TempestatibusSmallWidgetProvider extends AppWidgetProvider {
         Intent intent = new Intent(context.getApplicationContext(),
                 WidgetForecastUpdateService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, newWidgetIds);
-        intent.putExtra(WidgetForecastUpdateService.OLD_WIDGET_IDS, oldWidgetIds);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.OLD_WIDGET_IDS, oldWidgetIds);
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
-        intent.putExtra(WidgetForecastUpdateService.RESTORE_WIDGET,true);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.RESTORE_WIDGET,true);
         context.startService(intent);
         super.onRestored(context,oldWidgetIds,newWidgetIds);
     }

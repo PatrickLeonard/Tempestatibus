@@ -56,6 +56,34 @@
         android:contentDescription="@string/powered_by_google"
         android:background="@android:color/transparent"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/loadingLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading"
+            android:textColor="@color/summer_text_color"
+            android:layout_centerInParent="true"
+            android:id="@+id/loadingText"
+            android:textSize="32sp"/>
+
+        <ProgressBar
+            android:layout_width="36dip"
+            android:layout_height="36dip"
+            android:id="@+id/loadingProgressBar"
+            style="@style/SUMMER.INDETERMINATE_PROGRESS_STYLE"
+            android:background="@android:color/transparent"
+            android:duplicateParentState="true"
+            android:layout_toLeftOf="@id/loadingText"
+            android:layout_toStartOf="@id/loadingText"
+            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/first_widget_outer_relative_layout"
         android:layout_width="match_parent"
@@ -63,7 +91,8 @@
         android:orientation="vertical"
         android:weightSum="2.9"
         android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:orientation="horizontal"

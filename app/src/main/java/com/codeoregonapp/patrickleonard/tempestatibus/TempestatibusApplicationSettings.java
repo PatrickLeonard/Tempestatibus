@@ -18,6 +18,7 @@ public class TempestatibusApplicationSettings {
     public final static String APP_THEME_PREFERENCE = "APP_THEME";
     public final static String WIDGET_THEME_PREFERENCE = "WIDGET_THEME";
     public final static String WIDGET_CONFIG_PREFERENCE = "WIDGET_CONFIG";
+    public final static String WIDGET_DISPLAY_PREFERENCE = "WIDGET_DISPLAY";
     public final static String APP_UNITS_PREFERENCE = "APP_UNITS";
     public final static String HOURLY_EXTEND_APP_PREFERENCE = "APP_HOURLY_EXTEND";
     public final static boolean US_UNITS_PREFERENCE = false;
@@ -61,8 +62,16 @@ public class TempestatibusApplicationSettings {
         return mSharedPreferences.getBoolean(WIDGET_CONFIG_PREFERENCE+widgetId,false);
     }
 
-    public void setWidgetConfigPreference(int widgetId) {
-        mSharedPreferences.edit().putBoolean(WIDGET_CONFIG_PREFERENCE+widgetId,true).apply();
+    public void setWidgetConfigPreference(int widgetId, boolean config) {
+        mSharedPreferences.edit().putBoolean(WIDGET_CONFIG_PREFERENCE+widgetId,config).apply();
+    }
+
+    public boolean getWidgetDisplayPreference(int widgetId) {
+        return mSharedPreferences.getBoolean(WIDGET_DISPLAY_PREFERENCE+widgetId,false);
+    }
+
+    public void setWidgetDisplayPreference(int widgetId, boolean config) {
+        mSharedPreferences.edit().putBoolean(WIDGET_DISPLAY_PREFERENCE+widgetId,config).apply();
     }
 
     public void removeWidgetConfigPreference(int widgetId) {
@@ -71,6 +80,10 @@ public class TempestatibusApplicationSettings {
 
     public void removeWidgetThemePreference(int widgetId) {
         mSharedPreferences.edit().remove(WIDGET_THEME_PREFERENCE+widgetId).apply();
+    }
+
+    public void removeWidgetDisplayPreference(int widgetId) {
+        mSharedPreferences.edit().remove(WIDGET_DISPLAY_PREFERENCE+widgetId).apply();
     }
 
     public boolean getAppUnitsPreference() {

@@ -109,7 +109,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         setSelectedWidgetTheme(mAppWidgetId); //Execute these functions when the user clicks
-                        setSelectedWidgetAsConfigured(mAppWidgetId);
+                        setWidgetConfigPreference(mAppWidgetId);
                         UpdateWidgetAndFinish();  //Make sure it happens on the main ui thread
                     }
                 });
@@ -120,11 +120,16 @@ public class WidgetConfigureActivity extends AppCompatActivity {
         setResult(RESULT_CANCELED, mResultValue); //Set canceled so if backed out of will exit clean
     }
 
+    private void setWidgetConfigPreference(int appWidgetId) {
+        mTempestatibusApplicationSettings.setWidgetConfigPreference(appWidgetId,true);
+    }
+
     private void UpdateWidgetAndFinish() {
         Intent intent = new Intent(getApplicationContext(),
                 WidgetForecastUpdateService.class);
         int[] widgetIds = {mAppWidgetId};
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.PROVIDER_UPDATE_REQUEST,false);
         startService(intent);
         setResult(RESULT_OK, mResultValue);
         finish(); //Finish this activity with OK result
@@ -145,7 +150,4 @@ public class WidgetConfigureActivity extends AppCompatActivity {
         }
     }
 
-    private void setSelectedWidgetAsConfigured(int appWidgetId) {
-        mTempestatibusApplicationSettings.setWidgetConfigPreference(appWidgetId);
-    }
 }

@@ -132,6 +132,16 @@ public class WidgetRemoteViewsManager {
     }
 
     @NonNull
+    public RemoteViews toggleLoadingLayoutVisibilities(RemoteViews remoteViews, int widgetId) {
+            Log.d(WidgetForecastUpdateService.TAG, "WidgetID should have the progress bar visible: " + widgetId);
+            Log.d(WidgetForecastUpdateService.TAG, "Spinner should now be visible.");
+            remoteViews.setViewVisibility(R.id.loadingLayout, View.GONE);
+            remoteViews.setViewVisibility(R.id.first_widget_outer_relative_layout, View.VISIBLE);
+            return remoteViews;
+    }
+
+
+    @NonNull
     public RemoteViews updateResizableDynamicWidgetData(RemoteViews remoteViews, int widgetId) {
         Current current = getForecast().getCurrent();
         // Set the text with the new data retrieved
@@ -213,15 +223,14 @@ public class WidgetRemoteViewsManager {
     }
 
     public RemoteViews registerUpdateOnClickListener(int widgetId, RemoteViews remoteViews) {
-        // Register an onClickListener
-        Intent clickIntent;
-        clickIntent = getProviderIntent(widgetId);
-        clickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        // Register an onClickListener to update the widgets using this service
+        Intent clickIntent = new Intent(mContext,WidgetForecastUpdateService.class);
         int[] allWidgetIds = {widgetId};
         Log.d(WidgetRemoteViewsManager.TAG,"WidgetID having listener registered: " + widgetId);
         clickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
                 allWidgetIds);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, clickIntent,
+        clickIntent.putExtra(WidgetForecastUpdateServiceConstants.PROVIDER_UPDATE_REQUEST,false);
+        PendingIntent pendingIntent = PendingIntent.getService(mContext, 0, clickIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.first_widget_outer_relative_layout, pendingIntent);
         return remoteViews;
@@ -296,6 +305,8 @@ public class WidgetRemoteViewsManager {
         Log.d(WidgetRemoteViewsManager.TAG, "WidgetId: " + widgetId);
         getDynamicWidgetLayoutController().getTempestatibusApplicationSettings().removeWidgetThemePreference(widgetId);
         getDynamicWidgetLayoutController().getTempestatibusApplicationSettings().removeWidgetConfigPreference(widgetId);
+        getDynamicWidgetLayoutController().getTempestatibusApplicationSettings().removeWidgetDisplayPreference(widgetId);
+
     }
 
     public void restoreWidget(int newWidgetId, int oldWidgetId) {
@@ -305,8 +316,11 @@ public class WidgetRemoteViewsManager {
         getDynamicWidgetLayoutController().getTempestatibusApplicationSettings()
                 .setWidgetThemePreference(getDynamicWidgetLayoutController().getTempestatibusApplicationSettings().getWidgetThemePreference(oldWidgetId), newWidgetId);
         getDynamicWidgetLayoutController().getTempestatibusApplicationSettings()
-                .setWidgetConfigPreference(newWidgetId);
+                .setWidgetConfigPreference(newWidgetId,false);
+        getDynamicWidgetLayoutController().getTempestatibusApplicationSettings()
+                .setWidgetDisplayPreference(newWidgetId,false);
         getDynamicWidgetLayoutController().getTempestatibusApplicationSettings().removeWidgetThemePreference(oldWidgetId);
         getDynamicWidgetLayoutController().getTempestatibusApplicationSettings().removeWidgetConfigPreference(oldWidgetId);
+        getDynamicWidgetLayoutController().getTempestatibusApplicationSettings().removeWidgetDisplayPreference(oldWidgetId);
     }
 }

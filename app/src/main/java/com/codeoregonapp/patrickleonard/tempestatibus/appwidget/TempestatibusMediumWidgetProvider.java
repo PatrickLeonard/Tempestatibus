@@ -5,6 +5,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.codeoregonapp.patrickleonard.tempestatibus.ui.DailyForecastActivity;
 import com.codeoregonapp.patrickleonard.tempestatibus.ui.MainActivity;
 import com.codeoregonapp.patrickleonard.tempestatibus.weather.Day;
@@ -27,8 +29,10 @@ public class TempestatibusMediumWidgetProvider extends AppWidgetProvider {
         Intent intent = new Intent(context.getApplicationContext(),
                 WidgetForecastUpdateService.class);
         // Custom Extra Boolean to signify NOT an option change
+        Log.d(TempestatibusMediumWidgetProvider.TAG,"onUpdate is being called");
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.PROVIDER_UPDATE_REQUEST,true);
         // Update the widgets via the service
         context.startService(intent);
     }
@@ -76,7 +80,7 @@ public class TempestatibusMediumWidgetProvider extends AppWidgetProvider {
                 WidgetForecastUpdateService.class);
         // Custom Extra Boolean to signify NOT an option change
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
-        intent.putExtra(WidgetForecastUpdateService.DELETE_WIDGET,true);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.DELETE_WIDGET,true);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         // Update the widgets via the service
         context.startService(intent);
@@ -89,9 +93,9 @@ public class TempestatibusMediumWidgetProvider extends AppWidgetProvider {
         Intent intent = new Intent(context.getApplicationContext(),
                 WidgetForecastUpdateService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, newWidgetIds);
-        intent.putExtra(WidgetForecastUpdateService.OLD_WIDGET_IDS, oldWidgetIds);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.OLD_WIDGET_IDS, oldWidgetIds);
         intent.putExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
-        intent.putExtra(WidgetForecastUpdateService.RESTORE_WIDGET,true);
+        intent.putExtra(WidgetForecastUpdateServiceConstants.RESTORE_WIDGET,true);
         context.startService(intent);
         super.onRestored(context,oldWidgetIds,newWidgetIds);
     }

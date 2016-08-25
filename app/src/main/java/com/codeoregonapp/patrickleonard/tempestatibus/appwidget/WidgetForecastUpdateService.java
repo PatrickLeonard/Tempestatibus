@@ -30,13 +30,12 @@ public class WidgetForecastUpdateService extends Service {
     public static final String TAG = WidgetForecastUpdateService.class.getSimpleName();
     public static Forecast staticForecast;
     public static String staticAddress;
-    public static final String DELETE_WIDGET = ".widget.WidgetForecastUpdateService.DELETE_WIDGET";
-    public static final String RESTORE_WIDGET = ".widget.WidgetForecastUpdateService.RESTORE_WIDGET";
-    public static final String OLD_WIDGET_IDS = ".widget.WidgetForecastUpdateService.OLD_WIDGET_IDS";
+    private static final long TEN_SECONDS = 1000 * 10;
     private ResultReceiver mReceiver;
     private WidgetRemoteViewsManager mWidgetRemoteViewsManager;
     private boolean mHasRetrievalError;
     private boolean mIsRunning;
+    private long mLastTime;
     private TempestatibusApplicationSettings mTempestatibusApplicationSettings;
     private BroadcastReceiver mTimeTickReceiver;
 
@@ -80,18 +79,26 @@ public class WidgetForecastUpdateService extends Service {
 
     @Override
     public void onCreate() {
-         mIsRunning = false;
+        mIsRunning = false;
+        mLastTime = 0L;
         getTempestatibusApplicationSettings().createSharedPreferenceContext(getApplicationContext());
-        startTimeTicketReceiver();
+        registerTimeTickReceiver();
+        registerShutDownReceiver();
     }
 
     @Override
     public void onDestroy() {
+        Log.d(WidgetForecastUpdateService.TAG,"onDestroy is being called");
         if (mTimeTickReceiver != null) {
             getApplicationContext().unregisterReceiver(mTimeTickReceiver);
         }
+        //De-configure the widgets so they load properly when the phone is turned on/off
+        int[] appWidgetIds = getAllAppWidgetIdsFromAllProviders();
+        Log.d(WidgetForecastUpdateService.TAG, "Shutting Down Widget Update Service, appWidgetIds length: " + appWidgetIds.length);
+        for(int widgetId: appWidgetIds) {
+            getTempestatibusApplicationSettings().setWidgetDisplayPreference(widgetId,false);
+        }
     }
-
 
     @Override
     public int onStartCommand(Intent intent,int flags, int ids) {
@@ -101,13 +108,21 @@ public class WidgetForecastUpdateService extends Service {
             boolean deleteWidget = false;
             boolean restoreWidget = false;
             boolean optionChange = false;
+            boolean providerUpdate = false;
 
             if(appWidgetIds != null) {
-                deleteWidget = intent.getBooleanExtra(WidgetForecastUpdateService.DELETE_WIDGET, false);
-                restoreWidget = intent.getBooleanExtra(WidgetForecastUpdateService.RESTORE_WIDGET, false);
+                deleteWidget = intent.getBooleanExtra(WidgetForecastUpdateServiceConstants.DELETE_WIDGET, false);
+                restoreWidget = intent.getBooleanExtra(WidgetForecastUpdateServiceConstants.RESTORE_WIDGET, false);
+                providerUpdate = intent.getBooleanExtra(WidgetForecastUpdateServiceConstants.PROVIDER_UPDATE_REQUEST, false);
                 optionChange = intent.getBooleanExtra(AppWidgetManager.EXTRA_CUSTOM_EXTRAS, false);
                 Log.d(WidgetForecastUpdateService.TAG, "RemoteViews Map size: " + getRemoteViewsManager().getRemoteViewsArray().size());
             }
+
+            Log.d(WidgetForecastUpdateService.TAG,"Running Update Service System Time: " + System.currentTimeMillis());
+            Log.d(WidgetForecastUpdateService.TAG,"Last Successful Update Time: " + mLastTime);
+            Log.d(WidgetForecastUpdateService.TAG,"Difference: " + (System.currentTimeMillis() - mLastTime));
+            boolean providerUpdateOK = !mIsRunning && providerUpdate && (System.currentTimeMillis() - mLastTime) > TEN_SECONDS;
+            boolean immediateUpdate = !mIsRunning && !providerUpdate;
 
             if(deleteWidget) {
                     for(int widgetId : appWidgetIds) {
@@ -115,12 +130,12 @@ public class WidgetForecastUpdateService extends Service {
                     }
             }
             else if(restoreWidget) {
-                int[] oldWidgetIds = intent.getIntArrayExtra(WidgetForecastUpdateService.OLD_WIDGET_IDS);
+                int[] oldWidgetIds = intent.getIntArrayExtra(WidgetForecastUpdateServiceConstants.OLD_WIDGET_IDS);
                 for(int i=0;i<oldWidgetIds.length;++i) {
                     getRemoteViewsManager().restoreWidget(appWidgetIds[i], oldWidgetIds[i]);
                 }
             }
-            else if (!optionChange && !mIsRunning) {
+            else if (!optionChange && (providerUpdateOK || immediateUpdate)) {
                 runUpdateService();
             } else if (optionChange) {
                 if(getRemoteViewsManager().getForecast() != null) {
@@ -135,17 +150,20 @@ public class WidgetForecastUpdateService extends Service {
     }
 
     private void runUpdateService() {
+        //Limit widget updates to no more than once every ten seconds
         mIsRunning = true;
         startIndeterminateProgressBar(getApplicationContext());
         startForecastRetrievalService();
+
     }
 
     private void startIndeterminateProgressBar(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = getAllAppWidgetIdsFromAllProviders();
         for(int widgetId : appWidgetIds) {
-            boolean configured = getTempestatibusApplicationSettings().getWidgetConfigPreference(widgetId);
-            if(configured) {
+            //Only set the progressBar visibility if the widget has been updated at least once.
+            boolean display = getTempestatibusApplicationSettings().getWidgetDisplayPreference(widgetId);
+            if(display) {
                 RemoteViews remoteViews = getRemoteViewsManager().getRemoteViewsArray().get(widgetId);
                 if (remoteViews == null) {
                     remoteViews = getRemoteViewsManager().getRemoteViews(appWidgetManager, widgetId);
@@ -160,7 +178,7 @@ public class WidgetForecastUpdateService extends Service {
         }
     }
 
-    private void startTimeTicketReceiver() {
+    private void registerTimeTickReceiver() {
         mTimeTickReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -168,8 +186,8 @@ public class WidgetForecastUpdateService extends Service {
                     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                     int[] appWidgetIds = getAllAppWidgetIdsFromAllProviders();
                     for(int widgetId : appWidgetIds) {
-                        boolean configured = getTempestatibusApplicationSettings().getWidgetConfigPreference(widgetId);
-                        if(configured) {
+                        boolean display = getTempestatibusApplicationSettings().getWidgetDisplayPreference(widgetId);
+                        if(display) {
                             RemoteViews remoteViews = getRemoteViewsManager().getRemoteViews(appWidgetManager, widgetId);
                             if(getRemoteViewsManager().getDynamicWidgetLayoutController().getHasDateTime()) {
                                 remoteViews = getRemoteViewsManager().updateDateTimeData(remoteViews);
@@ -184,6 +202,10 @@ public class WidgetForecastUpdateService extends Service {
         getApplicationContext().registerReceiver(mTimeTickReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
     }
 
+    private void registerShutDownReceiver() {
+        getApplicationContext().registerReceiver(new WidgetShutdownReceiver(),new IntentFilter(Intent.ACTION_SHUTDOWN));
+    }
+
     public void updateAppWidgets(int[] allWidgetIds) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this
                 .getApplicationContext());
@@ -193,12 +215,15 @@ public class WidgetForecastUpdateService extends Service {
                 RemoteViews remoteViews = getRemoteViewsManager().getRemoteViews(appWidgetManager, widgetId);
                 remoteViews = manageRemoteViews(widgetId, remoteViews);
                 appWidgetManager.updateAppWidget(widgetId, remoteViews);
+                getTempestatibusApplicationSettings().setWidgetDisplayPreference(widgetId,true);
             }
         }
         mIsRunning = false;
+        mLastTime = System.currentTimeMillis();
     }
 
     private RemoteViews manageRemoteViews(int widgetId, RemoteViews remoteViews) {
+        remoteViews = getRemoteViewsManager().toggleLoadingLayoutVisibilities(remoteViews,widgetId);
         if(hasRetrievalError()) {
             remoteViews = getRemoteViewsManager().displayError(remoteViews);
         }
@@ -211,6 +236,8 @@ public class WidgetForecastUpdateService extends Service {
         if(getRemoteViewsManager().getDynamicWidgetLayoutController().getHasGridView()) {
             getRemoteViewsManager().alertGridViewDataUpdate(widgetId);
         }
+        getRemoteViewsManager().getDynamicWidgetLayoutController().getTempestatibusApplicationSettings()
+                .setWidgetConfigPreference(widgetId,true);
         getRemoteViewsManager().getRemoteViewsArray().put(widgetId,remoteViews);
         return remoteViews;
     }
