@@ -15,8 +15,8 @@
     <string name="JSON" translatable="false">JSON</string>
     <string name="IO" translatable="false">IO</string>
     <string name="api_key_string" translatable="false">@string/api_key</string>
-    <string name="api_url" translatable="false">https://api.forecast.io/forecast/</string>
-    <string name="forecast_io_url" translatable="false">http://forecast.io</string>
+    <string name="api_url" translatable="false">https://api.darksky.net/forecast/</string>
+    <string name="forecast_io_url" translatable="false">http://darksky.net</string>
     <string name="JSON_Object_name_currently" translatable="false">currently</string>
     <string name="JSON_string_property_timezone" translatable="false">timezone</string>
     <string name="JSON_double_property_humidity" translatable="false">humidity</string>
@@ -110,7 +110,7 @@
     <string name="us_units_miles_per_hour" translatable="false">mph</string>
     <string name="units_dobson" translatable="false">DU</string>
     <string name="title_activity_search_for_location" translatable="false">SearchForLocationActivity</string>
-    <string name="powered_by_forecast" translatable="false"><u>Powered by Forecast</u></string>
+    <string name="powered_by_forecast" translatable="false"><u>Powered by Dark Sky</u></string>
     ---Needs to be translated
 
     ---Has been translated
