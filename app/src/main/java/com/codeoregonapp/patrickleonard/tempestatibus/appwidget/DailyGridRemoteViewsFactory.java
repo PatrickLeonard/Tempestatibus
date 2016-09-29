@@ -43,20 +43,22 @@ public class DailyGridRemoteViewsFactory implements RemoteViewsService.RemoteVie
     public RemoteViews getViewAt(int position) {
         int layoutId = getLayoutId();
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), layoutId);
-        Day day =  mDays.get(position);
-        remoteViews.setImageViewResource(R.id.dailyGridIconImageView, day.getIconId(mTheme, mContext));
-        remoteViews.setImageViewResource(R.id.dailyGridMMaxTempSmallDegreeImageView, TempestatibusApplicationSettings.getSmallDegreeId(mTheme));
-        remoteViews.setImageViewResource(R.id.dailyGridMMinTempSmallDegreeImageView, TempestatibusApplicationSettings.getSmallDegreeId(mTheme));
-        remoteViews.setTextViewText(R.id.dailyGridMaxTemperatureLabel, String.format("%s", day.getTemperatureMax()));
-        remoteViews.setTextViewText(R.id.dailyGridMinTemperatureLabel, String.format("%s", day.getTemperatureMin()));
-        remoteViews.setTextViewText(R.id.dayAbbreviationLabel, String.format("%s", day.getDayOfTheWeekAbbreviation()));
-        //onclick Intent for this Grid View Item to open up the DailyForecastActivity with that Day's data
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Day.TAG,day);
-        Intent fillInIntent = new Intent();
-        fillInIntent.putExtra(TempestatibusLargeWidgetProvider.DAY_BUNDLE,bundle);
-        fillInIntent.putExtra(MainActivity.ADDRESS_EXTRA, mAddress);
-        remoteViews.setOnClickFillInIntent(R.id.grid_item_layout, fillInIntent);
+        if(mDays != null) {
+            Day day =  mDays.get(position);
+            remoteViews.setImageViewResource(R.id.dailyGridIconImageView, day.getIconId(mTheme, mContext));
+            remoteViews.setImageViewResource(R.id.dailyGridMMaxTempSmallDegreeImageView, TempestatibusApplicationSettings.getSmallDegreeId(mTheme));
+            remoteViews.setImageViewResource(R.id.dailyGridMMinTempSmallDegreeImageView, TempestatibusApplicationSettings.getSmallDegreeId(mTheme));
+            remoteViews.setTextViewText(R.id.dailyGridMaxTemperatureLabel, String.format("%s", day.getTemperatureMax()));
+            remoteViews.setTextViewText(R.id.dailyGridMinTemperatureLabel, String.format("%s", day.getTemperatureMin()));
+            remoteViews.setTextViewText(R.id.dayAbbreviationLabel, String.format("%s", day.getDayOfTheWeekAbbreviation()));
+            //onclick Intent for this Grid View Item to open up the DailyForecastActivity with that Day's data
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Day.TAG,day);
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtra(TempestatibusLargeWidgetProvider.DAY_BUNDLE,bundle);
+            fillInIntent.putExtra(MainActivity.ADDRESS_EXTRA, mAddress);
+            remoteViews.setOnClickFillInIntent(R.id.grid_item_layout, fillInIntent);
+        }
         return remoteViews;
     }
 
